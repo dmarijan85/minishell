@@ -12,7 +12,7 @@
 
 static void	free_memory(char **split)
 {
-	free(split);
+	free(split); //TODO: Esto no esta bien no???
 }
 
 static char	*word_dup(const char *str, int start, int finish, char **split)
