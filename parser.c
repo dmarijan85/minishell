@@ -20,30 +20,32 @@ t_node	find_closest(t_node *temp) //nos encuentra el comando mas cercano. util p
 		return (temp->next->next);
 	return (temp->prev);
 }
-
+//the parser will read from the list present at the general MSH struct and deal with the redirection nodes. This means:
+//Create a new redirections list for each segment of our command input (each command between pipes), IF ANY.
+//Correctly merge the command str, in case its interrupted by a redirection (ex. "ls > hola -l").
+//Related to last point, it will also delete the actual redirection node, and if needed, delete any extra nodes currently present in the list
+//(such as the ">" node and the "hola -l" node in the previous example. The list thus simply becoming "ls -l").
 void	parser(t_msh *msh)
 {
 	t_node	*temp;
 	t_node	*closest;
+	t_node	*backup;
 	char	*str;
 
 	temp = msh->list;
 	closest = NULL;
+	backup = NULL;
 	if (temp)
 	{
 		while (temp)
-		{
+		{	
+			backup = temp;
 			if (temp->token != 0)
 			{
-				// split token node into the actual redirection + filename and either CREATE or JOIN the remainder of the text onto the closest command node.
+				//gotta figure out how to deal with pipes. probably not from here thats for sure
 				if (temp->token == PIPE)
 				{
-					if (!temp->prev)
-						return ;//error exit
-					if (!temp->next)
-						append_node(&temp, readline("> "), 0);
-					temp->prev->fdout = -1;//flag para pipe[0]
-					temp->next->fdin =  -2;//flag para pipe[1]
+					//do anything?
 				}
 				else if (temp->token == GREAT)
 				{
@@ -51,6 +53,8 @@ void	parser(t_msh *msh)
 						append_redirs(temp->prev->redir, open_file(temp->str, TRUNC));
 					else if (temp->next && temp->next->token == 0)
 						append_redirs(temp->next->redir, open_file(temp->str, TRUNC));
+					temp->prev->next = temp->next; //remove current token node from list by making the list point "over" it.
+					free_node(temp); //TODO: implement node free func. Can probably adapt it from push_swap.
 				}
 				else if (temp->token == GGREAT)
 				{
@@ -78,6 +82,7 @@ void	parser(t_msh *msh)
 					msh->herecounter++;
 				}
 			}
+			temp = backup;
 			temp = temp->next;
 		}
 	}
