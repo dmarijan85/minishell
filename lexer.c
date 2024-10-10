@@ -100,7 +100,11 @@ int expand_list(char *str, t_tokens token, t_node **first, int *end)
 		*end = *end + 1;
 	return (*end);
 }
-
+//this lexer is going through the raw input string and reading character by character. It will create the first version of
+//our linked list, ready to be passed to the parser. Upon finding one of the following tokens: > < >> << |, it will create
+//TWO nodes at the same time, one for the stuff to the left of the found token (if anything), and one for the singular token.
+//this behavior is exactly the same for each token, the only differences being the indexes it reads from to account for >> and <<.
+//all of this is automatically assigned to the pointer of the list in our general MSH struct. 
 void lexer(char *str, t_node *beg)
 {
 	int		stt; //start
