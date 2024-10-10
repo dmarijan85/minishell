@@ -6,14 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:53:09 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/09 16:34:08 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:55:47 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void	free_memory(char **split)
-{
-	free(split); //TODO: Esto no esta bien no???
-}
+#include "minishell.h"
 
 static char	*word_dup(const char *str, int start, int finish, char **split)
 {
@@ -24,7 +21,7 @@ static char	*word_dup(const char *str, int start, int finish, char **split)
 	word = malloc((finish - start + 1) * sizeof(char));
 	if (!word)
 	{
-		free_memory(split);
+		array_free(split);
 		return (NULL);
 	}
 	while (start < finish)

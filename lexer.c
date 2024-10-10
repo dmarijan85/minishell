@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/09 16:08:06 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:20:02 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	append_redirs(t_redirs **stack, int fd)
 		last_node = find_last_node(*stack);
 		last_node->next = node;
 	}
-}*/
-
+}
+*/
 //puts new node as first if its the first one in stack (if **stack is empty)
 //OR correctly appends new node as last of the list.
 void	append_node(t_node **stack, char *str, t_tokens token)
@@ -105,7 +105,7 @@ int expand_list(char *str, t_tokens token, t_node **first, int *end)
 //TWO nodes at the same time, one for the stuff to the left of the found token (if anything), and one for the singular token.
 //this behavior is exactly the same for each token, the only differences being the indexes it reads from to account for >> and <<.
 //all of this is automatically assigned to the pointer of the list in our general MSH struct. 
-void lexer(char *str, t_node *beg)
+void lexer(char *str, t_node **beg)
 {
 	int		stt; //start
 	int		end;
@@ -121,24 +121,24 @@ void lexer(char *str, t_node *beg)
 		else if (str[end] == '"')
 			opquote = true;
 		else if (str[end] == '|' && opquote == false)
-			stt = expand_list(ft_substr(str, stt, end), PIPE, &beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end), PIPE, beg, &end) + 1;
 		else if (str[end] == '<' && opquote == false && !isdouble(str + end, 0))
-			stt = expand_list(ft_substr(str, stt, end), LESS, &beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end), LESS, beg, &end) + 1;
 		else if (str[end] == '>' && opquote == false && !isdouble(str + end, 1))
-			stt = expand_list(ft_substr(str, stt, end), GREAT, &beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end), GREAT, beg, &end) + 1;
 		else if (str[end] == '<' && opquote == false && isdouble(str + end, 0))
-			stt = expand_list(ft_substr(str, stt, end), LLESS, &beg, &end) + 2;
+			stt = expand_list(ft_substr(str, stt, end), LLESS, beg, &end) + 2;
 		else if (str[end] == '>' && opquote == false && isdouble(str + end, 1))
-			stt = expand_list(ft_substr(str, stt, end), GGREAT, &beg, &end) + 2;
+			stt = expand_list(ft_substr(str, stt, end), GGREAT, beg, &end) + 2;
 		else if (!str[end + 1] && end != 0)
-			stt = expand_list(ft_substr(str, stt, end + 1), 0, &beg, &end);
+			stt = expand_list(ft_substr(str, stt, end + 1), 0, beg, &end);
 		end++;
 	}
 	t_node	*temp;
 	int		i;
 
 	i = 0;
-	temp = beg;
+	temp = *beg;
 	if (temp)
 	{
 		while (temp->next)
@@ -151,4 +151,5 @@ void lexer(char *str, t_node *beg)
 		ft_printf("NODE STR %i: %s\n", i, temp->str);
 		ft_printf("NODE TKN %i: %i\n", i, temp->token);
 	}
+	
 }

@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/10/09 14:13:19 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/10/10 14:32:39 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,9 @@ NAME = minishell
 
 SRC =	lexer.c			\
 		main.c			\
+		utils.c			\
+		wordsplit.c		\
+		cleaners.c		\
 		#parser.c		\
 		#bomboclaat.c	\
 		#main_bonus.c	\
