@@ -21,7 +21,7 @@ int	count_words(const char *str)
 	trigger = 0;
 	while (*str)
 	{
-		if ((*str != ' ' || *str != '\t') && trigger == 0)
+		if ((*str != ' ' && *str != '\t') && trigger == 0)
 		{
 			trigger = 1;
 			i++;
