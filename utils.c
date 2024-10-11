@@ -33,15 +33,18 @@ int	count_words(const char *str)
 	return (i);
 }
 
-//Receives the Token node and moves the string that comes after around
+//Receives the Token node and moves the string that comes after around: the first word is
 void	remove_redir(t_node *node)
 {
 	char	**buf;
+	char	*tmp;
 	int		i;
 	
 	//if (!node->next)
-		//error_exit("parse error")
+		//error_exit("parse error");
 	buf = wordsplit(node->next->str);
+	//if (!buf || !buf[0])
+		//error_exit("split error");
 	//Copy first word in token
 	node->str = ft_strdup(buf[0]);
 	i = 1;
@@ -53,10 +56,20 @@ void	remove_redir(t_node *node)
 			ft_strlen(node->next->str));
 			break ;
 		}
-		node->prev->str = ft_strjoin(node->prev->str, " ");
-		node->prev->str = ft_strjoin(node->prev->str, buf[i]);
+		//Esto debería evitar leaks??
+		tmp = node->prev->str;
+        	node->prev->str = ft_strjoin(tmp, " ");
+        	free(tmp);
+        	tmp = node->prev->str;
+        	node->prev->str = ft_strjoin(tmp, buf[i]);
+        	free(tmp);
+		//node->prev->str = ft_strjoin(node->prev->str, " ");
+		//node->prev->str = ft_strjoin(node->prev->str, buf[i]);
 		i++;
 	}
 	node->prev->next = node->next->next;
+	//Si existe next next, me interesa modificar tambien su prev
+	if (node->next->next)
+		node->next->next->prev = node->prev;
 	array_free(buf);
 }
