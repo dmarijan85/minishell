@@ -49,7 +49,7 @@ char	**wordsplit(char const *s)
 	index = -1;
 	while (i <= ft_strlen(s))
 	{
-		if ((s[i] != ' ' || s[i] != '\t') && index < 0)
+		if ((s[i] != ' ' && s[i] != '\t') && index < 0)
 			index = i;
 		else if (((s[i] == ' ' || s[i] == '\t') || i == ft_strlen(s)) 
 				&& index >= 0)
