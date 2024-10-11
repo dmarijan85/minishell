@@ -6,11 +6,21 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/10 15:26:05 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:23:31 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//update the nexts and prevs, and then harakiri the node
+void	delete_node(t_node **node)
+{
+	if ((*node)->next)
+		(*node)->next->prev = (*node)->prev;
+	if ((*node)->prev)
+		(*node)->prev->next = (*node)->next;
+	node_free(node);
+}
 
 int	count_words(const char *str)
 {
@@ -44,7 +54,7 @@ void	remove_redir(t_node *node)
 		//error_exit("parse error");
 	buf = wordsplit(node->next->str);
 	//if (!buf || !buf[0])
-		//error_exit("split error");
+		//error_exit("split error"); TODO
 	//Copy first word in token
 	node->str = ft_strdup(buf[0]);
 	i = 1;
@@ -56,20 +66,17 @@ void	remove_redir(t_node *node)
 			ft_strlen(node->next->str));
 			break ;
 		}
-		//Esto debería evitar leaks??
 		tmp = node->prev->str;
-        	node->prev->str = ft_strjoin(tmp, " ");
-        	free(tmp);
-        	tmp = node->prev->str;
-        	node->prev->str = ft_strjoin(tmp, buf[i]);
-        	free(tmp);
-		//node->prev->str = ft_strjoin(node->prev->str, " ");
-		//node->prev->str = ft_strjoin(node->prev->str, buf[i]);
+		node->prev->str = ft_strjoin(tmp, " ");
+		free(tmp);
+		tmp = node->prev->str;
+		node->prev->str = ft_strjoin(tmp, buf[i]);
+		free(tmp);
 		i++;
 	}
-	node->prev->next = node->next->next;
 	//Si existe next next, me interesa modificar tambien su prev
 	if (node->next->next)
 		node->next->next->prev = node->prev;
+	//TODO: borrar node->next sin LEAKS
 	array_free(buf);
 }

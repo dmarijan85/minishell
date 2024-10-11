@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:20:17 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/10 14:57:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:04:21 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	node_free(t_node **stack)
 			free((*stack)->str);
 		free(*stack);
 	}
+	*stack = NULL;
 }
 
 void	stack_free_nodes(t_node **stack)
@@ -63,6 +64,8 @@ void	stack_free_nodes(t_node **stack)
 	while (current)
 	{
 		tmp = current->next;
+		if (current->redir)
+			stack_free_redirs(&current->redir);
 		node_free(&current);
 		current = tmp;
 	}

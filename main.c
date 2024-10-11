@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/10 15:20:35 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:18:17 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,17 @@ void	parser(t_msh *msh)
 	{
 		while (temp)
 		{	
-			backup = temp;
+			backup = temp->next;
 			if (temp->token != 0)
 			{
 				remove_redir(temp);
 				if (temp->prev && temp->prev->token == 0)
-					printf(" ");//append_redirs((&temp->prev->redir), open_file(temp->str, TRUNC)); //TODO: fix append redirs arg and its call to find_last_node. copy it?
+					append_redirs((&temp->prev->redir), open_file(temp->str, TRUNC), 0);
 				else if (temp->next && temp->next->token == 0)
-					printf(" ");//append_redirs((&temp->next->redir), open_file(temp->str, TRUNC)); //TODO: fix append redirs arg and its call to find_last_node. copy it?
-				temp->prev->next = temp->next; //remove current token node.
-				node_free(&temp);
+					append_redirs((&temp->next->redir), open_file(temp->str, TRUNC), 0);
+				delete_node(&temp);	
 			}
 			temp = backup;
-			temp = temp->next;
 		}
 	}
 }
@@ -67,10 +65,15 @@ int	main(int ac, char **av, char **envp)
 	mini.list = NULL;
 	mini.reset = false;
 	mini.herectr = 0;
+	mini.args = NULL;
 
 	printf("Benvingut a la xiquipetxina!\n");
 	minishell_loop(&mini);
-	t_node	*temp;
+	stack_free_nodes(&mini.list);
+	free(mini.args);
+	//readline tiene 204.000 bytes de leaks, ignoralos :sob:
+}
+/*	t_node	*temp;
 	int		i;
 
 	i = 0;
@@ -81,12 +84,16 @@ int	main(int ac, char **av, char **envp)
 		{
 			ft_printf("Node STR %i: %s\n", i, temp->str);
 			ft_printf("Node TKN %i: %i\n", i, temp->token);
+			if (temp->redir)
+				ft_printf("The node %i has REDIR\n", i);
 			temp = temp->next;
 			i++;
 		}
 		ft_printf("NODE STR %i: %s\n", i, temp->str);
 		ft_printf("NODE TKN %i: %i\n", i, temp->token);
+		if (temp->redir)
+			ft_printf("The node %i has REDIR\n", i);
 	}
 
 	return (0);
-}
+}*/

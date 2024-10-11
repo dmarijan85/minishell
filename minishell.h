@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/10 15:20:22 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:53:47 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_node
 	int				i;
 	struct s_node	*next;
 	struct s_node	*prev;
-	struct t_redirs	*redir;
+	struct s_redirs	*redir;
 }				t_node;
 
 typedef struct	s_msh
@@ -81,13 +81,13 @@ typedef struct	s_msh
 
 //TODO:sort this shit pls
 void	exit_handler(int n_exit);
-int		open_file(char *file, int n);
+int		open_file(char *file, t_openmodes mode);
 char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	exec(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 void	lexer(char *str, t_node **beg);
-//void	append_redirs(t_redirs **stack, int fd);
+void	append_redirs(t_redirs **stack, int fd, int fd_type);
 
 //cleaners
 void	stack_free_nodes(t_node **stack);
@@ -99,5 +99,8 @@ void	remove_redir(t_node *node);
 //wordsplit
 int		count_words(const char *str);
 char	**wordsplit(char const *s);
+
+//nodestuff
+void	delete_node(t_node **node);
 
 #endif

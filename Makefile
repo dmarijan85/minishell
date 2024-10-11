@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/10/10 14:32:39 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/10/11 14:14:47 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,14 @@ SRC =	lexer.c			\
 		utils.c			\
 		wordsplit.c		\
 		cleaners.c		\
+		utils_bonus.c	\
 		#parser.c		\
 		#bomboclaat.c	\
 		#main_bonus.c	\
-		#utils_bonus.c	\
 
 OBJ = $(SRC:.c=.o)
 
-COMPILE = gcc -Wall -Werror -Wextra -g
+COMPILE = gcc -Wall -Werror -Wextra -g -fsanitize=address
 
 REMOVE = rm -f
 

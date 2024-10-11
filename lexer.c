@@ -6,11 +6,20 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/10 15:20:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:41:33 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_redirs	*find_last_redirs(t_redirs *current)
+{
+	if (!current)
+		return (NULL);
+	while (current->next)
+		current = current->next;
+	return (current);
+}
 
 t_node	*find_last_node(t_node *current)
 {
@@ -20,10 +29,10 @@ t_node	*find_last_node(t_node *current)
 		current = current->next;
 	return (current);
 }
-/*
+
 //puts new node as first if its the first one in stack (if **stack is empty)
 //OR correctly appends new node as last of the list.
-void	append_redirs(t_redirs **stack, int fd)
+void	append_redirs(t_redirs **stack, int fd, int fd_type)
 {
 	t_redirs	*node;
 	t_redirs	*last_node;
@@ -32,17 +41,17 @@ void	append_redirs(t_redirs **stack, int fd)
 	if (!node)
 		return ; //errexit with cleaning funcs
 	node->next = NULL;
-	if (fd)
-		node->fd = fd;
+	node->fd = fd;
+	node->fd_type = fd_type;
 	if (!*stack)
 		*stack = node;
 	else
 	{
-		last_node = find_last_node(*stack);
+		last_node = find_last_redirs(*stack);
 		last_node->next = node;
 	}
 }
-*/
+
 //puts new node as first if its the first one in stack (if **stack is empty)
 //OR correctly appends new node as last of the list.
 void	append_node(t_node **stack, char *str, t_tokens token)
@@ -114,7 +123,7 @@ void lexer(char *str, t_node **beg)
 	stt = 0;
 	end = 0;
 	opquote = false;
-	while (str[end])
+	while (str && str[end])
 	{
 		if (str[end] == '"' && opquote == true)
 			opquote = false;
@@ -134,7 +143,8 @@ void lexer(char *str, t_node **beg)
 			stt = expand_list(ft_substr(str, stt, end + 1), 0, beg, &end);
 		end++;
 	}
-	t_node	*temp;
+}
+/*	t_node	*temp;
 	int		i;
 
 	i = 0;
@@ -152,4 +162,4 @@ void lexer(char *str, t_node **beg)
 		ft_printf("NODE TKN %i: %i\n", i, temp->token);
 	}
 	
-}
+}*/
