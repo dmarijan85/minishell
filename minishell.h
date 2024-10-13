@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/13 15:10:56 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:54:46 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ char	**wordsplit(char const *s);
 
 //nodestuff
 void	delete_node(t_node **node);
+
+//parser
+void	parser(t_msh *msh);
 
 #endif

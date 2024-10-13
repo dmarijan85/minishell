@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/13 15:13:11 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:14:29 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,10 @@ bool isdouble(char *str, int lessorgreat)
 int expand_list(char *str, t_tokens token, t_node **first, int *end)
 {
 	if (str && *str)
-	{
-
 		append_node(first, str, 0);
-	}
 	if (token != 0)
 		append_node(first, NULL, token);
-	if (token == LESS || token == GREAT)
+	if (token == LLESS || token == GGREAT)
 		*end = *end + 1;
 	return (*end);
 }
@@ -126,6 +123,7 @@ void lexer(char *str, t_node **beg)
 	stt = 0;
 	end = 0;
 	opquote = false;
+	printf("Whole arg string: %s\n", str);
 	while (str && end < (int)ft_strlen(str))
 	{
 		if (str[end] == '"' && opquote == true)
@@ -133,19 +131,21 @@ void lexer(char *str, t_node **beg)
 		else if (str[end] == '"')
 			opquote = true;
 		else if (str[end] == '|' && opquote == false)
-			stt = expand_list(ft_substr(str, stt, end), PIPE, beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end - stt), PIPE, beg, &end) + 1;
 		else if (str[end] == '<' && opquote == false && !isdouble(str + end, 0))
-			stt = expand_list(ft_substr(str, stt, end), LESS, beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end - stt), LESS, beg, &end) + 1;
 		else if (str[end] == '>' && opquote == false && !isdouble(str + end, 1))
-			stt = expand_list(ft_substr(str, stt, end), GREAT, beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end - stt), GREAT, beg, &end) + 1;
 		else if (str[end] == '<' && opquote == false && isdouble(str + end, 0))
-			stt = expand_list(ft_substr(str, stt, end), LLESS, beg, &end) + 2;
+			stt = expand_list(ft_substr(str, stt, end - stt), LLESS, beg, &end) + 2;
 		else if (str[end] == '>' && opquote == false && isdouble(str + end, 1))
-			stt = expand_list(ft_substr(str, stt, end), GGREAT, beg, &end) + 2;
+			stt = expand_list(ft_substr(str, stt, end - stt), GGREAT, beg, &end) + 2;
 		else if (!str[end + 1] && end != 0)
-			stt = expand_list(ft_substr(str, stt, end + 1), 0, beg, &end);
+			stt = expand_list(ft_substr(str, stt, end - stt + 1), 0, beg, &end);
 		end++;
 	}
+}
+/*
 	t_node	*temp;
 	int		i;
 
@@ -155,13 +155,20 @@ void lexer(char *str, t_node **beg)
 	{
 		while (temp->next)
 		{
-			ft_printf("Node STR %i: %s\n", i, temp->str);
-			ft_printf("Node TKN %i: %i\n", i, temp->token);
+			if (temp->str)
+				printf("Node STR %i: %s\n", i, temp->str);
+			if (temp->token)
+				printf("Node TKN %i: %i\n", i, temp->token);
+			if (temp->redir)
+				printf("Node %i has REDIR\n", i);
 			temp = temp->next;
 			i++;
 		}
-		ft_printf("NODE STR %i: %s\n", i, temp->str);
-		ft_printf("NODE TKN %i: %i\n", i, temp->token);
-	}
-	
-}
+		if (temp->str)
+			printf("NODE STR %i: %s\n", i, temp->str);
+		if (temp->token)
+			printf("NODE TKN %i: %i\n", i, temp->token);
+		if (temp->redir)
+			printf("Node %i has REDIR\n", i);
+	}	
+}*/

@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/10/13 14:41:45 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/10/13 17:54:04 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC =	lexer.c			\
 		wordsplit.c		\
 		cleaners.c		\
 		utils_bonus.c	\
-		#parser.c		\
+		parser.c		\
 		#bomboclaat.c	\
 		#main_bonus.c	\
 
