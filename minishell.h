@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/11 13:53:47 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:10:56 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef enum s_openmodes
 
 typedef struct	s_redirs
 {
-	int				fd_type;
+	t_openmodes		fd_type;
 	int				fd;
 	struct s_redirs	*next;
 }				t_redirs;
@@ -87,7 +87,7 @@ char	*get_path(char *cmd, char **env);
 void	exec(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 void	lexer(char *str, t_node **beg);
-void	append_redirs(t_redirs **stack, int fd, int fd_type);
+void	append_redirs(t_redirs **stack, int fd, t_openmodes type);
 
 //cleaners
 void	stack_free_nodes(t_node **stack);

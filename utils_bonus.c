@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/11 13:28:05 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:10:40 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exit_handler(int n_exit)
 
 int	open_file(char *file, t_openmodes mode)
 {
-	int	ret;
+	int			ret;
 
 	if (mode == READ)
 		ret = open(file, O_RDONLY, 0777);

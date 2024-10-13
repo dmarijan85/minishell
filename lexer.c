@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/11 13:41:33 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:13:11 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_node	*find_last_node(t_node *current)
 
 //puts new node as first if its the first one in stack (if **stack is empty)
 //OR correctly appends new node as last of the list.
-void	append_redirs(t_redirs **stack, int fd, int fd_type)
+void	append_redirs(t_redirs **stack, int fd, t_openmodes type)
 {
 	t_redirs	*node;
 	t_redirs	*last_node;
@@ -42,7 +42,7 @@ void	append_redirs(t_redirs **stack, int fd, int fd_type)
 		return ; //errexit with cleaning funcs
 	node->next = NULL;
 	node->fd = fd;
-	node->fd_type = fd_type;
+	node->fd_type = type;
 	if (!*stack)
 		*stack = node;
 	else
@@ -102,10 +102,13 @@ bool isdouble(char *str, int lessorgreat)
 int expand_list(char *str, t_tokens token, t_node **first, int *end)
 {
 	if (str && *str)
+	{
+
 		append_node(first, str, 0);
+	}
 	if (token != 0)
 		append_node(first, NULL, token);
-	if (token == 3 || token == 5)
+	if (token == LESS || token == GREAT)
 		*end = *end + 1;
 	return (*end);
 }
@@ -123,7 +126,7 @@ void lexer(char *str, t_node **beg)
 	stt = 0;
 	end = 0;
 	opquote = false;
-	while (str && str[end])
+	while (str && end < (int)ft_strlen(str))
 	{
 		if (str[end] == '"' && opquote == true)
 			opquote = false;
@@ -143,8 +146,7 @@ void lexer(char *str, t_node **beg)
 			stt = expand_list(ft_substr(str, stt, end + 1), 0, beg, &end);
 		end++;
 	}
-}
-/*	t_node	*temp;
+	t_node	*temp;
 	int		i;
 
 	i = 0;
@@ -162,4 +164,4 @@ void lexer(char *str, t_node **beg)
 		ft_printf("NODE TKN %i: %i\n", i, temp->token);
 	}
 	
-}*/
+}

@@ -6,35 +6,51 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/11 14:18:17 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 13:16:49 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_node	*find_first_node(t_node *current)
+{
+	if (!current)
+		return (NULL);
+	while (current->prev)
+		current = current->prev;
+	return (current);
+}
+
 void	parser(t_msh *msh)
 {
 	t_node	*temp;
 	t_node	*backup;
+	bool	delnext;
 
 	temp = msh->list;
-	backup = NULL;
-	if (temp)
-	{
-		while (temp)
-		{	
-			backup = temp->next;
-			if (temp->token != 0)
-			{
-				remove_redir(temp);
-				if (temp->prev && temp->prev->token == 0)
-					append_redirs((&temp->prev->redir), open_file(temp->str, TRUNC), 0);
-				else if (temp->next && temp->next->token == 0)
-					append_redirs((&temp->next->redir), open_file(temp->str, TRUNC), 0);
-				delete_node(&temp);	
-			}
-			temp = backup;
+	delnext = false;
+	while (temp)
+	{	
+		backup = temp->next;
+		if (delnext)
+		{
+			delete_node(&temp);
+			delnext = false;
 		}
+		else if (temp->token != 0)
+		{
+			remove_redir(temp);
+			if (temp->prev && temp->prev->token == 0)
+				append_redirs((&temp->prev->redir), open_file(temp->str, TRUNC), 0);
+			else if (temp->next && temp->next->token == 0)
+				append_redirs((&temp->next->redir), open_file(temp->str, TRUNC), 0);
+			if (!temp->prev)
+				msh->list = temp->next;
+			else
+				delnext = true;
+			delete_node(&temp);
+		}
+		temp = backup;
 	}
 }
 
@@ -69,11 +85,9 @@ int	main(int ac, char **av, char **envp)
 
 	printf("Benvingut a la xiquipetxina!\n");
 	minishell_loop(&mini);
-	stack_free_nodes(&mini.list);
-	free(mini.args);
+
 	//readline tiene 204.000 bytes de leaks, ignoralos :sob:
-}
-/*	t_node	*temp;
+	t_node	*temp;
 	int		i;
 
 	i = 0;
@@ -82,18 +96,22 @@ int	main(int ac, char **av, char **envp)
 	{
 		while (temp->next)
 		{
-			ft_printf("Node STR %i: %s\n", i, temp->str);
-			ft_printf("Node TKN %i: %i\n", i, temp->token);
+			if (temp->str)
+				ft_printf("Node STR %i: %s\n", i, temp->str);
+			if (temp->token)
+				ft_printf("Node TKN %i: %i\n", i, temp->token);
 			if (temp->redir)
-				ft_printf("The node %i has REDIR\n", i);
+				ft_printf("The Node %i has REDIR\n", i);
 			temp = temp->next;
 			i++;
 		}
-		ft_printf("NODE STR %i: %s\n", i, temp->str);
-		ft_printf("NODE TKN %i: %i\n", i, temp->token);
+		if (temp->str)
+			ft_printf("Node STR %i: %s\n", i, temp->str);
+		if (temp->token)
+			ft_printf("Node TKN %i: %i\n", i, temp->token);
 		if (temp->redir)
-			ft_printf("The node %i has REDIR\n", i);
+			ft_printf("The Node %i has REDIR\n", i);
 	}
-
-	return (0);
-}*/
+	stack_free_nodes(&mini.list);
+	free(mini.args);
+}

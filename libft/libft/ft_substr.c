@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:29:05 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/03/27 14:52:18 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:40:45 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*substr(char const *s, unsigned int start, size_t len)
 	size_t	j;
 	char	*str;
 
+	if (start == 0 && len == 0)
+		return (NULL);
 	str = malloc(len + 1 * sizeof(char));
 	if (!str)
 		return (NULL);

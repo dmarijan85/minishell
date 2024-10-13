@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/11 14:23:31 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:49:53 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	delete_node(t_node **node)
 	if ((*node)->prev)
 		(*node)->prev->next = (*node)->next;
 	node_free(node);
+	node = NULL;
 }
 
 int	count_words(const char *str)
@@ -62,8 +63,10 @@ void	remove_redir(t_node *node)
 	{
 		if (!node->prev)
 		{
-			node->next->str = ft_substr(node->next->str, ft_strlen(buf[0] + 1),\
+			tmp = node->next->str;
+			node->next->str = ft_substr(node->next->str, ft_strlen(buf[0]) + 1,\
 			ft_strlen(node->next->str));
+			free(tmp);
 			break ;
 		}
 		tmp = node->prev->str;
@@ -74,9 +77,5 @@ void	remove_redir(t_node *node)
 		free(tmp);
 		i++;
 	}
-	//Si existe next next, me interesa modificar tambien su prev
-	if (node->next->next)
-		node->next->next->prev = node->prev;
-	//TODO: borrar node->next sin LEAKS
 	array_free(buf);
 }
