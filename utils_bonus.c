@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+//un poco innecesario
 void	exit_handler(int n_exit)
 {
 	if (n_exit == 1)
@@ -34,6 +35,7 @@ int	open_file(char *file, t_openmodes mode)
 	return (ret);
 }
 
+//Innecesario también
 void	ft_free_tab(char **tab)
 {
 	size_t	i;
