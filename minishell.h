@@ -75,7 +75,7 @@ typedef struct	s_msh
 	char	*args;
 	bool	reset;
 	int		herectr;
-	int		listlen;
+	int		pipelen;
 }				t_msh;
 
 //Prototypes
