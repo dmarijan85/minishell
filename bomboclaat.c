@@ -6,11 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/14 12:51:32 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:48:27 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "minishell.h"
 
 void	exec(char *cmd, char **env)
 {
@@ -23,7 +23,7 @@ void	exec(char *cmd, char **env)
 	{
 		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putendl_fd(s_cmd[0], 2);
-		ft_free_tab(s_cmd);
+		array_free(s_cmd);
 		exit(0);
 	}
 }
@@ -96,19 +96,22 @@ void	lebomboclaat(t_msh *mini)
 	int		fd_out;
 	t_node	*temp;
 
-	temp = mini->lista;
-	i = mini->
-	while ()
+	temp = mini->list;
+	i = mini->pipelen;
+	while (i >= 0)
 	{
-		if (!temp->next)
-		{
+		fd_in = fl_redir(temp->redir, READ);
+		dup2(fd_in, 0);
+		fd_out = fl_redir(temp->redir, TRUNC);
+		dup2(fd_out, 1);
+		if (i > 0)
+			do_pipe(temp->str, mini->env);
+		else if (i == 0)
 			do_last(temp->str, mini->env);
-		}
-		else if (temp->next->token == PIPE)
-		{
-			dopipe(temp->str, mini->env);
-			dopipe(temp->next->next->str, mini->env);
-		}
+		wait(NULL);
 		temp = temp->next;
+		i--;
 	}
+	close(fd_in);
+	close(fd_out);
 }

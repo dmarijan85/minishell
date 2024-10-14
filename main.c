@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:00:16 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:07:12 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void minishell_loop(t_msh *mini)
 	mini->args = readline("testing...> ");
 	lexer(mini->args, &mini->list);
 	parser(mini);
+	lebomboclaat(mini);
 //	if (*mini->list[0] == '\0')
 //		return (reset_msh(mini));
 //	add_history(args); (mirar man?)

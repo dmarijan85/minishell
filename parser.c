@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:12:18 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/13 15:09:50 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:07:26 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,19 @@ void	parser(t_msh *msh)
 			else
 				delnext = true;
 			delete_node(&temp);
+		}
+		else if (temp->token == PIPE)
+		{
+			if (!temp->prev)
+				return ;//error_exit(parseerror pipe);
+			if (!temp->next)
+				return ;//miniheredoc, con delim '\n'
+			msh->pipelen += 1;
+			delete_node(&temp);
+		}
+		else if (temp->token == LLESS)
+		{
+			return ; //miniheredoc con limitador de temp->next->str
 		}
 		temp = backup;
 	}

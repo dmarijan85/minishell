@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/10/13 17:54:04 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/10/14 14:09:12 by mclaver-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC =	lexer.c			\
 		cleaners.c		\
 		utils_bonus.c	\
 		parser.c		\
-		#bomboclaat.c	\
+		bomboclaat.c	\
 		#main_bonus.c	\
 
 OBJ = $(SRC:.c=.o)

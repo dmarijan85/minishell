@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/14 12:51:26 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:14:54 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,13 @@ void	delete_node(t_node **node);
 
 //parser
 void	parser(t_msh *msh);
+
+//utils
+int		fl_redir(t_redirs *current, t_openmodes mode);
+
+void	do_last(char *cmd, char **env);
+
+//bomboclaat
+void	lebomboclaat(t_msh *mini);
 
 #endif

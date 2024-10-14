@@ -6,19 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/13 15:10:40 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:17:33 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//un poco innecesario
-void	exit_handler(int n_exit)
-{
-	if (n_exit == 1)
-		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
-	exit(0);
-}
 
 int	open_file(char *file, t_openmodes mode)
 {
@@ -33,20 +25,6 @@ int	open_file(char *file, t_openmodes mode)
 	if (ret == -1)
 		exit(0); //error exit con custom message
 	return (ret);
-}
-
-//Innecesario también
-void	ft_free_tab(char **tab)
-{
-	size_t	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }
 
 char	*my_getenv(char *name, char **env)
@@ -91,12 +69,23 @@ char	*get_path(char *cmd, char **env)
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			ft_free_tab(s_cmd);
+			array_free(s_cmd);
 			return (exec);
 		}
 		free(exec);
 	}
-	ft_free_tab(allpath);
-	ft_free_tab(s_cmd);
+	array_free(allpath);
+	array_free(s_cmd);
 	return (cmd);
+}
+
+void	do_last(char *cmd, char **env)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		exit(0);
+	if (!pid)
+		exec(cmd, env);
 }

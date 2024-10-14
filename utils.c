@@ -6,11 +6,39 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:12:50 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:13:31 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	fl_redir(t_redirs *current, t_openmodes mode)
+{
+	t_redirs	*tmp;
+
+	tmp = current;
+	if (!tmp && (mode == APPEND || mode == TRUNC))
+		return (1);
+	if (!tmp && (mode == READ))
+		return (0);
+	if (mode == APPEND || mode == TRUNC)
+	{
+		while (tmp && tmp->fd_type == READ)
+			tmp = tmp->next;
+		if (tmp && tmp->fd_type != READ)
+			return (tmp->fd);
+		return (1);
+	}
+	else
+	{
+		while (tmp && tmp->fd_type != READ)
+			tmp = tmp->next;
+		if (tmp && tmp->fd_type == READ)
+			return (tmp->fd);
+		return (0);
+	}
+	return (-1);
+}
 
 //update the nexts and prevs, and then harakiri the node
 void	delete_node(t_node **node)
@@ -60,7 +88,7 @@ void	remove_redir(t_node *node)
 	node->str = ft_strdup(buf[0]);
 	i = 1;
 	while (i <= count_words(node->next->str))
-	{`
+	{
 		if (!node->prev)
 		{
 			tmp = node->next->str;
@@ -80,15 +108,4 @@ void	remove_redir(t_node *node)
 	array_free(buf);
 }
 
-void	checkout_pipelen(t_msh *msh)
-{
-	t_node	*tmp;
 
-	tmp = msh->lst;
-	while (tmp)
-	{
-		if (tmp->token == PIPE)
-			msh->pipelen += 1;
-		lst = lst->next;
-	}
-}
