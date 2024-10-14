@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/13 18:13:56 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:51:29 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void minishell_loop(t_msh *mini)
 //		return (reset_msh(mini));
 //	add_history(args); (mirar man?)
 //	parser(tools); logica de lista, crear argumento para execv, deal wildcards
-//	prepare_executor(tools); llamar el bomboclaater
+//	prepare_executor(mini); llamar el bomboclaater
 //	reset_msh(mini);
 }	
 

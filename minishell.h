@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/13 17:54:46 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:51:26 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct	s_msh
 	char	*args;
 	bool	reset;
 	int		herectr;
+	int		listlen;
 }				t_msh;
 
 //Prototypes

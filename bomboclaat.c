@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/03 15:19:46 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:51:32 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,42 +89,26 @@ void	do_pipe(char *cmd, char **env)
 	}
 }
 
-int	lebomboclaat(int ac, /* structcaca */)
+void	lebomboclaat(t_msh *mini)
 {
 	int		i;
 	int		fd_in;
 	int		fd_out;
+	t_node	*temp;
 
-	temp = structcaca->lista;
-	if (temp)
+	temp = mini->lista;
+	i = mini->
+	while ()
 	{
-		while (temp)
+		if (!temp->next)
 		{
-			
-
-			if (temp->token == PIPE)
-			{
-				dopipe(temp->prev->str, structcaca->env);
-				dopipe(temp->next->str, structcaca->env);
-			}
-			temp = temp->next;
+			do_last(temp->str, mini->env);
 		}
+		else if (temp->next->token == PIPE)
+		{
+			dopipe(temp->str, mini->env);
+			dopipe(temp->next->next->str, mini->env);
+		}
+		temp = temp->next;
 	}
-	if (ft_strncmp(av[1], "here_doc", ft_strlen(av[1])) == 0)
-	{
-		i = 3;
-		fd_out = open_file(av[ac - 1], 2);
-		here_doc(av);
-	}
-	else
-	{
-		i = 2;
-		fd_in = open_file(av[1], 0);
-		fd_out = open_file(av[ac - 1], 1);
-		dup2(fd_in, 0);
-	}
-	while (i < ac - 2)
-		do_pipe(av[i++], env);
-	dup2(fd_out, 1);
-	exec(av[ac - 2], env);
 }
