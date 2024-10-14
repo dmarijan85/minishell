@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/14 12:51:29 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:00:16 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int ac, char **av, char **envp)
 	mini.reset = false;
 	mini.herectr = 0;
 	mini.args = NULL;
+	mini.pipelen = 0;
 
 	printf("Benvingut a la xiquipetxina!\n");
 	minishell_loop(&mini);

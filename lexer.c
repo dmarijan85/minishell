@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/13 18:14:29 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:11:33 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ void lexer(char *str, t_node **beg)
 	stt = 0;
 	end = 0;
 	opquote = false;
-	printf("Whole arg string: %s\n", str);
 	while (str && end < (int)ft_strlen(str))
 	{
 		if (str[end] == '"' && opquote == true)

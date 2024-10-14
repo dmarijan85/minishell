@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/13 14:49:53 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:12:50 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	remove_redir(t_node *node)
 	node->str = ft_strdup(buf[0]);
 	i = 1;
 	while (i <= count_words(node->next->str))
-	{
+	{`
 		if (!node->prev)
 		{
 			tmp = node->next->str;
@@ -78,4 +78,17 @@ void	remove_redir(t_node *node)
 		i++;
 	}
 	array_free(buf);
+}
+
+void	checkout_pipelen(t_msh *msh)
+{
+	t_node	*tmp;
+
+	tmp = msh->lst;
+	while (tmp)
+	{
+		if (tmp->token == PIPE)
+			msh->pipelen += 1;
+		lst = lst->next;
+	}
 }
