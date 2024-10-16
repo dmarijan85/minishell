@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/14 14:14:54 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:14:37 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	exec(char *cmd, char **env);
 void	ft_free_tab(char **tab);
-void	lexer(char *str, t_node **beg);
+void	shrimp_lexer(char *str, t_node **beg);
 void	append_redirs(t_redirs **stack, int fd, t_openmodes type);
 
 //cleaners

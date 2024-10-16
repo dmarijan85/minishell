@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:48:27 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:37:13 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ void	do_pipe(char *cmd, char **env)
 	{
 		close(p_fd[0]);
 		dup2(p_fd[1], 1);
+		close(p_fd[1]);
 		exec(cmd, env);
 	}
 	else
 	{
 		close(p_fd[1]);
 		dup2(p_fd[0], 0);
+		close(p_fd[0]);
 	}
 }
 
@@ -94,24 +96,38 @@ void	lebomboclaat(t_msh *mini)
 	int		i;
 	int		fd_in;
 	int		fd_out;
+	int		tmp1;
+	int		tmp0;
 	t_node	*temp;
 
 	temp = mini->list;
 	i = mini->pipelen;
+	tmp0 = dup(0);
+	tmp1 = dup(1);
 	while (i >= 0)
 	{
 		fd_in = fl_redir(temp->redir, READ);
 		dup2(fd_in, 0);
+		if (fd_in != 0)
+			close(fd_in);
 		fd_out = fl_redir(temp->redir, TRUNC);
 		dup2(fd_out, 1);
+		if (fd_out != 1)
+			close(fd_out);
 		if (i > 0)
 			do_pipe(temp->str, mini->env);
 		else if (i == 0)
 			do_last(temp->str, mini->env);
-		wait(NULL);
 		temp = temp->next;
 		i--;
 	}
+	dup2(tmp0, 0);
+	close(tmp0);
+	dup2(tmp1, 1);
+	close(tmp1);
+	i = mini->pipelen;
+	while (i-- >= 0)
+		wait(NULL);
 	close(fd_in);
 	close(fd_out);
 }
