@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/16 14:55:30 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:27:33 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec(char *cmd, char **env)
 	path = get_path(s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
 	{
-		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putstr_fd("msh: command not found: ", 2);
 		ft_putendl_fd(s_cmd[0], 2);
 		array_free(s_cmd);
 		exit(0);

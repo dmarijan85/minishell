@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/16 15:19:12 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:50:21 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	exec(char *cmd, char **env);
 void	ft_free_tab(char **tab);
-void	shrimp_lexer(char *str, t_node **beg);
+void	shrimp_lexer(t_msh *mini);
 void	append_redirs(t_redirs **stack, int fd, t_openmodes type);
 
 //cleaners
@@ -118,5 +118,6 @@ void	lebomboclaat(t_msh *mini);
 
 //donepezilo
 void	reset_msh(t_msh *mini);
+void	errexit(t_msh *mini, char *str);
 
 #endif

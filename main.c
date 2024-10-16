@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/16 15:17:20 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:28:12 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ void minishell_loop(t_msh *mini)
 	int	i = 0;
 	while (i < 3)
 	{
-		mini->args = readline("testing...> ");
-		shrimp_lexer(mini->args, &mini->list);
+		mini->args = readline("msh> ");
+		shrimp_lexer(mini);
 		parser(mini);
-		lebomboclaat(mini);
+		if (mini->list)
+			lebomboclaat(mini);
 //		add_history(args); (mirar man?)
 		reset_msh(mini);
 		i++;
@@ -40,19 +41,15 @@ int	main(int ac, char **av, char **envp)
 {
 	t_msh	mini;
 
-	av = av;
-	if (ac != 1)
-	{
-		printf("This program does not accept arguments!! >:3\n");
-		exit(0);
-	}
 	mini.env = envp;
 	mini.list = NULL;
 	mini.reset = false;
 	mini.herectr = 0;
 	mini.args = NULL;
 	mini.pipelen = 0;
-
+	av = av;
+	if (ac != 1)
+		errexit(&mini, "This program does not accept arguments!! >:3\n");
 	printf("Benvingut a la xiquipetxina!\n");
 	minishell_loop(&mini);
 	//readline tiene 204.000 bytes de leaks, ignoralos :sob:
