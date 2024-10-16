@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/15 13:37:13 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:55:30 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,13 @@ void	do_pipe(char *cmd, char **env)
 	}
 }
 
-void	lebomboclaat(t_msh *mini)
+void	leminibomber(t_node *temp, t_msh *mini)
 {
-	int		i;
-	int		fd_in;
-	int		fd_out;
-	int		tmp1;
-	int		tmp0;
-	t_node	*temp;
+	int	i;
+	int	fd_in;
+	int	fd_out;
 
-	temp = mini->list;
 	i = mini->pipelen;
-	tmp0 = dup(0);
-	tmp1 = dup(1);
 	while (i >= 0)
 	{
 		fd_in = fl_redir(temp->redir, READ);
@@ -121,13 +115,24 @@ void	lebomboclaat(t_msh *mini)
 		temp = temp->next;
 		i--;
 	}
+	close(fd_in);
+	close(fd_out);
+}
+
+void	lebomboclaat(t_msh *mini)
+{
+	int		tmp1;
+	int		tmp0;
+	t_node	*temp;
+
+	temp = mini->list;
+	tmp0 = dup(0);
+	tmp1 = dup(1);
+	leminibomber(temp, mini);
 	dup2(tmp0, 0);
 	close(tmp0);
 	dup2(tmp1, 1);
 	close(tmp1);
-	i = mini->pipelen;
-	while (i-- >= 0)
+	while ((mini->pipelen)-- >= 0)
 		wait(NULL);
-	close(fd_in);
-	close(fd_out);
 }

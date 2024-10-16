@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/15 13:14:37 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:19:12 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	stack_free_nodes(t_node **stack);
 void	stack_free_redirs(t_redirs **stack);
 void	node_free(t_node **stack);
 void	array_free(char **str);
-void	remove_redir(t_node *node);
+void	el_fregading(t_msh *mini);
 
 //wordsplit
 int		count_words(const char *str);
@@ -109,10 +109,14 @@ void	parser(t_msh *msh);
 
 //utils
 int		fl_redir(t_redirs *current, t_openmodes mode);
+void	remove_redir(t_node *node);
 
 void	do_last(char *cmd, char **env);
 
 //bomboclaat
 void	lebomboclaat(t_msh *mini);
+
+//donepezilo
+void	reset_msh(t_msh *mini);
 
 #endif

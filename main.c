@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/15 13:14:51 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:17:20 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ t_node	*find_first_node(t_node *current)
 
 void minishell_loop(t_msh *mini)
 {
-	mini->args = readline("testing...> ");
-	shrimp_lexer(mini->args, &mini->list);
-	parser(mini);
-	lebomboclaat(mini);
-//	if (*mini->list[0] == '\0')
-//		return (reset_msh(mini));
-//	add_history(args); (mirar man?)
-//	parser(tools); logica de lista, crear argumento para execv, deal wildcards
-//	prepare_executor(mini); llamar el bomboclaater
-//	reset_msh(mini);
+	int	i = 0;
+	while (i < 3)
+	{
+		mini->args = readline("testing...> ");
+		shrimp_lexer(mini->args, &mini->list);
+		parser(mini);
+		lebomboclaat(mini);
+//		add_history(args); (mirar man?)
+		reset_msh(mini);
+		i++;
+	}
 }	
 
 int	main(int ac, char **av, char **envp)
@@ -80,6 +81,5 @@ int	main(int ac, char **av, char **envp)
 			i++;
 		}
 	}
-	stack_free_nodes(&mini.list);
-	free(mini.args);
+	reset_msh(&mini);
 }

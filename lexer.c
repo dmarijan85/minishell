@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/14 13:11:33 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:27:00 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,11 @@ void shrimp_lexer(char *str, t_node **beg)
 	while (str && end < (int)ft_strlen(str))
 	{
 		if (str[end] == '"' && opquote == true)
+		{
 			opquote = false;
+			if (!str[end + 1])
+				stt = expand_list(ft_substr(str, stt, end - stt + 1), 0, beg, &end);
+		}
 		else if (str[end] == '"')
 			opquote = true;
 		else if (str[end] == '|' && opquote == false)
