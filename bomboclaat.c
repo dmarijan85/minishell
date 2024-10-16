@@ -6,17 +6,19 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/16 18:27:33 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:53:42 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec(char *cmd, char **env)
+void	exec(t_msh *mini, char *cmd, char **env)
 {
 	char	**s_cmd;
 	char	*path;
 
+	if (cmd && !*cmd)
+		errexit(mini, "msh: command not found: ''\n");
 	s_cmd = ft_split(cmd, ' ');
 	path = get_path(s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
@@ -66,22 +68,22 @@ void	here_doc(char **av)
 	}
 }
 
-void	do_pipe(char *cmd, char **env)
+void	do_pipe(t_msh *mini, char *cmd, char **env)
 {
 	pid_t	pid;
 	int		p_fd[2];
 
 	if (pipe(p_fd) == -1)
-		exit(0);
+		exit(0);//TODO
 	pid = fork();
 	if (pid == -1)
-		exit(0);
+		exit(0);//TODO
 	if (!pid)
 	{
 		close(p_fd[0]);
 		dup2(p_fd[1], 1);
 		close(p_fd[1]);
-		exec(cmd, env);
+		exec(mini, cmd, env);
 	}
 	else
 	{
@@ -109,9 +111,9 @@ void	leminibomber(t_node *temp, t_msh *mini)
 		if (fd_out != 1)
 			close(fd_out);
 		if (i > 0)
-			do_pipe(temp->str, mini->env);
+			do_pipe(mini, temp->str, mini->env);
 		else if (i == 0)
-			do_last(temp->str, mini->env);
+			do_last(mini, temp->str, mini->env);
 		temp = temp->next;
 		i--;
 	}

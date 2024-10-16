@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:17:33 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:54:02 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*get_path(char *cmd, char **env)
 	return (cmd);
 }
 
-void	do_last(char *cmd, char **env)
+void	do_last(t_msh *mini, char *cmd, char **env)
 {
 	pid_t	pid;
 
@@ -87,5 +87,5 @@ void	do_last(char *cmd, char **env)
 	if (pid == -1)
 		exit(0);
 	if (!pid)
-		exec(cmd, env);
+		exec(mini, cmd, env);
 }

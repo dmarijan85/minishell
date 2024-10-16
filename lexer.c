@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/16 18:25:35 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:38:02 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,28 @@ bool isdouble(char *str, int lessorgreat)
 	}
 	return (false);
 }
-/*
-char	*removequotes(char *str)
+
+void	removequotes(char **str)
 {
 	char	*tmp;
 
-	if (str[1] == '\"' || str[1] == '\'')
-		return (NULL);
-	tmp = ft_substr(str + 1, 0, ft_strlen(str) - 1);
-	free(str);
-	return (tmp);
+	tmp = NULL;
+	if ((*str)[1] == '\"' || (*str)[1] == '\'')
+		**str = '\0';
+	else
+	{
+		tmp = ft_substr(*str, 1, ft_strlen(*str) - 1);
+		free(*str);
+		*str = tmp;
+	}
 }
-*/
+
 int expand_list(char *str, t_tokens token, t_node **first, int *end)
 {
 	if (str && *str)
 	{
-		//if (*str == '\'' || *str == '\"')
-			//str = removequotes(str);
+		if (*str == '\'' || *str == '\"')
+			removequotes(&str);
 		append_node(first, str, 0);
 	}
 	if (token != 0)
@@ -186,7 +190,7 @@ void shrimp_lexer(t_msh *mini)
 			stt = expand_list(ft_substr(str, stt, end - stt), 0, beg, &end);
 		}
 		else if (str[end] == '|')
-			stt = expand_list(ft_substr(str, stt + 1, end - stt - 2), PIPE, beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end - stt), PIPE, beg, &end) + 1;
 		else if (str[end] == '<' && !isdouble(str + end, 0))
 			stt = expand_list(ft_substr(str, stt, end - stt), LESS, beg, &end) + 1;
 		else if (str[end] == '>' && !isdouble(str + end, 1))

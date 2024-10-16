@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/16 17:50:21 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:55:03 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	exit_handler(int n_exit);
 int		open_file(char *file, t_openmodes mode);
 char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
-void	exec(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 void	shrimp_lexer(t_msh *mini);
 void	append_redirs(t_redirs **stack, int fd, t_openmodes type);
@@ -111,10 +110,13 @@ void	parser(t_msh *msh);
 int		fl_redir(t_redirs *current, t_openmodes mode);
 void	remove_redir(t_node *node);
 
-void	do_last(char *cmd, char **env);
+//utils bonus
+void	do_last(t_msh *mini, char *cmd, char **env);
+
 
 //bomboclaat
 void	lebomboclaat(t_msh *mini);
+void	exec(t_msh *mini, char *cmd, char **env);
 
 //donepezilo
 void	reset_msh(t_msh *mini);

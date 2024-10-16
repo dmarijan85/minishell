@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:59:40 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/16 17:52:45 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:55:31 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	reset_msh(t_msh *mini)
 
 void	errexit(t_msh *mini, char *err)
 {
-	ft_printf("msh: %s", err);
+	ft_printstderr("msh: %s", err);
 	reset_msh(mini);
 	exit(-1);
 }
