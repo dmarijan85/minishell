@@ -87,7 +87,7 @@ char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 void	shrimp_lexer(t_msh *mini);
-void	append_redirs(t_redirs **stack, int fd, t_openmodes type);
+void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini);
 
 //cleaners
 void	stack_free_nodes(t_node **stack);
