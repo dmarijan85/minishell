@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/16 18:55:03 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:39:35 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct	s_redirs
 	t_openmodes		fd_type;
 	int				fd;
 	struct s_redirs	*next;
+	struct s_msh	*mini;
 }				t_redirs;
 
 typedef struct s_node

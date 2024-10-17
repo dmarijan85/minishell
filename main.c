@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/16 18:28:12 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:57:19 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,20 @@ t_node	*find_first_node(t_node *current)
 
 void minishell_loop(t_msh *mini)
 {
-	int	i = 0;
-	while (i < 3)
-	{
-		mini->args = readline("msh> ");
-		shrimp_lexer(mini);
-		parser(mini);
-		if (mini->list)
-			lebomboclaat(mini);
-//		add_history(args); (mirar man?)
-		reset_msh(mini);
-//		minishell_loop(mini);
-		i++;
-	}
+	mini->args = readline("msh> ");
+	shrimp_lexer(mini);
+	parser(mini);
+	if (mini->list)
+	lebomboclaat(mini);
+//	add_history(args); (mirar man?)
+//	reset_msh(mini);
+//	minishell_loop(mini);
 }	
 
 int	main(int ac, char **av, char **envp)
 {
 	t_msh	mini;
+	int		j = 0;
 
 	mini.env = envp;
 	mini.list = NULL;
@@ -51,7 +47,11 @@ int	main(int ac, char **av, char **envp)
 	av = av;
 	if (ac != 1)
 		errexit(&mini, "This program does not accept arguments!! >:3\n");
+	do_last(&mini, "clear", mini.env);//limpia la pantalla al ejecutar y queda tope limpio :3
+	wait(NULL);
 	printf("Benvingut a la xiquipetxina!\n");
+	while (j < 3)
+	{
 	minishell_loop(&mini);
 	//readline tiene 204.000 bytes de leaks, ignoralos :sob:
 	t_node		*temp;
@@ -80,4 +80,6 @@ int	main(int ac, char **av, char **envp)
 		}
 	}
 	reset_msh(&mini);
+	j++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/16 18:38:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:42:42 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini)
 	node->next = NULL;
 	node->fd = fd;
 	node->fd_type = type;
+	node->mini = mini;
 	if (!*stack)
 		*stack = node;
 	else
@@ -66,6 +67,7 @@ void	append_node(t_node **stack, char *str, t_tokens token, t_msh *mini)
 	node->redir = NULL;
 	node->str = str;
 	node->token = token;
+	node->mini = mini;
 	if (!*stack)
 	{
 		*stack = node;
@@ -114,16 +116,17 @@ void	removequotes(char **str)
 	}
 }
 
-int expand_list(char *str, t_tokens token, t_node **first, int *end)
+int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 {
+	
 	if (str && *str)
 	{
 		if (*str == '\'' || *str == '\"')
 			removequotes(&str);
-		append_node(first, str, 0);
+		append_node(&mini->list, str, 0, mini);
 	}
 	if (token != 0)
-		append_node(first, NULL, token);
+		append_node(&mini->list, NULL, token, mini);
 	if (token == LLESS || token == GGREAT)
 		*end = *end + 1;
 	return (*end);
@@ -173,11 +176,9 @@ void shrimp_lexer(t_msh *mini)
 {
 	int		stt; //start
 	int		end;
-	t_node	**beg;
 	char	*str;
 
 	str = mini->args;
-	beg = &mini->list;
 	stt = 0;
 	end = 0;
 	while (str && end < (int)ft_strlen(str))
@@ -187,20 +188,20 @@ void shrimp_lexer(t_msh *mini)
 			end = quote_lexer(mini, end);
 			if (!end)
 				errexit(mini, "You can't leave any unopened quotes!\n");
-			stt = expand_list(ft_substr(str, stt, end - stt), 0, beg, &end);
+			stt = expand_list(ft_substr(str, stt, end - stt), 0, mini, &end);
 		}
 		else if (str[end] == '|')
-			stt = expand_list(ft_substr(str, stt, end - stt), PIPE, beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end - stt), PIPE, mini, &end) + 1;
 		else if (str[end] == '<' && !isdouble(str + end, 0))
-			stt = expand_list(ft_substr(str, stt, end - stt), LESS, beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end - stt), LESS, mini, &end) + 1;
 		else if (str[end] == '>' && !isdouble(str + end, 1))
-			stt = expand_list(ft_substr(str, stt, end - stt), GREAT, beg, &end) + 1;
+			stt = expand_list(ft_substr(str, stt, end - stt), GREAT, mini, &end) + 1;
 		else if (str[end] == '<' && isdouble(str + end, 0))
-			stt = expand_list(ft_substr(str, stt, end - stt), LLESS, beg, &end) + 2;
+			stt = expand_list(ft_substr(str, stt, end - stt), LLESS, mini, &end) + 2;
 		else if (str[end] == '>' && isdouble(str + end, 1))
-			stt = expand_list(ft_substr(str, stt, end - stt), GGREAT, beg, &end) + 2;
+			stt = expand_list(ft_substr(str, stt, end - stt), GGREAT, mini, &end) + 2;
 		else if (!str[end + 1] && end != 0)
-			stt = expand_list(ft_substr(str, stt, end - stt + 1), 0, beg, &end);
+			stt = expand_list(ft_substr(str, stt, end - stt + 1), 0, mini, &end);
 		end++;
 	}
 }

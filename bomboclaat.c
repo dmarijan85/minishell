@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/16 18:53:42 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:57:48 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec(t_msh *mini, char *cmd, char **env)
 	char	*path;
 
 	if (cmd && !*cmd)
-		errexit(mini, "msh: command not found: ''\n");
+		errexit(mini, "command not found: ''\n");
 	s_cmd = ft_split(cmd, ' ');
 	path = get_path(s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
@@ -26,7 +26,7 @@ void	exec(t_msh *mini, char *cmd, char **env)
 		ft_putstr_fd("msh: command not found: ", 2);
 		ft_putendl_fd(s_cmd[0], 2);
 		array_free(s_cmd);
-		exit(0);
+		errexit(mini, "");
 	}
 }
 
@@ -54,10 +54,10 @@ void	here_doc(char **av)
 	pid_t	pid;
 
 	if (pipe(p_fd) == -1)
-		exit(0);
+		exit(0);//TODO
 	pid = fork();
 	if (pid == -1)
-		exit(0);
+		exit(0);//TODO
 	if (!pid)
 		here_doc_put_in(av, p_fd);
 	else
