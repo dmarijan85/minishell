@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:31:15 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/04/04 14:52:12 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:53:25 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strnstr(const char *str, const char *to_find, size_t n);
 char	*ft_strrchr(const char *s, int c);
+int		int_strrchr(const char *s, int c);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_itoa(int n);

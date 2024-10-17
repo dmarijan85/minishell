@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/17 13:42:42 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:04:58 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini)
 
 	node = malloc(sizeof(t_redirs));
 	if (!node)
-		errexit(mini, "msh: t_redirs malloc failure?!\n");
+		errexit(mini, "t_redirs malloc failure?!\n");
 	node->next = NULL;
 	node->fd = fd;
 	node->fd_type = type;
@@ -62,7 +62,7 @@ void	append_node(t_node **stack, char *str, t_tokens token, t_msh *mini)
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		errexit(mini, "msh: t_node malloc failure?!\n");
+		errexit(mini, "t_node malloc failure?!\n");
 	node->next = NULL;
 	node->redir = NULL;
 	node->str = str;
@@ -104,16 +104,23 @@ bool isdouble(char *str, int lessorgreat)
 void	removequotes(char **str)
 {
 	char	*tmp;
+	char	*freer;
+	int		i;
+	int		j;
 
-	tmp = NULL;
-	if ((*str)[1] == '\"' || (*str)[1] == '\'')
-		**str = '\0';
-	else
-	{
-		tmp = ft_substr(*str, 1, ft_strlen(*str) - 1);
-		free(*str);
-		*str = tmp;
-	}
+	i = 0;
+	j = 0;
+	freer = malloc((ft_strlen(*str) - 1) * sizeof(char));
+	tmp =  *str;
+	while (tmp[i] && tmp[i] != '\"' && tmp[i] != '\'')
+		i++;
+	i++;
+	while (tmp[i] && tmp[i] != '\"' && tmp[i] != '\'')
+		freer[j++] = tmp[i++];
+	freer[j] = '\0';
+	tmp = *str;
+	free(tmp);
+	*str = freer;
 }
 
 int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
@@ -187,7 +194,7 @@ void shrimp_lexer(t_msh *mini)
 		{
 			end = quote_lexer(mini, end);
 			if (!end)
-				errexit(mini, "You can't leave any unopened quotes!\n");
+				errexit(mini, "syntax error: unclosed quotes!\n");
 			stt = expand_list(ft_substr(str, stt, end - stt), 0, mini, &end);
 		}
 		else if (str[end] == '|')

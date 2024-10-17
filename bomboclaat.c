@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/17 13:57:48 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:40:27 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ void	here_doc_put_in(char **av, int *p_fd)
 	}
 }
 
-void	here_doc(char **av)
+void	here_doc(char **av, t_msh *mini)
 {
 	int		p_fd[2];
 	pid_t	pid;
 
 	if (pipe(p_fd) == -1)
-		exit(0);//TODO
+		errexit(mini, "pipe error: illegal fd assignment\n");
 	pid = fork();
 	if (pid == -1)
-		exit(0);//TODO
+		errexit(mini, "fork error: fork returned -1!\n");
 	if (!pid)
 		here_doc_put_in(av, p_fd);
 	else
@@ -74,10 +74,10 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	int		p_fd[2];
 
 	if (pipe(p_fd) == -1)
-		exit(0);//TODO
+		errexit(mini, "pipe error: illegal fd assignment\n");
 	pid = fork();
 	if (pid == -1)
-		exit(0);//TODO
+		errexit(mini, "fork error: fork returned -1!\n");
 	if (!pid)
 	{
 		close(p_fd[0]);

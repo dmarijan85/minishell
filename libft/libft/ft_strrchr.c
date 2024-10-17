@@ -6,11 +6,34 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:19:49 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/01/25 13:28:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:50:14 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+int	int_strrchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	while (i >= 0)
+	{
+		if (s[i] == (char)c)
+		{
+			while (i > 0)
+			{
+				s++;
+				i--;
+			}
+			return (i);
+		}
+		i--;
+	}
+	return (-1);
+}
 
 char	*ft_strrchr(const char *s, int c)
 {
