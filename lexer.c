@@ -32,14 +32,14 @@ t_node	*find_last_node(t_node *current)
 
 //puts new node as first if its the first one in stack (if **stack is empty)
 //OR correctly appends new node as last of the list.
-void	append_redirs(t_redirs **stack, int fd, t_openmodes type)
+void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini)
 {
 	t_redirs	*node;
 	t_redirs	*last_node;
 
 	node = malloc(sizeof(t_redirs));
 	if (!node)
-		return ; //errexit with cleaning funcs
+		errexit(mini, "msh: t_redirs malloc failure?!\n");
 	node->next = NULL;
 	node->fd = fd;
 	node->fd_type = type;
@@ -54,14 +54,14 @@ void	append_redirs(t_redirs **stack, int fd, t_openmodes type)
 
 //puts new node as first if its the first one in stack (if **stack is empty)
 //OR correctly appends new node as last of the list.
-void	append_node(t_node **stack, char *str, t_tokens token)
+void	append_node(t_node **stack, char *str, t_tokens token, t_msh *mini)
 {
 	t_node	*node;
 	t_node	*last_node;
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		return ; //errexit with cleaning funcs
+		errexit(mini, "msh: t_node malloc failure?!\n");
 	node->next = NULL;
 	node->redir = NULL;
 	node->str = str;
