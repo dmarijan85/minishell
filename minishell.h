@@ -21,9 +21,7 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <stdlib.h>
-# include "libft/ft_printf.h"
 # include <unistd.h>
-# include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/types.h>
@@ -66,6 +64,7 @@ typedef struct s_node
 	struct s_node	*next;
 	struct s_node	*prev;
 	struct s_redirs	*redir;
+	struct s_msh	*mini;
 }				t_node;
 
 typedef struct	s_msh
