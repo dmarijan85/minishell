@@ -33,6 +33,7 @@ void minishell_loop(t_msh *mini)
 			lebomboclaat(mini);
 //		add_history(args); (mirar man?)
 		reset_msh(mini);
+//		minishell_loop(mini);
 		i++;
 	}
 }	
