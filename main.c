@@ -23,11 +23,11 @@ t_node	*find_first_node(t_node *current)
 
 void minishell_loop(t_msh *mini)
 {
-	mini->args = readline("msh> ");
+	mini->args = get_next_line(0);
 	shrimp_lexer(mini);
 	parser(mini);
 	if (mini->list)
-	lebomboclaat(mini);
+		lebomboclaat(mini);
 //	add_history(args); (mirar man?)
 //	reset_msh(mini);
 //	minishell_loop(mini);

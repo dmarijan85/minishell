@@ -113,7 +113,7 @@ void	removequotes(char **str)
 	freer = malloc((ft_strlen(*str) - 1) * sizeof(char));
 	tmp =  *str;
 	while (tmp[i] && tmp[i] != '\"' && tmp[i] != '\'')
-		i++;
+		freer[j++] = tmp[i++];
 	i++;
 	while (tmp[i] && tmp[i] != '\"' && tmp[i] != '\'')
 		freer[j++] = tmp[i++];
@@ -123,12 +123,26 @@ void	removequotes(char **str)
 	*str = freer;
 }
 
+int istherequotes(char *str)
+{
+	int	i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 {
 	
 	if (str && *str)
 	{
-		if (*str == '\'' || *str == '\"')
+		if (istherequotes(str))
 			removequotes(&str);
 		append_node(&mini->list, str, 0, mini);
 	}
