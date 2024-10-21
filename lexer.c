@@ -143,7 +143,7 @@ int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 	if (str && *str)
 	{
 		if (istherequotes(str))
-			//removequotes(&str);
+			removequotes(&str);
 		append_node(&mini->list, str, 0, mini);
 	}
 	if (token != 0)
