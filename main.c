@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/17 14:32:41 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:18:06 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_node	*find_first_node(t_node *current)
 
 void minishell_loop(t_msh *mini)
 {
-	mini->args = get_next_line(0);
+	mini->args = readline("msh$ ");
 	shrimp_lexer(mini);
 	parser(mini);
 	if (mini->list)

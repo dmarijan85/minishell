@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/17 15:04:58 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:53:35 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 	if (str && *str)
 	{
 		if (istherequotes(str))
-			removequotes(&str);
+			//removequotes(&str);
 		append_node(&mini->list, str, 0, mini);
 	}
 	if (token != 0)

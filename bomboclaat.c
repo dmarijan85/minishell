@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/17 14:40:27 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:18:02 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	here_doc_put_in(char **av, int *p_fd)
 	close(p_fd[0]);
 	while (1)
 	{
-		ret = get_next_line(0);
+		ret = readline("heredoc> ");
 		if (ft_strncmp(ret, av[2], ft_strlen(av[2])) == 0)
 		{
 			free(ret);

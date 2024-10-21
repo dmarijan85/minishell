@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:53:09 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/10 14:55:47 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:03:37 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	**wordsplit(char const *s)
 	index = -1;
 	while (i <= ft_strlen(s))
 	{
+
 		if ((s[i] != ' ' && s[i] != '\t') && index < 0)
 			index = i;
 		else if (((s[i] == ' ' || s[i] == '\t') || i == ft_strlen(s)) 
