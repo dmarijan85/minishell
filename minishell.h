@@ -82,7 +82,7 @@ typedef struct	s_msh
 
 //TODO:sort this shit pls
 void	exit_handler(int n_exit);
-int		open_file(char *file, t_openmodes mode);
+int		open_file(t_msh *mini, char *file, t_openmodes mode);
 char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	ft_free_tab(char **tab);

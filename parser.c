@@ -68,9 +68,9 @@ void	parser(t_msh *msh)
 			mode = setmode(temp);
 			remove_redir(temp);
 			if (temp->prev && temp->prev->token == 0)
-				append_redirs((&temp->prev->redir), open_file(temp->str, mode), mode, msh);
+				append_redirs((&temp->prev->redir), open_file(msh, temp->str, mode), mode, msh);
 			else if (temp->next && temp->next->token == 0)
-				append_redirs((&temp->next->redir), open_file(temp->str, mode), mode, msh);
+				append_redirs((&temp->next->redir), open_file(msh, temp->str, mode), mode, msh);
 			if (!temp->prev)
 				msh->list = temp->next;
 			else

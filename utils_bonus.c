@@ -12,9 +12,10 @@
 
 #include "minishell.h"
 
-int	open_file(char *file, t_openmodes mode)
+int	open_file(t_msh *mini, char *file, t_openmodes mode)
 {
 	int			ret;
+	char			*tmp;
 
 	if (mode == READ)
 		ret = open(file, O_RDONLY, 0777);
@@ -23,7 +24,12 @@ int	open_file(char *file, t_openmodes mode)
 	if (mode == APPEND)
 		ret = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (ret == -1)
-		exit(0); //error exit con custom message
+	{
+		tmp = ft_strjoin("msh: ", file);
+		perror(tmp);
+		free(tmp);
+		errexit(mini, "");
+	}
 	return (ret);
 }
 
