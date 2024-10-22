@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/21 12:18:06 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:22:42 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ void minishell_loop(t_msh *mini)
 	parser(mini);
 	if (mini->list)
 		lebomboclaat(mini);
+	reset_msh(mini);
+	exit(0);
 //	add_history(args); (mirar man?)
-//	reset_msh(mini);
 //	minishell_loop(mini);
 }	
 
 int	main(int ac, char **av, char **envp)
 {
 	t_msh	mini;
+	int		pid;
 	int		j = 0;
 
 	mini.env = envp;
@@ -52,7 +54,15 @@ int	main(int ac, char **av, char **envp)
 	printf("Benvingut a la xiquipetxina!\n");
 	while (j < 3)
 	{
-	minishell_loop(&mini);
+		pid = fork();	
+		if (pid == -1)
+			errexit(&mini, "Fork error???\n");
+		else if (!pid)
+			minishell_loop(&mini);
+		else if (pid)
+			wait(NULL);
+		j++;
+	}
 	//readline tiene 204.000 bytes de leaks, ignoralos :sob:
 	t_node		*temp;
 	t_redirs	*redir;
@@ -80,6 +90,4 @@ int	main(int ac, char **av, char **envp)
 		}
 	}
 	reset_msh(&mini);
-	j++;
-	}
 }

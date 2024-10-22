@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/17 13:39:35 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:01:16 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	parser(t_msh *msh);
 //utils
 int		fl_redir(t_redirs *current, t_openmodes mode);
 void	remove_redir(t_node *node);
+void	removequotes(char **str);
 
 //utils bonus
 void	do_last(t_msh *mini, char *cmd, char **env);

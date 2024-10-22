@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/16 18:54:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:59:56 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 int	open_file(t_msh *mini, char *file, t_openmodes mode)
 {
 	int			ret;
-	char			*tmp;
+	char		*tmp;
 
+	removequotes(&file);
 	if (mode == READ)
 		ret = open(file, O_RDONLY, 0777);
 	if (mode == TRUNC)

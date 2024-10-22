@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/21 12:18:02 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:01:51 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec(t_msh *mini, char *cmd, char **env)
 
 	if (cmd && !*cmd)
 		errexit(mini, "command not found: ''\n");
-	s_cmd = ft_split(cmd, ' ');
+	s_cmd = wordsplit(cmd);
 	path = get_path(s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
 	{

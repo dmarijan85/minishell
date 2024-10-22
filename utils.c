@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:13:31 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:50:32 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,30 @@ int	count_words(const char *str)
 {
 	int	i;
 	int	trigger;
+	int	quote;
 
 	i = 0;
 	trigger = 0;
+	quote = 0;
 	while (*str)
 	{
-		if ((*str != ' ' && *str != '\t') && trigger == 0)
+		if ((*str == '\'' || *str == '\"') && !quote)
+		{
+			quote = *str;
+			trigger = 1;
+			i++;
+		}
+		else if (*str == quote)
+		{
+			quote = 0;
+			trigger = 0;
+		}
+		else if ((*str != ' ' && *str != '\t') && !trigger)
 		{
 			trigger = 1;
 			i++;
 		}
-		else if (*str == ' ' || *str == '\t')
+		else if ((*str == ' ' || *str == '\t') && !quote)
 			trigger = 0;
 		str++;
 	}

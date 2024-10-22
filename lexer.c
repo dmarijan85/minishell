@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/21 12:53:35 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:35:29 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ bool isdouble(char *str, int lessorgreat)
 	return (false);
 }
 
+/*
 void	removequotes(char **str)
 {
 	char	*tmp;
@@ -135,7 +136,7 @@ int istherequotes(char *str)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 {
