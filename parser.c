@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:12:18 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/17 14:08:48 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:32:14 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	parser(t_msh *msh)
 			&& temp->token != LLESS)
 		{
 			if (!temp->next)
-				errexit(msh, "syntax error near unexpected token `newline'\n");
+				errexit(msh, "syntax error near unexpected token\n");
 			mode = setmode(temp);
 			remove_redir(temp);
 			if (temp->prev && temp->prev->token == 0)
@@ -87,10 +87,20 @@ void	parser(t_msh *msh)
 			delete_node(&temp);
 		}
 		else if (temp->token == LLESS)
-		{
+		{//TODO: maybe join it with the first if check
 			if (!temp->next)
-				errexit(msh, "syntax error near unexpected token `newline'\n");
-			return ; //miniheredoc con limitador de temp->next->str
+				errexit(msh, "syntax error near unexpected token\n");
+			remove_redir(temp);
+			here_doc(msh, temp);
+			if (temp->prev && temp->prev->token == 0)
+				append_redirs((&temp->prev->redir), open_file(msh, ".heredoc", READ), READ, msh);
+			else if (temp->next && temp->next->token == 0)
+				append_redirs((&temp->next->redir), open_file(msh, ".heredoc", READ), READ, msh);
+			if (!temp->prev)
+				msh->list = temp->next;
+			else
+				delnext = true;
+			delete_node(&temp);
 		}
 		temp = backup;
 	}

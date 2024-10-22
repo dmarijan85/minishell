@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/22 12:01:16 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:26:45 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	do_last(t_msh *mini, char *cmd, char **env);
 //bomboclaat
 void	lebomboclaat(t_msh *mini);
 void	exec(t_msh *mini, char *cmd, char **env);
+void	here_doc(t_msh *mini, t_node *node);
 
 //donepezilo
 void	reset_msh(t_msh *mini);

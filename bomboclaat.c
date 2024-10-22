@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/22 12:01:51 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:30:28 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,42 +30,35 @@ void	exec(t_msh *mini, char *cmd, char **env)
 	}
 }
 
-void	here_doc_put_in(char **av, int *p_fd)
+void	here_doc_put_in(char *delim, int fd)
 {
 	char	*ret;
 
-	close(p_fd[0]);
 	while (1)
 	{
 		ret = readline("heredoc> ");
-		if (ft_strncmp(ret, av[2], ft_strlen(av[2])) == 0)
+		if (ft_strncmp(ret, delim, ft_strlen(delim) + 1) == 0)
 		{
 			free(ret);
+			close(fd);
 			exit(0);
 		}
-		ft_putstr_fd(ret, p_fd[1]);
+		ft_putstr_fd(ret, fd);
+		ft_putstr_fd("\n", fd);
 		free(ret);
 	}
 }
 
-void	here_doc(char **av, t_msh *mini)
+void	here_doc(t_msh *mini, t_node *node)
 {
-	int		p_fd[2];
 	pid_t	pid;
 
-	if (pipe(p_fd) == -1)
-		errexit(mini, "pipe error: illegal fd assignment\n");
 	pid = fork();
 	if (pid == -1)
 		errexit(mini, "fork error: fork returned -1!\n");
 	if (!pid)
-		here_doc_put_in(av, p_fd);
-	else
-	{
-		close(p_fd[1]);
-		dup2(p_fd[0], 0);
-		wait(NULL);
-	}
+		here_doc_put_in(node->str, open_file(mini, ".heredoc", TRUNC));
+	wait(NULL);
 }
 
 void	do_pipe(t_msh *mini, char *cmd, char **env)
