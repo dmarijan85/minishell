@@ -6,37 +6,51 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/22 11:50:32 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:38:02 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_redirs *fl_findlast(t_redirs *tmp, t_openmodes mode)
+{
+	t_redirs	*res;
+	
+	res = NULL;
+	if (mode == READ)
+	{
+		while (tmp)
+		{
+			if (tmp && tmp->fd_type == READ)
+				res = tmp;
+			tmp = tmp->next;
+		}
+		return (res);
+	}
+	else
+	{
+		while (tmp)
+		{
+			if (tmp && (tmp->fd_type == TRUNC || tmp->fd_type == APPEND))
+				res = tmp;
+			tmp = tmp->next;
+		}
+		return (res);
+	}
+	return (NULL);
+}
+
 int	fl_redir(t_redirs *current, t_openmodes mode)
 {
 	t_redirs	*tmp;
 
-	tmp = current;
+	tmp = fl_findlast(current, mode);
 	if (!tmp && (mode == APPEND || mode == TRUNC))
 		return (1);
 	if (!tmp && (mode == READ))
 		return (0);
-	if (mode == APPEND || mode == TRUNC)
-	{
-		while (tmp && tmp->fd_type == READ)
-			tmp = tmp->next;
-		if (tmp && tmp->fd_type != READ)
-			return (tmp->fd);
-		return (1);
-	}
 	else
-	{
-		while (tmp && tmp->fd_type != READ)
-			tmp = tmp->next;
-		if (tmp && tmp->fd_type == READ)
-			return (tmp->fd);
-		return (0);
-	}
+		return (tmp->fd);
 	return (-1);
 }
 
@@ -86,18 +100,15 @@ int	count_words(const char *str)
 }
 
 //Receives the Token node and moves the string that comes after around: the first word is
-void	remove_redir(t_node *node)
+void	remove_redir(t_msh *mini, t_node *node)
 {
 	char	**buf;
 	char	*tmp;
 	int		i;
 	
-	//if (!node->next)
-		//error_exit("parse error");
 	buf = wordsplit(node->next->str);
-	//if (!buf || !buf[0])
-		//error_exit("split error"); TODO
-	//Copy first word in token
+	if (!buf || !buf[0])
+		errexit(mini, "Remove Redir Error?!");
 	node->str = ft_strdup(buf[0]);
 	i = 1;
 	while (i <= count_words(node->next->str))

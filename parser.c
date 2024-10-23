@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:12:18 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/22 16:32:14 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:57:48 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ void	parser(t_msh *msh)
 			if (!temp->next)
 				errexit(msh, "syntax error near unexpected token\n");
 			mode = setmode(temp);
-			remove_redir(temp);
-			if (temp->prev && temp->prev->token == 0)
+			remove_redir(msh, temp);
+			if (temp && temp->prev && temp->prev->token == 0)
 				append_redirs((&temp->prev->redir), open_file(msh, temp->str, mode), mode, msh);
-			else if (temp->next && temp->next->token == 0)
+			else if (temp && temp->next && temp->next->token == 0)
 				append_redirs((&temp->next->redir), open_file(msh, temp->str, mode), mode, msh);
-			if (!temp->prev)
+			if (temp && !temp->prev)
 				msh->list = temp->next;
 			else
 				delnext = true;
@@ -90,13 +90,13 @@ void	parser(t_msh *msh)
 		{//TODO: maybe join it with the first if check
 			if (!temp->next)
 				errexit(msh, "syntax error near unexpected token\n");
-			remove_redir(temp);
+			remove_redir(msh, temp);
 			here_doc(msh, temp);
-			if (temp->prev && temp->prev->token == 0)
+			if (temp && temp->prev && temp->prev->token == 0)
 				append_redirs((&temp->prev->redir), open_file(msh, ".heredoc", READ), READ, msh);
-			else if (temp->next && temp->next->token == 0)
+			else if (temp && temp->next && temp->next->token == 0)
 				append_redirs((&temp->next->redir), open_file(msh, ".heredoc", READ), READ, msh);
-			if (!temp->prev)
+			if (temp && !temp->prev)
 				msh->list = temp->next;
 			else
 				delnext = true;

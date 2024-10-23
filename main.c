@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/22 14:22:42 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:09:30 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,48 +21,43 @@ t_node	*find_first_node(t_node *current)
 	return (current);
 }
 
+void msh_init(t_msh *mini)
+{
+	mini->list = NULL;
+	mini->reset = false;
+	mini->herectr = 0;
+	mini->args = NULL;
+	mini->pipelen = 0;
+}
+
 void minishell_loop(t_msh *mini)
 {
+	msh_init(mini);
 	mini->args = readline("msh$ ");
 	shrimp_lexer(mini);
 	parser(mini);
 	if (mini->list)
 		lebomboclaat(mini);
 	reset_msh(mini);
-	exit(0);
 //	add_history(args); (mirar man?)
-//	minishell_loop(mini);
+	minishell_loop(mini);
 }	
+
+
 
 int	main(int ac, char **av, char **envp)
 {
 	t_msh	mini;
-	int		pid;
-	int		j = 0;
 
-	mini.env = envp;
-	mini.list = NULL;
-	mini.reset = false;
-	mini.herectr = 0;
-	mini.args = NULL;
-	mini.pipelen = 0;
 	av = av;
 	if (ac != 1)
-		errexit(&mini, "This program does not accept arguments!! >:3\n");
+		errexit(&mini, "Aquest programa no tolera arguments!! >:3\n");
+	mini.env = envp;
 	do_last(&mini, "clear", mini.env);//limpia la pantalla al ejecutar y queda tope limpio :3
 	wait(NULL);
-	printf("Benvingut a la xiquipetxina!\n");
-	while (j < 3)
-	{
-		pid = fork();	
-		if (pid == -1)
-			errexit(&mini, "Fork error???\n");
-		else if (!pid)
-			minishell_loop(&mini);
-		else if (pid)
-			wait(NULL);
-		j++;
-	}
+	printf("\n\tT X I Q U I P E T X I N A !\n\n");
+	minishell_loop(&mini);
+
 	//readline tiene 204.000 bytes de leaks, ignoralos :sob:
 	t_node		*temp;
 	t_redirs	*redir;

@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/22 11:59:56 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:11:21 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,17 @@ char	*get_path(char *cmd, char **env)
 void	do_last(t_msh *mini, char *cmd, char **env)
 {
 	pid_t	pid;
+	char	**arr;
 
+	arr = wordsplit(cmd);
+	if (!arr || !*arr)
+	{
+		array_free(arr);
+		return ;
+	}
+	if (!ft_strncmp(arr[0], "exit", 4))
+		ft_exit(mini, arr);
+	array_free(arr);
 	pid = fork();
 	if (pid == -1)
 		exit(0);

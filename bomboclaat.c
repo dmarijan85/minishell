@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/22 16:30:28 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:03:58 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,22 @@ void	exec(t_msh *mini, char *cmd, char **env)
 	char	*path;
 
 	if (cmd && !*cmd)
-		errexit(mini, "command not found: ''\n");
+		childexit(mini, "command not found: ''\n");
 	s_cmd = wordsplit(cmd);
-	path = get_path(s_cmd[0], env);
-	if (execve(path, s_cmd, env) == -1)
+	if (!s_cmd || !*s_cmd)
+		childexit(mini, "");
+	if (!ft_strncmp(s_cmd[0], "builtin", 4)) //TODO vigilar que sea un builtin
+		ft_exit(mini, s_cmd);
+	else
 	{
-		ft_putstr_fd("msh: command not found: ", 2);
-		ft_putendl_fd(s_cmd[0], 2);
-		array_free(s_cmd);
-		errexit(mini, "");
+		path = get_path(s_cmd[0], env);
+		if (execve(path, s_cmd, env) == -1)
+		{
+			ft_putstr_fd("msh: command not found: ", 2);
+				ft_putendl_fd(s_cmd[0], 2);
+			array_free(s_cmd);
+			childexit(mini, "");
+		}
 	}
 }
 
@@ -86,7 +93,7 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	}
 }
 
-void	leminibomber(t_node *temp, t_msh *mini)
+void	letxiquibomber(t_node *temp, t_msh *mini)
 {
 	int	i;
 	int	fd_in;
@@ -123,7 +130,7 @@ void	lebomboclaat(t_msh *mini)
 	temp = mini->list;
 	tmp0 = dup(0);
 	tmp1 = dup(1);
-	leminibomber(temp, mini);
+	letxiquibomber(temp, mini);
 	dup2(tmp0, 0);
 	close(tmp0);
 	dup2(tmp1, 1);

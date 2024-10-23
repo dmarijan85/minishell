@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/22 16:26:45 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:52:09 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct	s_msh
 	bool	reset;
 	int		herectr;
 	int		pipelen;
+	int		exit;
 }				t_msh;
 
 //Prototypes
@@ -88,6 +89,7 @@ char	*get_path(char *cmd, char **env);
 void	ft_free_tab(char **tab);
 void	shrimp_lexer(t_msh *mini);
 void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini);
+void	minishell_loop(t_msh *mini);
 
 //cleaners
 void	stack_free_nodes(t_node **stack);
@@ -108,7 +110,7 @@ void	parser(t_msh *msh);
 
 //utils
 int		fl_redir(t_redirs *current, t_openmodes mode);
-void	remove_redir(t_node *node);
+void	remove_redir(t_msh *msh, t_node *node);
 void	removequotes(char **str);
 
 //utils bonus
@@ -123,5 +125,9 @@ void	here_doc(t_msh *mini, t_node *node);
 //donepezilo
 void	reset_msh(t_msh *mini);
 void	errexit(t_msh *mini, char *str);
+void	childexit(t_msh *mini, char *str);
+
+//builtins
+void	ft_exit(t_msh *mini, char **arr);
 
 #endif
