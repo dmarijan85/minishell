@@ -81,14 +81,7 @@ typedef struct	s_msh
 
 //Prototypes
 
-//TODO:sort this shit pls
-void	exit_handler(int n_exit);
-int		open_file(t_msh *mini, char *file, t_openmodes mode);
-char	*my_getenv(char *name, char **env);
-char	*get_path(char *cmd, char **env);
-void	ft_free_tab(char **tab);
-void	shrimp_lexer(t_msh *mini);
-void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini);
+//main
 void	minishell_loop(t_msh *mini);
 
 //cleaners
@@ -108,14 +101,24 @@ void	delete_node(t_node **node);
 //parser
 void	parser(t_msh *msh);
 
+//lexer
+void	shrimp_lexer(t_msh *mini);
+void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini);
+
 //utils
 int		fl_redir(t_redirs *current, t_openmodes mode);
 void	remove_redir(t_msh *msh, t_node *node);
 void	removequotes(char **str);
 
-//utils bonus
+//utils two
 void	do_last(t_msh *mini, char *cmd, char **env);
+int		open_file(t_msh *mini, char *file, t_openmodes mode);
+char	*my_getenv(char *name, char **env);
+char	*get_path(char *cmd, char **env);
 
+//utils three
+int	ft_argc(char **argv);
+int	ft_nodesize(t_node *lst);
 
 //bomboclaat
 void	lebomboclaat(t_msh *mini);
@@ -128,6 +131,8 @@ void	errexit(t_msh *mini, char *str);
 void	childexit(t_msh *mini, char *str);
 
 //builtins
+void	ft_builtins(t_msh *mini, char **arr);
 void	ft_exit(t_msh *mini, char **arr);
+void	ft_env(char **envp);
 
 #endif

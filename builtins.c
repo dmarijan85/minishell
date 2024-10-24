@@ -12,27 +12,18 @@
 
 #include "minishell.h"
 
-int		ft_argc(char **arr)
+void	ft_builtins(t_msh *mini, char **arr)
 {
 	int	argc;
 
-	argc = 0;
-	while (arr[argc])
-		argc++;
-	return (argc);
-}
-
-int	ft_nodesize(t_node *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
+	argc = ft_argc(arr);
+	if (!ft_strncmp(arr[0], "env", 3))
 	{
-		lst = lst->next;
-		i++;
+		array_free(arr);
+		if (argc > 1)
+			childexit(mini, "env: No options or arguments allowed!\n");
+		ft_env(mini->env);
 	}
-	return (i);
 }
 
 void	ft_exit(t_msh *mini, char **arr)
@@ -56,5 +47,18 @@ void	ft_exit(t_msh *mini, char **arr)
 		exit(buf);
 	}
 	array_free(arr);
+	exit(0);
+}
+
+void	ft_env(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		ft_printf("%s\n", envp[i]);
+		i++;
+	}
 	exit(0);
 }

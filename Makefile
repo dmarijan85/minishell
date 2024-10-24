@@ -17,11 +17,12 @@ SRC =	lexer.c			\
 		utils.c			\
 		wordsplit.c		\
 		cleaners.c		\
-		utils_bonus.c	\
+		utils_two.c	\
 		parser.c		\
 		bomboclaat.c	\
 		donepezilo.c	\
 		builtins.c		\
+		utils_three.c
 		#main_bonus.c	\
 
 OBJ = $(SRC:.c=.o)

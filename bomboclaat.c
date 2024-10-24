@@ -22,18 +22,14 @@ void	exec(t_msh *mini, char *cmd, char **env)
 	s_cmd = wordsplit(cmd);
 	if (!s_cmd || !*s_cmd)
 		childexit(mini, "");
-	if (!ft_strncmp(s_cmd[0], "builtin", 4)) //TODO vigilar que sea un builtin
-		ft_exit(mini, s_cmd);
-	else
+	ft_builtins(mini, s_cmd);	
+	path = get_path(s_cmd[0], env);
+	if (execve(path, s_cmd, env) == -1)
 	{
-		path = get_path(s_cmd[0], env);
-		if (execve(path, s_cmd, env) == -1)
-		{
-			ft_putstr_fd("msh: command not found: ", 2);
-				ft_putendl_fd(s_cmd[0], 2);
-			array_free(s_cmd);
-			childexit(mini, "");
-		}
+		ft_putstr_fd("msh: command not found: ", 2);
+			ft_putendl_fd(s_cmd[0], 2);
+		array_free(s_cmd);
+		childexit(mini, "");
 	}
 }
 
