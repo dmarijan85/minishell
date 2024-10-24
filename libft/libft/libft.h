@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:31:15 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/17 14:53:25 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:53:14 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_list
 
 int		ft_isalnum(int i);
 int		ft_isalpha(int i);
+int		ft_isonlyalpha(char *str);
 int		ft_isdigit(int i);
 void	*ft_bzero(void *s, size_t len);
 int		ft_isascii(int c);
