@@ -93,7 +93,7 @@ void	el_fregading(t_msh *mini)
 {
 	stack_free_nodes(&mini->list);
 	free(mini->args);
-	if (access(".heredoc", F_OK)) 
+	if (!access(".heredoc", F_OK)) 
 		do_last(mini, "rm -rf .heredoc", mini->env);
 	wait(NULL);
 }
