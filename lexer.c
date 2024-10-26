@@ -6,11 +6,20 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/22 12:35:29 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:29:23 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_envvar	*find_last_envvar(t_envvar *current)
+{
+	if (!current)
+		return (NULL);
+	while (current->next)
+		current = current->next;
+	return (current);
+}
 
 t_redirs	*find_last_redirs(t_redirs *current)
 {
@@ -28,6 +37,48 @@ t_node	*find_last_node(t_node *current)
 	while (current->next)
 		current = current->next;
 	return (current);
+}
+
+int	isvalid(char *name)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(name[i]))
+		return (0);
+	while (name[i])
+	{
+		if (!ft_isalnum(name[i]))
+			if (!(name[i] == '_'))
+				return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini)
+{
+	t_envvar	*node;
+	t_envvar	*last_node;
+
+	if (!isvalid(name))
+		errexit(mini, "export: illegal variable name\n");
+	node = malloc(sizeof(t_envvar));
+	if (!node)
+		errexit(mini, "t_envvar malloc failure?!\n");
+	node->next = NULL;
+	node->name = name;
+	node->hasvalue = false;
+	if (value)
+		node->hasvalue = true;
+	node->value = value;
+	if (!*stack)
+		*stack = node;
+	else
+	{
+		last_node = find_last_envvar(*stack);
+		last_node->next = node;
+	}
 }
 
 //puts new node as first if its the first one in stack (if **stack is empty)

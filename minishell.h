@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/23 17:52:09 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:38:21 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ typedef enum s_openmodes
 
 //Structs
 
+typedef struct s_envvar
+{
+	char			*name;
+	char			*value;
+	struct s_envvar	*next;
+	bool			hasvalue;
+}				t_envvar;
+
 typedef struct	s_redirs
 {
 	t_openmodes		fd_type;
@@ -70,13 +78,14 @@ typedef struct s_node
 
 typedef struct	s_msh
 {
-	char	**env;
-	t_node	*list;
-	char	*args;
-	bool	reset;
-	int		herectr;
-	int		pipelen;
-	int		exit;
+	char		**env;
+	t_node		*list;
+	char		*args;
+	bool		reset;
+	int			herectr;
+	int			pipelen;
+	int			exit;
+	t_envvar	*envvar;
 }				t_msh;
 
 //Prototypes
@@ -117,8 +126,8 @@ char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 
 //utils three
-int	ft_argc(char **argv);
-int	ft_nodesize(t_node *lst);
+int		ft_argc(char **argv);
+int		ft_nodesize(t_node *lst);
 
 //bomboclaat
 void	lebomboclaat(t_msh *mini);
@@ -129,10 +138,20 @@ void	here_doc(t_msh *mini, t_node *node);
 void	reset_msh(t_msh *mini);
 void	errexit(t_msh *mini, char *str);
 void	childexit(t_msh *mini, char *str);
+void	stack_free_envvars(t_msh *mini);
 
 //builtins
 void	ft_builtins(t_msh *mini, char **arr);
+int		ft_builtdads(t_msh *mini, char **arr);
 void	ft_exit(t_msh *mini, char **arr);
-void	ft_env(char **envp);
+void	ft_env(t_msh *mini, char **envp);
+
+//find_last
+void	ft_export_create(t_msh *mini, char **env, int i);
+void	ft_export_print(t_msh *mini, char **env);
+
+//append
+void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini);
+
 
 #endif

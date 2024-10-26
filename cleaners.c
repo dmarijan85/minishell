@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:20:17 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/22 16:23:54 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:04:29 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,26 @@ void	node_free(t_node **stack)
 		free(*stack);
 	}
 	*stack = NULL;
+}
+
+void	stack_free_envvars(t_msh *mini)
+{
+	t_envvar	*tmp;
+	t_envvar	*current;
+
+	current = mini->envvar;
+	if (!current)
+		return ;
+	while (current)
+	{
+		tmp = current->next;
+		free(current->name);
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = tmp;
+	}
+	mini->envvar = NULL;
 }
 
 void	stack_free_nodes(t_node **stack)

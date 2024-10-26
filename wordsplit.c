@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:53:09 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/22 14:14:33 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:23:39 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static char	*word_dup(const char *str, int start, int finish, char **split)
 	int		i;
 
 	i = 0;
-
 	if (start >= finish)
 		return (NULL);
 	word = malloc((finish - start + 1) * sizeof(char));

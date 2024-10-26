@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/23 18:09:30 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:28:59 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void minishell_loop(t_msh *mini)
 	reset_msh(mini);
 //	add_history(args); (mirar man?)
 	minishell_loop(mini);
-}	
+}
 
 
 
@@ -56,6 +56,7 @@ int	main(int ac, char **av, char **envp)
 	do_last(&mini, "clear", mini.env);//limpia la pantalla al ejecutar y queda tope limpio :3
 	wait(NULL);
 	printf("\n\tT X I Q U I P E T X I N A !\n\n");
+	mini.envvar = NULL;
 	minishell_loop(&mini);
 
 	//readline tiene 204.000 bytes de leaks, ignoralos :sob:

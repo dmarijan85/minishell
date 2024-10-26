@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   utils_two.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/23 18:11:21 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:52:22 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	do_last(t_msh *mini, char *cmd, char **env)
 		array_free(arr);
 		return ;
 	}
-	if (!ft_strncmp(arr[0], "exit", 4))
-		ft_exit(mini, arr);
+	if (ft_builtdads(mini, arr))
+		return ;
 	array_free(arr);
 	pid = fork();
 	if (pid == -1)
