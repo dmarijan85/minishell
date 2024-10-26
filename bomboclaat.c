@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/23 18:03:58 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:15:11 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	here_doc_put_in(char *delim, int fd)
 		{
 			free(ret);
 			close(fd);
-			exit(0);
+			exit(0);//TODO errexit
 		}
 		ft_putstr_fd(ret, fd);
 		ft_putstr_fd("\n", fd);
@@ -56,6 +56,7 @@ void	here_doc(t_msh *mini, t_node *node)
 {
 	pid_t	pid;
 
+	mini->herectr++;
 	pid = fork();
 	if (pid == -1)
 		errexit(mini, "fork error: fork returned -1!\n");

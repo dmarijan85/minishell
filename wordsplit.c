@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:53:09 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/26 17:23:39 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:13:01 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	removequotes(char **str)
 		return ;
 	freer = malloc((ft_strlen(*str) - howmanyquotes(*str) + 1) * sizeof(char));
 	if (!freer)
-		return ;//TODO
+		errexit(mini, "msh: malloc error?!");
 	while (tmp[i])
 	{
 		if (!isquote(tmp[i]))

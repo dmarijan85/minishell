@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/26 15:52:22 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:14:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_path(char *cmd, char **env)
 	i = -1;
 	allpath = ft_split(my_getenv("PATH", env), ':');
 	s_cmd = ft_split(cmd, ' ');
-	while (allpath[++i])
+	while (allpath && allpath[++i] && s_cmd)
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, s_cmd[0]);
@@ -102,7 +102,7 @@ void	do_last(t_msh *mini, char *cmd, char **env)
 	array_free(arr);
 	pid = fork();
 	if (pid == -1)
-		exit(0);
+		errexit("msh: fork failure!?\n");
 	if (!pid)
 		exec(mini, cmd, env);
 }

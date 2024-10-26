@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:59:40 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/26 16:03:29 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:59:11 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	errexit(t_msh *mini, char *err)
 {
 	if (err && *err)
 		ft_printstderr("msh: %s", err);
+	if (mini->args && mini->herectr == 0)
+		add_history(mini->args);
 	reset_msh(mini);
 	minishell_loop(mini);
 }
@@ -34,6 +36,5 @@ void	childexit(t_msh *mini, char *err)
 		ft_printstderr("msh: %s", err);
 	stack_free_envvars(mini);
 	reset_msh(mini);
-
 	exit(-1);
 }

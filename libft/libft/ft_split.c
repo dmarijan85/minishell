@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:38:14 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/06/17 12:01:38 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:04:33 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**ft_split(const char *str, char c)
 	char	**arr;
 	int		i;
 
-	if (str == 0)
+	if (!str || !*str)
 		return (0);
 	while (*str && *str == c)
 		str++;
