@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:53:09 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/26 18:13:01 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:15:59 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,62 @@ int	howmanyquotes(char *str)
 	return (quote);
 }
 
+char imquoted(char *str, int loc)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	quote = 0;
+	while (str[i] && i <= loc)
+	{
+		if (isquote(str[i]) && !quote)
+		{
+			quote = str[i];
+			while (str[i] != quote)
+			{
+				if (i == loc)
+					return (quote);
+				i++;
+			}
+			quote = 0;
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	removequotes(char **str)
 {
 	char	*tmp;
 	char	*freer;
 	int		i;
 	int		j;
+	char	quote;
 
-	
 	i = 0;
 	j = 0;
+	quote = 0;
 	tmp = *str;
 	if (!istherequotes(tmp))
 		return ;
 	freer = malloc((ft_strlen(*str) - howmanyquotes(*str) + 1) * sizeof(char));
 	if (!freer)
-		errexit(mini, "msh: malloc error?!");
+	{
+		free(*str);
+		*str = NULL;
+		return ;
+	}
 	while (tmp[i])
 	{
-		if (!isquote(tmp[i]))
-			freer[j++] = tmp[i];
+		quote = 0;
+		if (isquote(tmp[i]))
+		{
+			quote = tmp[i];
+			i++;
+			while (tmp[i] != '\0' && tmp[i] != quote)
+				freer[j++] = tmp[i++];
+		}
 		i++;
 	}
 	freer[j] = '\0';
@@ -94,7 +130,7 @@ static char	*word_dup(const char *str, int start, int finish, char **split)
 	if (!word)
 	{
 		array_free(split);
-		return (NULL);//TODO
+		return (NULL);
 	}
 	while (start < finish)
 	{
@@ -103,11 +139,10 @@ static char	*word_dup(const char *str, int start, int finish, char **split)
 		start++;
 	}
 	word[i] = '\0';
-	removequotes(&word);
 	return (word);
 }
 
-char	**wordsplit(char const *s)
+char	**wordsplit(t_msh *mini, char const *s, bool delquotes)
 {
 	size_t	i;
 	size_t	j;
@@ -116,10 +151,10 @@ char	**wordsplit(char const *s)
 	char	quote;
 
 	if (!s)
-		return (0);//TODO
+		return (0);
 	split = malloc((count_words(s) + 1) * sizeof(char *));
 	if (!split)
-		return (0);//errexit(mini, "msh: malloc error\n");
+		errexit(mini, "msh: malloc error\n");
 	i = 0;
 	j = 0;
 	index = -1;
@@ -128,7 +163,7 @@ char	**wordsplit(char const *s)
 	{
 		if (quote && s[i] == quote)
 			quote = '\0';
-		else if (isquote(s[i]))
+		else if (isquote(s[i]) && quote  == '\0')
 		{
 			if (index == -1)
 				index = i;
@@ -139,8 +174,13 @@ char	**wordsplit(char const *s)
 		else if (((s[i] == ' ' || s[i] == '\t') || i == ft_strlen(s)) 
 				&& index >= 0 && !quote)
 		{
-			split[j++] = word_dup(s, index, i, split);
+			split[j] = word_dup(s, index, i, split);
+			if (!split[j])
+				errexit(mini, "msh: malloc error\n");
+			if (delquotes)
+				removequotes(&split[j]);
 			index = -1;
+			j++;
 		}
 		i++;
 	}

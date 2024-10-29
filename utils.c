@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/23 15:38:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:02:41 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	remove_redir(t_msh *mini, t_node *node)
 	char	*tmp;
 	int		i;
 	
-	buf = wordsplit(node->next->str);
+	buf = wordsplit(mini, node->next->str, false);
 	if (!buf || !buf[0])
 		errexit(mini, "Remove Redir Error?!");
 	node->str = ft_strdup(buf[0]);

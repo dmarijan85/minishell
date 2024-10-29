@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/26 17:29:23 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:07:36 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,43 +152,6 @@ bool isdouble(char *str, int lessorgreat)
 	return (false);
 }
 
-/*
-void	removequotes(char **str)
-{
-	char	*tmp;
-	char	*freer;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	freer = malloc((ft_strlen(*str) - 1) * sizeof(char));
-	tmp =  *str;
-	while (tmp[i] && tmp[i] != '\"' && tmp[i] != '\'')
-		freer[j++] = tmp[i++];
-	i++;
-	while (tmp[i] && tmp[i] != '\"' && tmp[i] != '\'')
-		freer[j++] = tmp[i++];
-	freer[j] = '\0';
-	tmp = *str;
-	free(tmp);
-	*str = freer;
-}
-
-int istherequotes(char *str)
-{
-	int	i;
-	
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			return (1);
-		i++;
-	}
-	return (0);
-}*/
-
 int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 {
 	
@@ -223,9 +186,10 @@ int	quote_lexer(t_msh *mini, int end)
 	int		nquote;
 	char	quote;
 
+	quote = 0;
 	nquote = 0;
 	str = mini->args;
-	while (end < (int)ft_strlen(str) && !delim(str[end]))
+	while (str[end] && end < (int)ft_strlen(str) && str[end] != quote) 
 	{
 		if (str[end] == '\"' || str[end] == '\'')
 		{
@@ -238,7 +202,8 @@ int	quote_lexer(t_msh *mini, int end)
 				return (0);
 			nquote++;
 		}
-		end++;
+		if (str[end] && str[end] != quote)
+			end++;
 	}
 	if (nquote % 2)
 		return (0);
@@ -253,17 +218,17 @@ void shrimp_lexer(t_msh *mini)
 
 	str = mini->args;
 	stt = 0;
-	end = 0;
-	while (str && end < (int)ft_strlen(str))
+	end = -1;
+	while (str && ++end < (int)ft_strlen(str))
 	{
 		if (str[end] == '\"' || str[end] == '\'')
 		{
 			end = quote_lexer(mini, end);
 			if (!end)
 				errexit(mini, "syntax error: unclosed quotes!\n");
-			stt = expand_list(ft_substr(str, stt, end - stt), 0, mini, &end);
 		}
-		else if (str[end] == '|')
+		ft_printf("aqui: %c\n", str[end]);
+		if (str[end] == '|')
 			stt = expand_list(ft_substr(str, stt, end - stt), PIPE, mini, &end) + 1;
 		else if (str[end] == '<' && !isdouble(str + end, 0))
 			stt = expand_list(ft_substr(str, stt, end - stt), LESS, mini, &end) + 1;
@@ -273,9 +238,8 @@ void shrimp_lexer(t_msh *mini)
 			stt = expand_list(ft_substr(str, stt, end - stt), LLESS, mini, &end) + 2;
 		else if (str[end] == '>' && isdouble(str + end, 1))
 			stt = expand_list(ft_substr(str, stt, end - stt), GGREAT, mini, &end) + 2;
-		else if (!str[end + 1] && end != 0)
+		else if (!str[end + 1])
 			stt = expand_list(ft_substr(str, stt, end - stt + 1), 0, mini, &end);
-		end++;
 	}
 }
 /*

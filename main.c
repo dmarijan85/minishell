@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/26 18:02:44 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:08:25 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,34 @@ void minishell_loop(t_msh *mini)
 		lebomboclaat(mini);
 	if (mini->args && *(mini->args) && mini->herectr == 0)
 		add_history(mini->args);
+t_node	*temp;
+	int		i;
 
+	i = 0;
+	temp = mini->list;
+	if (temp)
+	{
+		while (temp->next)
+		{
+			if (temp->str)
+				printf("Node STR %i: %s\n", i, temp->str);
+			if (temp->token)
+				printf("Node TKN %i: %i\n", i, temp->token);
+			if (temp->redir)
+				printf("Node %i has REDIR\n", i);
+			temp = temp->next;
+			i++;
+		}
+		if (temp->str)
+			printf("NODE STR %i: %s\n", i, temp->str);
+		if (temp->token)
+			printf("NODE TKN %i: %i\n", i, temp->token);
+		if (temp->redir)
+			printf("Node %i has REDIR\n", i);
+	}	
 	reset_msh(mini);
 	minishell_loop(mini);
 }
-
-
 
 int	main(int ac, char **av, char **envp)
 {

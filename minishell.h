@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/26 17:38:21 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:16:36 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	el_fregading(t_msh *mini);
 
 //wordsplit
 int		count_words(const char *str);
-char	**wordsplit(char const *s);
+char	**wordsplit(t_msh *mini, char const *s, bool delquotes);
 
 //nodestuff
 void	delete_node(t_node **node);
@@ -153,5 +153,7 @@ void	ft_export_print(t_msh *mini, char **env);
 //append
 void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini);
 
+//quotes
+char	imquoted(char *str, int loc);
 
 #endif

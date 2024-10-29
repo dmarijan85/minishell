@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/26 18:14:24 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:57:07 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	do_last(t_msh *mini, char *cmd, char **env)
 	pid_t	pid;
 	char	**arr;
 
-	arr = wordsplit(cmd);
+	arr = wordsplit(mini, cmd, true);
 	if (!arr || !*arr)
 	{
 		array_free(arr);
@@ -102,7 +102,7 @@ void	do_last(t_msh *mini, char *cmd, char **env)
 	array_free(arr);
 	pid = fork();
 	if (pid == -1)
-		errexit("msh: fork failure!?\n");
+		errexit(mini, "msh: fork failure!?\n");
 	if (!pid)
 		exec(mini, cmd, env);
 }

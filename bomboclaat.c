@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/26 18:15:11 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:57:23 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec(t_msh *mini, char *cmd, char **env)
 
 	if (cmd && !*cmd)
 		childexit(mini, "command not found: ''\n");
-	s_cmd = wordsplit(cmd);
+	s_cmd = wordsplit(mini, cmd, true);
 	if (!s_cmd || !*s_cmd)
 		childexit(mini, "");
 	ft_builtins(mini, s_cmd);	
@@ -44,7 +44,7 @@ void	here_doc_put_in(char *delim, int fd)
 		{
 			free(ret);
 			close(fd);
-			exit(0);//TODO errexit
+			exit(0);
 		}
 		ft_putstr_fd(ret, fd);
 		ft_putstr_fd("\n", fd);
