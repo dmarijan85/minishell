@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/29 18:56:46 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:23:50 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	expand_name_end(char *str, int stt)
 		return (end);
 	else if (str[end] && (ft_isalpha(str[end]) || str[end] == '_'))
 	{
-		while (str[end] && (ft_isalnum(str[end]) || str[end] == '_')
+		while (str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 			end++;
 		return (end);
 	}
@@ -37,13 +37,16 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 	int		i;
 	int		end;
 
+	mini=mini;//TODO
 	i = -1;
 	firstpart = malloc(stt * sizeof(char));
+	//proc malloc
 	while (str[++i] && str[i] != '$')
 		firstpart[i] = str[i];
 	firstpart[i] = '\0';
 	end = expand_name_end(str, stt);
 	lastpart = malloc((ft_strlen(str) - end + 1) * sizeof(char));
+	//proc malloc
 	i = -1;
 	while (str[end])
 		lastpart[++i] = str[end++];
@@ -54,16 +57,16 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 	return (result);
 }
 
-char	*wildfinder(t_msh *mini, char *str, int stt)//asumo que j es el sitio en str donde esta el $ (lo llamo stt)
+//asumo que j es el sitio en str donde esta el $ (lo llamo stt)
+char	*wildhandler(t_msh *mini, char *str, int stt)
 {
-	t_envvar	*env;
+	t_envvar	*tmp;
 	int			end;
 	char		*name;
 
-	env = mini->envvar;
+	mini=mini; //TODO
+	tmp = mini->envvar;
 	end = expand_name_end(str, stt);
-	if (end <= stt)
-		return (NULL);	//devolver el mismo string no? o NULO
 	name = ft_substr(str, stt, end - stt);
 	if (getenv(name))
 		return (strexpander(mini, str, getenv(name), stt));	//strexpander
@@ -72,9 +75,29 @@ char	*wildfinder(t_msh *mini, char *str, int stt)//asumo que j es el sitio en st
 		while (tmp)
 		{
 			if (ft_strlen(name) == ft_strlen(tmp->name) && ft_strncmp(name, tmp->name, ft_strlen(name)))
-				return (strexpander(mini, str, tmp->value, stt);
+				return (strexpander(mini, str, tmp->value, stt));
 			tmp = tmp->next;
 		}
 	}
-	return (NULL) // o str, no se muy bien
+	return (NULL); // o str, no se muy bien
+}
+
+void	wildfinder(t_msh *mini, char **str)
+{
+	int		i;
+	char	*res;
+	char	*rec;
+
+	i = 0;
+	rec = *str;
+	while (rec[i])
+	{
+		if (rec[i] == '$')
+		{
+			res = wildhandler(mini, *str, i);
+			free(*str);
+			*str = res;
+		}
+		i++;
+	}
 }

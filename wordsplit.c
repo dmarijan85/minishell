@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:53:09 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/29 16:15:59 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:04:00 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,11 @@ void	removequotes(char **str)
 		{
 			quote = tmp[i];
 			i++;
-			while (tmp[i] != '\0' && tmp[i] != quote)
+			while (tmp[i] && tmp[i] != quote)
 				freer[j++] = tmp[i++];
 		}
+		else
+			freer[j++] = tmp[i];
 		i++;
 	}
 	freer[j] = '\0';

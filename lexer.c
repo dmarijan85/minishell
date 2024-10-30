@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/29 16:07:36 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:06:49 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ void shrimp_lexer(t_msh *mini)
 			if (!end)
 				errexit(mini, "syntax error: unclosed quotes!\n");
 		}
-		ft_printf("aqui: %c\n", str[end]);
 		if (str[end] == '|')
 			stt = expand_list(ft_substr(str, stt, end - stt), PIPE, mini, &end) + 1;
 		else if (str[end] == '<' && !isdouble(str + end, 0))

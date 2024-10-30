@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/10/23 16:13:19 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/10/30 14:19:18 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC =	lexer.c			\
 		bomboclaat.c	\
 		donepezilo.c	\
 		builtins.c		\
-		utils_three.c
+		utils_three.c	\
+		wildproject.c
 		#main_bonus.c	\
 
 OBJ = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/29 16:16:36 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:18:46 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,8 @@ void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini);
 
 //quotes
 char	imquoted(char *str, int loc);
+
+//wildshit
+void	wildfinder(t_msh *mini, char **str);
 
 #endif
