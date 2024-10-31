@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/30 14:23:50 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/31 13:37:06 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	expand_name_end(char *str, int stt)
 {
 	int	end;
 
-	end = stt + 1;
+	end = stt;
 	if (str[end] == '?')
 		return (end);
 	else if (str[end] && (ft_isalpha(str[end]) || str[end] == '_'))
@@ -39,18 +39,18 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 
 	mini=mini;//TODO
 	i = -1;
-	firstpart = malloc(stt * sizeof(char));
+	firstpart = malloc(stt + 1 * sizeof(char));
 	//proc malloc
 	while (str[++i] && str[i] != '$')
 		firstpart[i] = str[i];
 	firstpart[i] = '\0';
-	end = expand_name_end(str, stt);
-	lastpart = malloc((ft_strlen(str) - end + 1) * sizeof(char));
+	end = expand_name_end(str, stt + 1);
+	lastpart = malloc((ft_strlen(str) - stt + 1) * sizeof(char));
 	//proc malloc
 	i = -1;
 	while (str[end])
 		lastpart[++i] = str[end++];
-	lastpart[end] = '\0';
+	lastpart[++i] = '\0';
 	result = ft_strjoin(ft_strjoin(firstpart, value), lastpart);
 	free(firstpart);
 	free(lastpart);
@@ -58,28 +58,28 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 }
 
 //asumo que j es el sitio en str donde esta el $ (lo llamo stt)
-char	*wildhandler(t_msh *mini, char *str, int stt)
+char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 {
 	t_envvar	*tmp;
-	int			end;
-	char		*name;
 
 	mini=mini; //TODO
 	tmp = mini->envvar;
-	end = expand_name_end(str, stt);
-	name = ft_substr(str, stt, end - stt);
 	if (getenv(name))
 		return (strexpander(mini, str, getenv(name), stt));	//strexpander
 	else
 	{
 		while (tmp)
 		{
-			if (ft_strlen(name) == ft_strlen(tmp->name) && ft_strncmp(name, tmp->name, ft_strlen(name)))
+			if (!ft_strncmp(name, tmp->name, ft_strlen(name)))
+			{
+				free(name);
 				return (strexpander(mini, str, tmp->value, stt));
+			}
 			tmp = tmp->next;
 		}
 	}
-	return (NULL); // o str, no se muy bien
+	free(name);
+	return (strexpander(mini, str, NULL, stt)); //o str, no se muy bien
 }
 
 void	wildfinder(t_msh *mini, char **str)
@@ -87,6 +87,7 @@ void	wildfinder(t_msh *mini, char **str)
 	int		i;
 	char	*res;
 	char	*rec;
+	char	*name;
 
 	i = 0;
 	rec = *str;
@@ -94,8 +95,8 @@ void	wildfinder(t_msh *mini, char **str)
 	{
 		if (rec[i] == '$')
 		{
-			res = wildhandler(mini, *str, i);
-			free(*str);
+			name = ft_substr(rec, i + 1, expand_name_end(rec, i + 1) - i);
+			res = wildhandler(mini, *str, i, name);
 			*str = res;
 		}
 		i++;
