@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/31 13:37:06 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:11:55 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	expand_name_end(char *str, int stt)
 	{
 		while (str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 			end++;
+		//printf("start: %i end returned: %i\n", stt, end);
 		return (end);
 	}
 	else
@@ -51,13 +52,13 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 	while (str[end])
 		lastpart[++i] = str[end++];
 	lastpart[++i] = '\0';
+	//printf("firstpart: %s value: %s lastpart: %s\n", firstpart, value, lastpart);
 	result = ft_strjoin(ft_strjoin(firstpart, value), lastpart);
 	free(firstpart);
 	free(lastpart);
 	return (result);
 }
 
-//asumo que j es el sitio en str donde esta el $ (lo llamo stt)
 char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 {
 	t_envvar	*tmp;
@@ -65,7 +66,7 @@ char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 	mini=mini; //TODO
 	tmp = mini->envvar;
 	if (getenv(name))
-		return (strexpander(mini, str, getenv(name), stt));	//strexpander
+		return (strexpander(mini, str, getenv(name), stt));
 	else
 	{
 		while (tmp)
@@ -79,7 +80,7 @@ char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 		}
 	}
 	free(name);
-	return (strexpander(mini, str, NULL, stt)); //o str, no se muy bien
+	return (strexpander(mini, str, NULL, stt));
 }
 
 void	wildfinder(t_msh *mini, char **str)
@@ -91,14 +92,18 @@ void	wildfinder(t_msh *mini, char **str)
 
 	i = 0;
 	rec = *str;
-	while (rec[i])
+	while (i < (int)ft_strlen(rec) && rec[i])
 	{
 		if (rec[i] == '$')
 		{
-			name = ft_substr(rec, i + 1, expand_name_end(rec, i + 1) - i);
+			//printf("loop n%i before-> %s\n", i, *str);
+			name = ft_substr(rec, i + 1, expand_name_end(rec, i + 1) - i - 1);
+			//printf("supposed name: %s, its length: %li\n", name, ft_strlen(name));
 			res = wildhandler(mini, *str, i, name);
 			*str = res;
+			//printf("loop n%i after -> %s\n", i, *str);
 		}
 		i++;
+		rec = *str;
 	}
 }
