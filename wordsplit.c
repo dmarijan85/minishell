@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:53:09 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/30 14:04:00 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:09:21 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,24 @@ char imquoted(char *str, int loc)
 	char	quote;
 
 	i = 0;
-	quote = 0;
+	quote = '\0';
 	while (str[i] && i <= loc)
 	{
 		if (isquote(str[i]) && !quote)
 		{
 			quote = str[i];
+			i++;
 			while (str[i] != quote)
 			{
 				if (i == loc)
 					return (quote);
 				i++;
 			}
-			quote = 0;
+			quote = '\0';
 		}
 		i++;
 	}
-	return (0);
+	return (quote);
 }
 
 void	removequotes(char **str)

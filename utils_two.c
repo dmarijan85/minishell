@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/29 15:57:07 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:02:57 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	do_last(t_msh *mini, char *cmd, char **env)
 	pid_t	pid;
 	char	**arr;
 
-	arr = wordsplit(mini, cmd, true);
+	
+	arr = wordsplit(mini, cmd, false);
 	if (!arr || !*arr)
 	{
 		array_free(arr);
