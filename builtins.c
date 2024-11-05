@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/05 13:04:32 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:42:37 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	int	argc;
 
 	argc = ft_argc(arr);
-	if (!ft_strncmp(arr[0], "export", 6))
+	if (!ft_strncmp(arr[0], "export\0", 7))
 	{
 		if (argc > 1)
 			ft_export_create(mini, arr, 1);
@@ -26,20 +26,8 @@ int	ft_builtdads(t_msh *mini, char **arr)
 		array_free(arr);
 		return (1);
 	}
-	else if (!ft_strncmp(arr[0], "exit", 4))
+	else if (!ft_strncmp(arr[0], "exit\0", 5))
 		ft_exit(mini, arr);
-	else if (!ft_strncmp(arr[0], "pwd", 3))
-	{
-		ft_pwd(mini->env);
-		array_free(arr);
-		return (1);
-	}
-	else if (!ft_strncmp(arr[0], "echo", 4))
-	{
-		ft_echo(arr);
-		array_free(arr);
-		return (1);
-	}
 	return (0);
 }
 
@@ -48,14 +36,14 @@ void	ft_builtins(t_msh *mini, char **arr)
 	int	argc;
 
 	argc = ft_argc(arr);
-	if (!ft_strncmp(arr[0], "env", 3))
+	if (!ft_strncmp(arr[0], "env\0", 4))
 	{
 		array_free(arr);
 		if (argc > 1)
 			childexit(mini, "env: No options or arguments allowed!\n");
 		ft_env(mini, mini->env);
 	}
-	else if (!ft_strncmp(arr[0], "export", 6))
+	else if (!ft_strncmp(arr[0], "export\0", 7))
 	{
 		if (argc > 1)
 			ft_export_create(mini, arr, 1);
@@ -64,20 +52,21 @@ void	ft_builtins(t_msh *mini, char **arr)
 		array_free(arr);
 		childexit(mini, "");
 	}
-	else if (!ft_strncmp(arr[0], "exit", 4))
+	else if (!ft_strncmp(arr[0], "exit\0", 5))
 		ft_exit(mini, arr);
-	else if (!ft_strncmp(arr[0], "pwd", 3))
+	else if (!ft_strncmp(arr[0], "pwd\0", 4))
 	{
 		ft_pwd(mini->env);
 		array_free(arr);
 		childexit(mini, "");
 	}
-	else if (!ft_strncmp(arr[0], "echo", 4))
+	else if (!ft_strncmp(arr[0], "echo\0", 5))
 	{
 		ft_echo(arr);
 		array_free(arr);
 		childexit(mini, "");
 	}
+//	else if (!ft_strncmp(arr[0], "cd\0", 2))
 }
 
 void	ft_exit(t_msh *mini, char **arr)
