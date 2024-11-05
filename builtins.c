@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/05 11:35:25 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:04:46 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	else if (!ft_strncmp(arr[0], "pwd", 3))
 	{
 		ft_pwd(mini->env);
+		array_free(arr);
+		return (1);
+	}
+	else if (!ft_strncmp(arr[0], "echo", 4))
+	{
+		ft_echo(arr);
 		array_free(arr);
 		return (1);
 	}
@@ -63,6 +69,12 @@ void	ft_builtins(t_msh *mini, char **arr)
 	else if (!ft_strncmp(arr[0], "pwd", 3))
 	{
 		ft_pwd(mini->env);
+		array_free(arr);
+		exit(0);
+	}
+	else if (!ft_strncmp(arr[0], "echo", 4))
+	{
+		ft_echo(arr);
 		array_free(arr);
 		exit(0);
 	}
@@ -189,4 +201,29 @@ void	ft_pwd(char **envp)
 		}
 		i++;
 	}
+}
+
+void	ft_echo(char **arr)
+{
+	int	j;
+	int	i;
+
+	i = 1;
+	j = 0;
+	if (arr[i] && !ft_strncmp(arr[i], "-n", 2))
+		i++;
+	while (arr[i])
+	{
+		while (j < (int)ft_strlen(arr[i]) && arr[i][j])
+		{
+			ft_printf("%c", arr[i][j]);
+			j++;
+		}
+		if (arr[i + 1])
+			ft_printf(" ");
+		j = 0;
+		i++;
+	}
+	if (!arr[1] || ft_strncmp(arr[1], "-n", 2))
+		ft_printf("\n");
 }
