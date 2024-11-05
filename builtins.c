@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/05 12:04:46 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:04:32 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_builtins(t_msh *mini, char **arr)
 		else
 			ft_export_print(mini, mini->env);
 		array_free(arr);
-		exit(0);
+		childexit(mini, "");
 	}
 	else if (!ft_strncmp(arr[0], "exit", 4))
 		ft_exit(mini, arr);
@@ -70,13 +70,13 @@ void	ft_builtins(t_msh *mini, char **arr)
 	{
 		ft_pwd(mini->env);
 		array_free(arr);
-		exit(0);
+		childexit(mini, "");
 	}
 	else if (!ft_strncmp(arr[0], "echo", 4))
 	{
 		ft_echo(arr);
 		array_free(arr);
-		exit(0);
+		childexit(mini, "");
 	}
 }
 
