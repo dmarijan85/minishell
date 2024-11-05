@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/31 13:40:04 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:30:57 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void	ft_builtins(t_msh *mini, char **arr);
 int		ft_builtdads(t_msh *mini, char **arr);
 void	ft_exit(t_msh *mini, char **arr);
 void	ft_env(t_msh *mini, char **envp);
+void	ft_pwd(char **envp);
 
 //find_last
 void	ft_export_create(t_msh *mini, char **env, int i);
