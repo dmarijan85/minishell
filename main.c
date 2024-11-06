@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/29 16:08:25 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:43:10 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1)
 		errexit(&mini, "Aquest programa no tolera arguments!! >:3\n");
 	mini.env = envp;
+	mini.envismallocd = false;
 	do_last(&mini, "clear", mini.env);//limpia la pantalla al ejecutar y queda tope limpio :3
 	wait(NULL);
 	printf("\n\tT X I Q U I P E T X I N A !\n\n");

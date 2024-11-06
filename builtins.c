@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/05 17:42:37 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:02:52 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	}
 	else if (!ft_strncmp(arr[0], "exit\0", 5))
 		ft_exit(mini, arr);
+	else if (!ft_strncmp(arr[0], "unset\0", 6))
+	{
+		ft_unset(mini, arr);
+		return (1);
+	}
 	return (0);
 }
 

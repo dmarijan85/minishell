@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/31 17:06:09 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:25:28 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	expand_name_end(char *str, int stt)
 	{
 		while (str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 			end++;
-		//printf("start: %i end returned: %i\n", stt, end);
 		return (end);
 	}
 	else
@@ -52,7 +51,6 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 	while (str[end])
 		lastpart[++i] = str[end++];
 	lastpart[++i] = '\0';
-	//printf("firstpart: %s value: %s lastpart: %s\n", firstpart, value, lastpart);
 	result = ft_strjoin(ft_strjoin(firstpart, value), lastpart);
 	free(firstpart);
 	free(lastpart);
@@ -61,23 +59,13 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 
 char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 {
-	t_envvar	*tmp;
+	char		*ret;
 
-	mini=mini; //TODO
-	tmp = mini->envvar;
-	if (getenv(name))
-		return (strexpander(mini, str, getenv(name), stt));
-	else
+	if (my_getenv(name, mini->env, mini->envvar))
 	{
-		while (tmp)
-		{
-			if (!ft_strncmp(name, tmp->name, ft_strlen(name)))
-			{
-				free(name);
-				return (strexpander(mini, str, tmp->value, stt));
-			}
-			tmp = tmp->next;
-		}
+		ret = strexpander(mini, str, my_getenv(name, mini->env, mini->envvar), stt);		
+		free(name);
+		return (ret);
 	}
 	free(name);
 	return (strexpander(mini, str, NULL, stt));

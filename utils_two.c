@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/31 17:02:57 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:22:17 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ int	open_file(t_msh *mini, char *file, t_openmodes mode)
 	return (ret);
 }
 
-char	*my_getenv(char *name, char **env)
+char	*my_getenv(char *name, char **env, t_envvar *envvar)
 {
-	int		i;
-	int		j;
-	char	*sub;
+	int			i;
+	int			j;
+	char		*sub;
+	t_envvar	*temp;
 
 	i = 0;
 	while (env[i])
@@ -55,10 +56,17 @@ char	*my_getenv(char *name, char **env)
 		free(sub);
 		i++;
 	}
+	temp = envvar;
+	while (temp)
+	{
+		if (!ft_strncmp(name, temp->name, ft_strlen(name) + 1))
+			return (temp->value);
+		temp = temp->next;
+	}
 	return (NULL);
 }
 
-char	*get_path(char *cmd, char **env)
+char	*get_path(t_msh *mini, char *cmd, char **env)
 {
 	int		i;
 	char	*exec;
@@ -67,7 +75,7 @@ char	*get_path(char *cmd, char **env)
 	char	**s_cmd;
 
 	i = -1;
-	allpath = ft_split(my_getenv("PATH", env), ':');
+	allpath = ft_split(my_getenv("PATH", env, mini->envvar), ':');
 	s_cmd = ft_split(cmd, ' ');
 	while (allpath && allpath[++i] && s_cmd)
 	{

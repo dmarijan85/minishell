@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/05 11:49:54 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:26:01 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_node
 typedef struct	s_msh
 {
 	char		**env;
+	bool		envismallocd;
 	t_node		*list;
 	char		*args;
 	bool		reset;
@@ -121,8 +122,8 @@ void	removequotes(char **str);
 //utils two
 void	do_last(t_msh *mini, char *cmd, char **env);
 int		open_file(t_msh *mini, char *file, t_openmodes mode);
-char	*my_getenv(char *name, char **env);
-char	*get_path(char *cmd, char **env);
+char	*my_getenv(char *name, char **env, t_envvar *envvar);
+char	*get_path(t_msh *mini, char *cmd, char **env);
 
 //utils three
 int		ft_argc(char **argv);
@@ -146,6 +147,7 @@ void	ft_exit(t_msh *mini, char **arr);
 void	ft_env(t_msh *mini, char **envp);
 void	ft_pwd(char **envp);
 void	ft_echo(char **arr);
+void	ft_unset(t_msh *mini, char **arr);
 
 //find_last
 void	ft_export_create(t_msh *mini, char **env, int i);

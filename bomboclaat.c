@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/30 14:18:53 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:26:36 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec(t_msh *mini, char *cmd, char **env)
 	if (!s_cmd || !*s_cmd)
 		childexit(mini, "");
 	ft_builtins(mini, s_cmd);	
-	path = get_path(s_cmd[0], env);
+	path = get_path(mini, s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
 	{
 		ft_putstr_fd("msh: command not found: ", 2);
