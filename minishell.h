@@ -86,6 +86,7 @@ typedef struct	s_msh
 	int			pipelen;
 	int			exit;
 	t_envvar	*envvar;
+	char		*pwd;
 }				t_msh;
 
 //Prototypes
