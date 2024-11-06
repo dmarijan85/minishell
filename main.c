@@ -78,6 +78,9 @@ int	main(int ac, char **av, char **envp)
 		errexit(&mini, "Aquest programa no tolera arguments!! >:3\n");
 	mini.env = envp;
 	mini.envismallocd = false;
+	mini.pwd = getenv("PWD");
+	if (!mini.pwd)
+		errexit(&mini, "Va no em toquis els qllons germanet\n");
 	do_last(&mini, "clear", mini.env);//limpia la pantalla al ejecutar y queda tope limpio :3
 	wait(NULL);
 	printf("\n\tT X I Q U I P E T X I N A !\n\n");
