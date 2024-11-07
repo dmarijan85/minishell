@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/06 16:26:01 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/07 14:31:06 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct s_node
 typedef struct	s_msh
 {
 	char		**env;
-	bool		envismallocd;
 	t_node		*list;
 	char		*args;
 	bool		reset;
@@ -132,7 +131,7 @@ int		ft_nodesize(t_node *lst);
 
 //bomboclaat
 void	lebomboclaat(t_msh *mini);
-void	exec(t_msh *mini, char *cmd, char **env);
+void	exec(t_msh *mini, char *cmd);
 void	here_doc(t_msh *mini, t_node *node);
 
 //donepezilo
@@ -162,5 +161,9 @@ char	imquoted(char *str, int loc);
 
 //wildshit
 void	wildfinder(t_msh *mini, char **str);
+
+//init
+void	msh_init(t_msh *mini);
+void	msh_start(t_msh *mini, char **env);
 
 #endif

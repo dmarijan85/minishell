@@ -11,22 +11,25 @@ void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarl
 	mini->pipelen = 0;
 }
 
-static char	**whileloop_cpy_env(char **env, char **ret) //static pq sirve solo para esto no?
+static char	**whileloop_cpy_env(char **env, char **ret, char **og)
 {
 	int	i;
+	int	size;
 
 	i = 0;
-	while (env[i])
+	size = 0;
+	while (og[size])
+		size++;
+	while (i < size)
 	{
 		ret[i] = ft_strdup(env[i]);
 		if (!ret[i])
 		{
 			array_free(ret);
 			return (NULL);
-    }
-    i++;
+    	}
+    	i++;
 	}
-	env[i] = NULL;
 	return (ret);
 }
 
@@ -38,18 +41,20 @@ char	**cpy_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	ret = malloc(sizeof(char *) * i);
+	ret = calloc(sizeof(char *), i + 1);
 	if (!ret)
 		return (NULL);
-	ret = whileloop_cpy_env(env, ret);
+	ret = whileloop_cpy_env(env, ret, env);
 	return (ret);
 }
 
-void  msh_start(t_msh *mini, char **env) //deberia ir en el main en vez de las lineas q tenemos iniciando env pwd etc
+void  msh_start(t_msh *mini, char **env) 
 {
-  mini->env = cpy_env(env);//quiero el env nuestro, no el original / ALSO que pasa si falla el malloc?
-	mini->envismallocd = true; //no se si al hacer el cpy_env hace falta este flag?
+	mini->env = env;
+//	if (!mini->env)
+//		errexit(mini, "environment copy failure?!\n");
 	mini->pwd = getenv("PWD");
-	if (!mini.pwd)  //diria que esto no deberia ir así, pero ya lo arreglaremos pq ns como hay que hacerlo
-		errexit(&mini, "Va no em toquis els qllons germanet\n")
+	mini->envvar = NULL;
+	if (!mini->pwd)
+		errexit(mini, "Va no em toquis els qllons germanet\n");
 }

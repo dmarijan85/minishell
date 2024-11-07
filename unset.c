@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:40:21 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/06 16:28:44 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:46:18 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ void	ft_unset(t_msh *mini, char **arr)
 		if (my_getenv(arr[i], mini->env, mini->envvar))
 		{
 			tmp = del_var(mini->env, arr[i]);
-			if (mini->envismallocd)
-				array_free(mini->env);
+			array_free(mini->env);
 			mini->env = tmp;
 			i++;
-			mini->envismallocd = true;
 		}
 	}
 }

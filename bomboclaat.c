@@ -6,13 +6,13 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/06 16:26:36 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/07 14:32:44 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec(t_msh *mini, char *cmd, char **env)
+void	exec(t_msh *mini, char *cmd)
 {
 	char	**s_cmd;
 	char	*path;
@@ -24,11 +24,11 @@ void	exec(t_msh *mini, char *cmd, char **env)
 	if (!s_cmd || !*s_cmd)
 		childexit(mini, "");
 	ft_builtins(mini, s_cmd);	
-	path = get_path(mini, s_cmd[0], env);
-	if (execve(path, s_cmd, env) == -1)
+	path = get_path(mini, s_cmd[0], mini->env);
+	if (execve(path, s_cmd, mini->env) == -1)
 	{
 		ft_putstr_fd("msh: command not found: ", 2);
-			ft_putendl_fd(s_cmd[0], 2);
+		ft_putendl_fd(s_cmd[0], 2);
 		array_free(s_cmd);
 		childexit(mini, "");
 	}
@@ -71,6 +71,7 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	pid_t	pid;
 	int		p_fd[2];
 
+	env = env;//TODO
 	if (pipe(p_fd) == -1)
 		errexit(mini, "pipe error: illegal fd assignment\n");
 	pid = fork();
@@ -81,7 +82,7 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 		close(p_fd[0]);
 		dup2(p_fd[1], 1);
 		close(p_fd[1]);
-		exec(mini, cmd, env);
+		exec(mini, cmd);
 	}
 	else
 	{

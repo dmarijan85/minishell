@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/06 14:43:10 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:06:49 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,6 @@ t_node	*find_first_node(t_node *current)
 	return (current);
 }
 
-void msh_init(t_msh *mini)
-{
-	mini->list = NULL;
-	mini->reset = false;
-	mini->herectr = 0;
-	mini->args = NULL;
-	mini->pipelen = 0;
-}
-
 void minishell_loop(t_msh *mini)
 {
 	msh_init(mini);
@@ -40,7 +31,7 @@ void minishell_loop(t_msh *mini)
 		lebomboclaat(mini);
 	if (mini->args && *(mini->args) && mini->herectr == 0)
 		add_history(mini->args);
-t_node	*temp;
+	t_node	*temp;
 	int		i;
 
 	i = 0;
@@ -72,18 +63,12 @@ t_node	*temp;
 int	main(int ac, char **av, char **envp)
 {
 	t_msh	mini;
-
 	av = av;
 	if (ac != 1)
 		errexit(&mini, "Aquest programa no tolera arguments!! >:3\n");
-	mini.env = envp;
-	mini.envismallocd = false;
-	mini.pwd = getenv("PWD");
-	if (!mini.pwd)
-		errexit(&mini, "Va no em toquis els qllons germanet\n");
-	do_last(&mini, "clear", mini.env);//limpia la pantalla al ejecutar y queda tope limpio :3
+	msh_start(&mini, envp);	
+	do_last(&mini, "clear", mini.env);
 	wait(NULL);
 	printf("\n\tT X I Q U I P E T X I N A !\n\n");
-	mini.envvar = NULL;
 	minishell_loop(&mini);
 }

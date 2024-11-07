@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/06 16:02:52 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:03:10 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	ft_exit(t_msh *mini, char **arr)
 		exit(buf);
 	}
 	array_free(arr);
+	reset_msh(mini);
 	exit(0);
 }
 

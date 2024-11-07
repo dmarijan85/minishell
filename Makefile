@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/11/06 14:34:34 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/11/07 13:44:57 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,15 @@ SRC =	lexer.c			\
 		utils.c			\
 		wordsplit.c		\
 		cleaners.c		\
-		utils_two.c	\
+		utils_two.c		\
 		parser.c		\
 		bomboclaat.c	\
 		donepezilo.c	\
 		builtins.c		\
 		utils_three.c	\
 		wildproject.c	\
-		unset.c
+		unset.c			\
+		init.c			
 		#main_bonus.c	\
 
 OBJ = $(SRC:.c=.o)
