@@ -6,38 +6,38 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:40:21 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/07 13:46:18 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:39:46 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**whileloop_del_var(char **env, char **ret, char *str)
+static char	**whileloop_del_env(char **env, char **ret, char *str)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (env[i])
+	while (env[j])
 	{
-		if (ft_strncmp(env[i], str, ft_strlen(str)))
+		if (ft_strncmp(env[j], str, ft_strlen(str)))
 		{
-			ret[j] = ft_strdup(env[i]);
-			if (!ret[j])
+			ret[i] = ft_strdup(env[j]);
+			if (!ret[i])
 			{
 				array_free(ret);
 				return (NULL);
-			}
-			j++;
-		}	
-		i++;
+    		}
+    		i++;
+		}
+		j++;
 	}
-	env[i] = NULL;
+	ret[i] = NULL;
 	return (ret);
 }
 
-char	**del_var(char **env, char *str)
+char	**del_env(t_msh *mini, char **env, char *str)
 {
 	char	**ret;
 	size_t	i;
@@ -45,27 +45,43 @@ char	**del_var(char **env, char *str)
 	i = 0;
 	while (env[i])
 		i++;
-	ret = malloc(sizeof(char *) * i);
+	ret = ft_calloc(sizeof(char *), i);
 	if (!ret)
-		return (NULL);
-	ret = whileloop_del_var(env, ret, str);
+		errexit(mini, "malloc: malloc failure?!\n");
+	ret = whileloop_del_env(env, ret, str);
 	return (ret);
 }
 
 void	ft_unset(t_msh *mini, char **arr)
 {
-	char	**tmp;
-	int		i;
+	char		**tmp;
+	int			i;
+	t_envvar	*var;
 
 	i = 1;
 	while (arr[i])
 	{
 		if (my_getenv(arr[i], mini->env, mini->envvar))
 		{
-			tmp = del_var(mini->env, arr[i]);
-			array_free(mini->env);
-			mini->env = tmp;
-			i++;
+			if (my_getenv(arr[i], mini->env, NULL))
+			{
+				tmp = del_env(mini, mini->env, arr[i]);
+				array_free(mini->env);
+				mini->env = tmp;
+				return ;
+			}
+			var = mini->envvar;
+			while (var)
+			{
+				if (!ft_strncmp(arr[i], var->name, ft_strlen(var->name + 1)))
+				{
+					var = delete_envvar(&var);
+					mini->envvar = find_first_envvar(var);
+					return ;
+				}
+				var = var->next;
+			}
 		}
+		i++;
 	}
 }

@@ -6,11 +6,20 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/30 14:06:49 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:35:11 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_envvar	*find_first_envvar(t_envvar *current)
+{
+	if (!current)
+		return (NULL);
+	while (current->prev)
+		current = current->prev;
+	return (current);
+}
 
 t_envvar	*find_last_envvar(t_envvar *current)
 {
@@ -66,6 +75,7 @@ void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini)
 	node = malloc(sizeof(t_envvar));
 	if (!node)
 		errexit(mini, "t_envvar malloc failure?!\n");
+	node->prev = NULL;
 	node->next = NULL;
 	node->name = name;
 	node->hasvalue = false;
@@ -78,6 +88,7 @@ void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini)
 	{
 		last_node = find_last_envvar(*stack);
 		last_node->next = node;
+		node->prev = last_node;
 	}
 }
 

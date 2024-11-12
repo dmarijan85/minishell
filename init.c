@@ -30,6 +30,7 @@ static char	**whileloop_cpy_env(char **env, char **ret, char **og)
     	}
     	i++;
 	}
+	ret[i] = NULL;
 	return (ret);
 }
 
@@ -41,7 +42,7 @@ char	**cpy_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	ret = calloc(sizeof(char *), i + 1);
+	ret = ft_calloc(sizeof(char *), i + 1);
 	if (!ret)
 		return (NULL);
 	ret = whileloop_cpy_env(env, ret, env);
@@ -50,9 +51,9 @@ char	**cpy_env(char **env)
 
 void  msh_start(t_msh *mini, char **env) 
 {
-	mini->env = env;
-//	if (!mini->env)
-//		errexit(mini, "environment copy failure?!\n");
+	mini->env = cpy_env(env);
+	if (!mini->env)
+		errexit(mini, "environment copy failure?!\n");
 	mini->pwd = getenv("PWD");
 	mini->envvar = NULL;
 	if (!mini->pwd)

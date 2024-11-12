@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/07 15:06:49 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:31:13 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ int	main(int ac, char **av, char **envp)
 	msh_start(&mini, envp);	
 	do_last(&mini, "clear", mini.env);
 	wait(NULL);
-	printf("\n\tT X I Q U I P E T X I N A !\n\n");
+	ft_printf("\n\tT X I Q U I P E T X I N A !\n\n");
 	minishell_loop(&mini);
 }

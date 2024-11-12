@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/07 14:31:06 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:39:14 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_envvar
 	char			*name;
 	char			*value;
 	struct s_envvar	*next;
+	struct s_envvar *prev;
 	bool			hasvalue;
 }				t_envvar;
 
@@ -91,79 +92,83 @@ typedef struct	s_msh
 //Prototypes
 
 //main
-void	minishell_loop(t_msh *mini);
+void		minishell_loop(t_msh *mini);
 
 //cleaners
-void	stack_free_nodes(t_node **stack);
-void	stack_free_redirs(t_redirs **stack);
-void	node_free(t_node **stack);
-void	array_free(char **str);
-void	el_fregading(t_msh *mini);
+void		stack_free_nodes(t_node **stack);
+void		stack_free_redirs(t_redirs **stack);
+void		node_free(t_node **stack);
+void		array_free(char **str);
+void		el_fregading(t_msh *mini);
 
 //wordsplit
-int		count_words(const char *str);
-char	**wordsplit(t_msh *mini, char const *s, bool delquotes);
+int			count_words(const char *str);
+char		**wordsplit(t_msh *mini, char const *s, bool delquotes);
 
 //nodestuff
-void	delete_node(t_node **node);
+void		delete_node(t_node **node);
 
 //parser
-void	parser(t_msh *msh);
+void		parser(t_msh *msh);
 
 //lexer
-void	shrimp_lexer(t_msh *mini);
-void	append_redirs(t_redirs **stack, int fd, t_openmodes type, t_msh *mini);
+void		shrimp_lexer(t_msh *mini);
+void		append_redirs(t_redirs **stack, int fd, \
+t_openmodes type, t_msh *mini);
+t_envvar	*find_first_envvar(t_envvar *current);
 
 //utils
-int		fl_redir(t_redirs *current, t_openmodes mode);
-void	remove_redir(t_msh *msh, t_node *node);
-void	removequotes(char **str);
+int			fl_redir(t_redirs *current, t_openmodes mode);
+void		remove_redir(t_msh *msh, t_node *node);
+void		removequotes(char **str);
 
 //utils two
-void	do_last(t_msh *mini, char *cmd, char **env);
-int		open_file(t_msh *mini, char *file, t_openmodes mode);
-char	*my_getenv(char *name, char **env, t_envvar *envvar);
-char	*get_path(t_msh *mini, char *cmd, char **env);
+void		do_last(t_msh *mini, char *cmd, char **env);
+int			open_file(t_msh *mini, char *file, t_openmodes mode);
+char		*my_getenv(char *name, char **env, t_envvar *envvar);
+char		*get_path(t_msh *mini, char *cmd, char **env);
 
 //utils three
-int		ft_argc(char **argv);
-int		ft_nodesize(t_node *lst);
+int			ft_argc(char **argv);
+int			ft_nodesize(t_node *lst);
+t_envvar	*delete_envvar(t_envvar **var);
 
 //bomboclaat
-void	lebomboclaat(t_msh *mini);
-void	exec(t_msh *mini, char *cmd);
-void	here_doc(t_msh *mini, t_node *node);
+void		lebomboclaat(t_msh *mini);
+void		exec(t_msh *mini, char *cmd);
+void		here_doc(t_msh *mini, t_node *node);
 
 //donepezilo
-void	reset_msh(t_msh *mini);
-void	errexit(t_msh *mini, char *str);
-void	childexit(t_msh *mini, char *str);
-void	stack_free_envvars(t_msh *mini);
+void		reset_msh(t_msh *mini);
+void		errexit(t_msh *mini, char *str);
+void		childexit(t_msh *mini, char *str);
+void		stack_free_envvars(t_msh *mini);
 
 //builtins
-void	ft_builtins(t_msh *mini, char **arr);
-int		ft_builtdads(t_msh *mini, char **arr);
-void	ft_exit(t_msh *mini, char **arr);
-void	ft_env(t_msh *mini, char **envp);
-void	ft_pwd(char **envp);
-void	ft_echo(char **arr);
-void	ft_unset(t_msh *mini, char **arr);
+void		ft_builtins(t_msh *mini, char **arr);
+int			ft_builtdads(t_msh *mini, char **arr);
+void		ft_exit(t_msh *mini, char **arr);
+void		ft_env(t_msh *mini, char **envp);
+void		ft_pwd(t_msh *mini);
+void		ft_echo(char **arr);
+void		ft_unset(t_msh *mini, char **arr);
 
 //find_last
-void	ft_export_create(t_msh *mini, char **env, int i);
-void	ft_export_print(t_msh *mini, char **env);
+void		ft_export_create(t_msh *mini, char **env, int i);
+void		ft_export_print(t_msh *mini, char **env);
 
 //append
-void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini);
+void		append_envvar(t_envvar **stack, char *name, \
+char *value, t_msh *mini);
 
 //quotes
-char	imquoted(char *str, int loc);
+char		imquoted(char *str, int loc);
 
 //wildshit
-void	wildfinder(t_msh *mini, char **str);
+void		wildfinder(t_msh *mini, char **str);
 
 //init
-void	msh_init(t_msh *mini);
-void	msh_start(t_msh *mini, char **env);
+void		msh_init(t_msh *mini);
+void		msh_start(t_msh *mini, char **env);
 
 #endif
