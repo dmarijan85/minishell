@@ -6,11 +6,30 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:04:52 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/05 17:05:21 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:38:41 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_envvar	*delete_envvar(t_envvar **node)
+{
+	t_envvar	*tmp;
+
+	tmp = (*node)->prev;
+	if (!tmp)
+		tmp = (*node)->next;
+	if ((*node)->next)
+		(*node)->next->prev = (*node)->prev;
+	if ((*node)->prev)
+		(*node)->prev->next = (*node)->next;
+	free((*node)->name);
+	if ((*node)->value)
+		free((*node)->value);
+	free((*node));
+	node = NULL;
+	return (tmp);
+}
 
 int	ft_argc(char **arr)
 {

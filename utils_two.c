@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/06 16:22:17 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:40:50 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ char	*get_path(t_msh *mini, char *cmd, char **env)
 	char	*path_part;
 	char	**s_cmd;
 
+	mini = mini;//TODO
+	env = env;//TODO
 	i = -1;
-	allpath = ft_split(my_getenv("PATH", env, mini->envvar), ':');
+	allpath = ft_split(getenv("PATH"), ':');
 	s_cmd = ft_split(cmd, ' ');
 	while (allpath && allpath[++i] && s_cmd)
 	{
@@ -84,6 +86,7 @@ char	*get_path(t_msh *mini, char *cmd, char **env)
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
+			array_free(allpath);
 			array_free(s_cmd);
 			return (exec);
 		}
@@ -99,7 +102,7 @@ void	do_last(t_msh *mini, char *cmd, char **env)
 	pid_t	pid;
 	char	**arr;
 
-	
+	env = env;//TODO
 	arr = wordsplit(mini, cmd, false);
 	if (!arr || !*arr)
 	{
@@ -113,5 +116,5 @@ void	do_last(t_msh *mini, char *cmd, char **env)
 	if (pid == -1)
 		errexit(mini, "msh: fork failure!?\n");
 	if (!pid)
-		exec(mini, cmd, env);
+		exec(mini, cmd);
 }
