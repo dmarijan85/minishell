@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/12 14:13:57 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:37:16 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	ft_env(t_msh *mini, char **envp)
 
 void	ft_export_create(t_msh *mini, char **args, int i)
 {
+	char 	*tmp;
 	int		start;
 	int		finnish;
 
@@ -141,9 +142,15 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 		while (args[i][finnish] != '=')
 		{
 			if (!(args[i][finnish]))
-			{
-				append_envvar(&mini->envvar, ft_substr(args[i], start, \
-				finnish), NULL, mini);
+			{	
+				tmp = ft_substr(args[i], start, finnish);
+				if (!my_getenv(tmp, mini->env, mini->envvar))
+				{
+					free(tmp);
+					tmp = ft_substr(args[i], start, finnish);				
+					append_envvar(&mini->envvar, tmp, NULL, mini);
+				}
+				free(tmp);
 				i++;
 				break ;
 			}
@@ -151,6 +158,16 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 		}
 		if (args[i])
 		{
+			tmp = ft_substr(args[i], start, finnish);
+			if (my_getenv(tmp, mini->env, mini->envvar))
+			{
+				free(tmp);
+				tmp = ft_strjoin("unset ", ft_substr(args[i], start, \
+				finnish));
+				do_last(mini, tmp, mini->env);
+				wait(NULL);
+			}
+			free(tmp);
 			append_envvar(&mini->envvar, ft_substr(args[i], start, finnish), \
 			ft_substr(args[i], finnish + 1, ft_strlen(args[i])), mini);
 			i++;

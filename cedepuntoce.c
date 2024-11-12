@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:58:41 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/06 18:24:26 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:17:57 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,24 @@ void	add_path_to_env(t_msh *mini)
 	int	i;
 	char	*tmp;
 
-	getenv
+	
 }
 
 void	change_path(t_msh *mini)
 {
-//	mini-> OLDPWD tambien, el env no es necesariamente modificable no?
-	free(mini->pwd);
+	free(mini->oldpwd);
+	mini->oldpwd = mini->pwd;
+//	free(mini->pwd); esta tia es tonta o soy retrasado?
 	mini->pwd = getcwd(NULL, sizeof(NULL));
 }
 
 void	ft_cd(t_msh *mini, char **arr, int argc)
 {
 	int	errnum;
-//afegir variable pwd en mini
-//	if (!(argc > 1))
-//		if (chdir(getenv("HOME")))
- 			
-//	change path a "HOME=" con getenv es ez, lo unico q si nos lo borran/cambian se lia
-//	else if (!ft_strncmp(arr[1], "-\0", 2))//(?? no conocia lo de cd -)
-//	change path a "OLDPWD=" same q con home
-//	else
-//	{
-	errnum = chdir(arr[1]);
-	if (errnum)
+//afegir variable pwd en mini	
+	if (chdir(arr[1])
 		errexit(mini, "cagaste we (cd error)");
 			//error papito
-//	}
-	//vigilar el errnum de los 2 primeros ifs
 	change_path(mini);
 	add_path_to_env(mini);
 //return o lo q sea (TIENE QUE HACERLO EL PAPA)

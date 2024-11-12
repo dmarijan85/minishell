@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/12 14:49:22 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:51:21 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct	s_msh
 	int			exit;
 	t_envvar	*envvar;
 	char		*pwd;
+	char		*oldpwd;
 }				t_msh;
 
 //Prototypes

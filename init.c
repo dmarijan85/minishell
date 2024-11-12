@@ -9,6 +9,9 @@ void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarl
 	mini->herectr = 0;
 	mini->args = NULL;
 	mini->pipelen = 0;
+//	mini->pwd = getenv("PWD");
+//	mini->oldpwd = getenv("OLDPWD");
+//	mini->home = getenv("HOME");
 }
 
 static char	**whileloop_cpy_env(char **env, char **ret, char **og)
