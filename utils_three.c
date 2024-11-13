@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:04:52 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/12 14:38:41 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:29:30 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_envvar	*delete_envvar(t_envvar **node)
 	if ((*node)->prev)
 		(*node)->prev->next = (*node)->next;
 	free((*node)->name);
-	if ((*node)->value)
+	if ((*node)->hasvalue)
 		free((*node)->value);
 	free((*node));
 	node = NULL;

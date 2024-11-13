@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:59:40 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/12 13:35:38 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:47:37 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	childexit(t_msh *mini, char *err)
 		ft_printstderr("msh: %s", err);
 	reset_msh(mini);
 	array_free(mini->env);
-	stack_free_envvars(mini);
+	if (mini->envvar)
+		stack_free_envvars(mini);
 	exit(-1);
 }

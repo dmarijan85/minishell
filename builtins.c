@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/13 12:35:24 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:43:13 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	else if (!ft_strncmp(arr[0], "pwd\0", 4))
 	{
 		ft_pwd(mini);
+		array_free(arr);
+		return (1);
+	}
+	else if (!ft_strncmp(arr[0], "cd\0", 3))
+	{
+		ft_cd(mini, arr, argc);
 		array_free(arr);
 		return (1);
 	}
@@ -78,7 +84,11 @@ void	ft_builtins(t_msh *mini, char **arr)
 		array_free(arr);
 		childexit(mini, "");
 	}
-//	else if (!ft_strncmp(arr[0], "cd\0", 2))
+	else if (!ft_strncmp(arr[0], "cd\0", 3))
+	{	
+		array_free(arr);
+		childexit(mini, "");
+	}
 }
 
 void	ft_exit(t_msh *mini, char **arr)
@@ -104,7 +114,8 @@ void	ft_exit(t_msh *mini, char **arr)
 	array_free(arr);
 	reset_msh(mini);
 	array_free(mini->env);
-	stack_free_envvars(mini);
+	if (mini->envvar)
+		stack_free_envvars(mini);
 	exit(0);
 }
 
@@ -147,11 +158,15 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 				tmp = ft_substr(args[i], start, finnish);
 				if (!my_getenv(tmp, mini->env, mini->envvar))
 				{
-					free(tmp);
-					tmp = ft_substr(args[i], start, finnish);				
-					append_envvar(&mini->envvar, tmp, NULL, mini);
+					if (!ft_strncmp(tmp,"PWD\0", 4))
+						append_envvar(&mini->envvar, tmp, mini->pwd, mini);
+					else if (!ft_strncmp(tmp, "OLDPWD\0", 7))
+						append_envvar(&mini->envvar, tmp, mini->oldpwd, mini);
+					else
+						append_envvar(&mini->envvar, tmp, NULL, mini);
 				}
-				free(tmp);
+				else
+					free(tmp);
 				i++;
 				break ;
 			}

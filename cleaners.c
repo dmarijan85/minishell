@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:20:17 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/26 16:04:29 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:36:37 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	stack_free_envvars(t_msh *mini)
 	{
 		tmp = current->next;
 		free(current->name);
-		if (current->value)
+		if (current->hasvalue)
 			free(current->value);
 		free(current);
 		current = tmp;

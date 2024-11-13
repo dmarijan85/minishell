@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/11/07 13:44:57 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/11/13 15:01:55 by mclaver-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,13 @@ SRC =	lexer.c			\
 		utils_three.c	\
 		wildproject.c	\
 		unset.c			\
-		init.c			
+		init.c			\
+		cedepuntoce.c	\
 		#main_bonus.c	\
 
 OBJ = $(SRC:.c=.o)
 
-COMPILE = gcc -Wall -Werror -Wextra #-g -fsanitize=address
+COMPILE = gcc -Wall -Werror -Wextra -g #-fsanitize=address
 
 REMOVE = rm -f
 

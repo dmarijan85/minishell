@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/12 16:39:20 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:13:23 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*my_getenv(char *name, char **env, t_envvar *envvar)
 		while (env[i][j] && env[i][j] != '=')
 			j++;
 		sub = ft_substr(env[i], 0, j);
-		if (ft_strncmp(sub, name, ft_strlen(sub)) == 0)
+		if (!ft_strncmp(sub, name, ft_strlen(sub)))
 		{
 			free(sub);
 			return (env[i] + j + 1);

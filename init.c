@@ -9,9 +9,6 @@ void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarl
 	mini->herectr = 0;
 	mini->args = NULL;
 	mini->pipelen = 0;
-//	mini->pwd = getenv("PWD");
-//	mini->oldpwd = getenv("OLDPWD");
-//	mini->home = getenv("HOME");
 }
 
 static char	**whileloop_cpy_env(char **env, char **ret, char **og)
@@ -54,6 +51,8 @@ char	**cpy_env(char **env)
 
 void  msh_start(t_msh *mini, char **env) 
 {
+	char *tmp;
+
 	mini->env = cpy_env(env);
 	if (!mini->env)
 		errexit(mini, "environment copy failure?!\n");
@@ -61,4 +60,19 @@ void  msh_start(t_msh *mini, char **env)
 	mini->envvar = NULL;
 	if (!mini->pwd)
 		errexit(mini, "Va no em toquis els qllons germanet\n");
+	mini->pwd = getcwd(NULL, 0);
+	if (!getenv("PWD"))
+	{
+		tmp = ft_strjoin("export PWD=", mini->pwd);
+		do_last(mini, tmp, mini->env);
+		wait(NULL);
+		free(tmp);
+	}
+	mini->oldpwd = NULL;
+	if (!getenv("OLDPWD"))
+	{
+		do_last(mini, "export OLDPWD", mini->env);
+		wait(NULL);
+	}
+	mini->oldpwd = ft_strdup(my_getenv("OLDPWD", mini->env, mini->envvar));
 }
