@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/13 15:51:03 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:29:50 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec(t_msh *mini, char *cmd)
 	{
 		ft_putstr_fd("msh: command not found: ", 2);
 		ft_putendl_fd(s_cmd[0], 2);
-		array_free(s_cmd);
+		array_free(s_cmd);//este se repite parece
 		childexit(mini, "");
 	}
 }

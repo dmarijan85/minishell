@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:58:41 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/13 15:32:13 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:17:11 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,13 @@ void	ft_cd(t_msh *mini, char **arr, int argc)
 	free(mini->oldpwd);
 	mini->oldpwd = getcwd(NULL, 0);
 	if (chdir(arr[1]))
-		errexit(mini, "cagaste we (cd error)\n");
+		errexit(mini, "cd: No such file or directory\n");
 	free(mini->pwd);
+/*	if (ft_nodesize(mini->list) != 1)
+	{
+		array_free(arr);
+		return ;
+	}*/
 	mini->pwd = getcwd(NULL, 0);
 	add_path_to_env(mini);
 }

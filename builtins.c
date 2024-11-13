@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/13 15:43:13 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:16:37 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_builtdads(t_msh *mini, char **arr)
 			ft_export_create(mini, arr, 1);
 		else
 			ft_export_print(mini, mini->env);
-		array_free(arr);
+		array_free(arr);//este
 		return (1);
 	}
 	else if (!ft_strncmp(arr[0], "exit\0", 5))
@@ -101,7 +101,7 @@ void	ft_exit(t_msh *mini, char **arr)
 		errexit(mini, "exit: too many arguments\n");
 	if (ft_nodesize(mini->list) != 1)
 	{
-		array_free(arr);
+		array_free(arr);//este free es un problema
 		return ;
 	}
 	ft_printstderr("exit\n");
@@ -111,7 +111,7 @@ void	ft_exit(t_msh *mini, char **arr)
 		array_free(arr);
 		exit(buf);
 	}
-	array_free(arr);
+	array_free(arr);//este puede que tambien
 	reset_msh(mini);
 	array_free(mini->env);
 	if (mini->envvar)
