@@ -63,6 +63,8 @@ void  msh_start(t_msh *mini, char **env)
 {
 	char *tmp;
 
+	mini->list = NULL;
+	mini->args = NULL;
 	mini->env = cpy_env(env);
 	if (!mini->env)
 		errexit(mini, "environment copy failure?!\n");
@@ -78,11 +80,10 @@ void  msh_start(t_msh *mini, char **env)
 		wait(NULL);
 		free(tmp);
 	}
-	mini->oldpwd = NULL;
+	mini->oldpwd = getenv("OLDPWD");
 	if (!getenv("OLDPWD"))
 	{
-		do_last(mini, "export OLDPWD", mini->env);
+		do_last(mini, "export OLDPWD=", mini->env);
 		wait(NULL);
 	}
-	mini->oldpwd = ft_strdup(my_getenv("OLDPWD", mini->env, mini->envvar));
 }

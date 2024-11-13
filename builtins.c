@@ -27,7 +27,10 @@ int	ft_builtdads(t_msh *mini, char **arr)
 		return (1);
 	}
 	else if (!ft_strncmp(arr[0], "exit\0", 5))
+	{	
 		ft_exit(mini, arr);
+		return (1);	
+	}	
 	else if (!ft_strncmp(arr[0], "unset\0", 6))
 	{
 		ft_unset(mini, arr);
@@ -48,7 +51,7 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	}
 	return (0);
 }
-
+//estos son los builtins que mira el hijo
 void	ft_builtins(t_msh *mini, char **arr)
 {
 	int	argc;
@@ -71,7 +74,10 @@ void	ft_builtins(t_msh *mini, char **arr)
 		childexit(mini, "");
 	}
 	else if (!ft_strncmp(arr[0], "exit\0", 5))
-		ft_exit(mini, arr);
+	{
+		array_free(arr);	
+		childexit(mini, "");
+	}	
 	else if (!ft_strncmp(arr[0], "pwd\0", 4))
 	{
 		ft_pwd(mini);
@@ -101,7 +107,7 @@ void	ft_exit(t_msh *mini, char **arr)
 		errexit(mini, "exit: too many arguments\n");
 	if (ft_nodesize(mini->list) != 1)
 	{
-		array_free(arr);//este free es un problema
+		array_free(arr);
 		return ;
 	}
 	ft_printstderr("exit\n");
@@ -111,7 +117,7 @@ void	ft_exit(t_msh *mini, char **arr)
 		array_free(arr);
 		exit(buf);
 	}
-	array_free(arr);//este puede que tambien
+	array_free(arr);
 	reset_msh(mini);
 	array_free(mini->env);
 	if (mini->envvar)

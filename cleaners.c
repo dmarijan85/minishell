@@ -25,6 +25,24 @@ char	*get_free(char **str)
 }
 */
 
+char	**test_array_free(char **str)
+{
+	int	i;
+
+	i = 0;
+	if (str)
+	
+		while (str[i])
+		{
+			get_free(&str[i]);
+			i++;
+		}
+		if (str)
+			free(str);
+	}
+	return (NULL);
+}
+
 void	array_free(char **str)
 {
 	int	i;
@@ -37,9 +55,10 @@ void	array_free(char **str)
 			get_free(&str[i]);
 			i++;
 		}
-		free(str);
-		str = NULL;
+		if (str)
+			free(str);
 	}
+	str = NULL;
 }
 
 void	node_free(t_node **stack)

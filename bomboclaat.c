@@ -29,7 +29,7 @@ void	exec(t_msh *mini, char *cmd)
 	{
 		ft_putstr_fd("msh: command not found: ", 2);
 		ft_putendl_fd(s_cmd[0], 2);
-		array_free(s_cmd);//este se repite parece
+		array_free(s_cmd);
 		childexit(mini, "");
 	}
 }
