@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/12 16:37:16 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:35:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	ft_env(t_msh *mini, char **envp)
 void	ft_export_create(t_msh *mini, char **args, int i)
 {
 	char 	*tmp;
+	char	*tmptwo;
 	int		start;
 	int		finnish;
 
@@ -161,10 +162,9 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 			tmp = ft_substr(args[i], start, finnish);
 			if (my_getenv(tmp, mini->env, mini->envvar))
 			{
-				free(tmp);
-				tmp = ft_strjoin("unset ", ft_substr(args[i], start, \
-				finnish));
-				do_last(mini, tmp, mini->env);
+				tmptwo = ft_strjoin("unset ", tmp);
+				do_last(mini, tmptwo, mini->env);
+				free(tmptwo);
 				wait(NULL);
 			}
 			free(tmp);

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/06 16:25:28 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:43:51 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 	char	*result;
 	char	*firstpart;
 	char	*lastpart;
+	char	*middlepart;
 	int		i;
 	int		end;
 
@@ -51,8 +52,10 @@ char	*strexpander(t_msh *mini, char *str, char *value, int stt)
 	while (str[end])
 		lastpart[++i] = str[end++];
 	lastpart[++i] = '\0';
-	result = ft_strjoin(ft_strjoin(firstpart, value), lastpart);
+	middlepart = ft_strjoin(firstpart, value);
+	result = ft_strjoin(middlepart, lastpart);
 	free(firstpart);
+	free(middlepart);
 	free(lastpart);
 	return (result);
 }
@@ -84,14 +87,12 @@ void	wildfinder(t_msh *mini, char **str)
 	{
 		if (rec[i] == '$' && imquoted(rec, i) != '\'')
 		{
-			printf("imquoted: %c loop n%i before-> %s\n", imquoted(rec, i), i, *str);
 			name = ft_substr(rec, i + 1, expand_name_end(rec, i + 1) - i - 1);
-			printf("supposed name: %s, its length: %li\n", name, ft_strlen(name));
 			res = wildhandler(mini, *str, i, name);
 			*str = res;
-			printf("loop n%i after -> %s\n", i, *str);
 		}
 		i++;
 		rec = *str;
 	}
+
 }
