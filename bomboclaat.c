@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/14 12:08:56 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:54:28 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec(t_msh *mini, char *cmd)
 
 	if (cmd && !*cmd)
 		childexit(mini, "command not found: ''\n");
-	wildfinder(mini, &cmd);
+	wildfinder(mini, &cmd, false);
 	s_cmd = wordsplit(mini, cmd, true);
 	if (!s_cmd || !*s_cmd)
 		childexit(mini, "");
@@ -27,8 +27,7 @@ void	exec(t_msh *mini, char *cmd)
 	path = get_path(mini, s_cmd[0], mini->env);
 	if (execve(path, s_cmd, mini->env) == -1)
 	{
-		ft_putstr_fd("msh: command not found: ", 2);
-		ft_putendl_fd(s_cmd[0], 2);
+		ft_printf(2, "msh: command not found: %s\n", s_cmd[0]);
 		array_free(s_cmd);
 		childexit(mini, "");
 	}
@@ -112,7 +111,7 @@ void	letxiquibomber(t_node *temp, t_msh *mini)
 		if (i > 0)
 			do_pipe(mini, temp->str, mini->env);
 		else if (i == 0)
-			do_last(mini, temp->str, mini->env);
+			do_last(mini, temp->str);
 		temp = temp->next;
 		i--;
 	}

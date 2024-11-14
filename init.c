@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:42 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/14 11:57:31 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:21:23 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void  msh_start(t_msh *mini, char **env)
 	if (!getenv("PWD"))
 	{
 		tmp = ft_strjoin("export PWD=", mini->pwd);
-		do_last(mini, tmp, mini->env);
+		do_last(mini, tmp);
 		free(tmp);
 	}
 	mini->oldpwd = getenv("OLDPWD");
 	if (!getenv("OLDPWD"))
-		do_last(mini, "export OLDPWD=", mini->env);
+		do_last(mini, "export OLDPWD=");
 }

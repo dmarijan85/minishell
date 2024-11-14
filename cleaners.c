@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:20:17 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/14 11:57:06 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:14:08 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	el_fregading(t_msh *mini)
 	free(mini->args);
 	if (!access(".heredoc", F_OK))
 	{
-		do_last(mini, "rm -rf .heredoc", mini->env);
+		do_last(mini, "rm -rf .heredoc");
 		wait(NULL);
 	}
 }

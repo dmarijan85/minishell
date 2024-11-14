@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/14 11:45:15 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:53:48 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void		remove_redir(t_msh *msh, t_node *node);
 void		removequotes(char **str);
 
 //utils two
-void		do_last(t_msh *mini, char *cmd, char **env);
+void		do_last(t_msh *mini, char *cmd);
 int			open_file(t_msh *mini, char *file, t_openmodes mode);
 char		*my_getenv(char *name, char **env, t_envvar *envvar);
 char		*get_path(t_msh *mini, char *cmd, char **env);
@@ -169,7 +169,7 @@ char *value, t_msh *mini);
 char		imquoted(char *str, int loc);
 
 //wildshit
-void		wildfinder(t_msh *mini, char **str);
+void		wildfinder(t_msh *mini, char **str, bool dofree);
 
 //init
 void		msh_init(t_msh *mini);

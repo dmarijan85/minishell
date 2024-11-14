@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:58:41 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/14 12:24:47 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:14:32 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	add_path_to_env(t_msh *mini)
 			tmp = ft_strjoin("export PWD=", mini->pwd);
 		else
 			tmp = ft_strdup("export PWD");
-		do_last(mini, tmp, mini->env);
+		do_last(mini, tmp);
 		free(tmp);
 	}
 	if (my_getenv("OLDPWD", mini->env, mini->envvar))
@@ -33,7 +33,7 @@ void	add_path_to_env(t_msh *mini)
 			tmp = ft_strjoin("export OLDPWD=", mini->oldpwd);
 		else
 			tmp = ft_strdup("export OLDPWD");
-		do_last(mini, tmp, mini->env);
+		do_last(mini, tmp);
 		free(tmp);
 	}
 }

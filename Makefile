@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/11/14 11:15:54 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/11/14 14:39:04 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC =	lexer.c			\
 
 OBJ = $(SRC:.c=.o)
 
-COMPILE = gcc -Wall -Werror -Wextra -g #-fsanitize=address
+COMPILE = gcc -Wall -Werror -Wextra -g -fsanitize=address
 
 REMOVE = rm -f
 

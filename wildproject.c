@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/13 12:43:51 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:54:04 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 	return (strexpander(mini, str, NULL, stt));
 }
 
-void	wildfinder(t_msh *mini, char **str)
+void	wildfinder(t_msh *mini, char **str, bool dofree)
 {
 	int		i;
 	char	*res;
@@ -89,10 +89,11 @@ void	wildfinder(t_msh *mini, char **str)
 		{
 			name = ft_substr(rec, i + 1, expand_name_end(rec, i + 1) - i - 1);
 			res = wildhandler(mini, *str, i, name);
+			if (dofree)
+				free(*str);
 			*str = res;
 		}
 		i++;
 		rec = *str;
 	}
-
 }

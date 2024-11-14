@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/13 17:35:09 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:54:19 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,16 @@ char	*get_path(t_msh *mini, char *cmd, char **env)
 	return (cmd);
 }
 
-void	do_last(t_msh *mini, char *cmd, char **env)
+void	do_last(t_msh *mini, char *cmd)
 {
 	pid_t	pid;
 	char	**arr;
-
-	env = env;//TODO
-	arr = wordsplit(mini, cmd, false);
+	char	*tmp;
+	
+	tmp = ft_strdup(cmd);
+	wildfinder(mini, &tmp, true);
+	arr = wordsplit(mini, tmp, false);
+	free(tmp);
 	if (!arr || !*arr)
 	{
 		array_free(arr);

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/14 12:24:24 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:21:47 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	else if (!ft_strncmp(arr[0], "exit\0", 5))
 	{	
 		ft_exit(mini, arr);
+		array_free(arr);
 		return (1);	
 	}	
 	else if (!ft_strncmp(arr[0], "unset\0", 6))
@@ -105,12 +106,12 @@ void	ft_exit(t_msh *mini, char **arr)
 
 	argc = ft_argc(arr);
 	if (argc > 2)
-		errexit(mini, "exit: too many arguments\n");
-	if (ft_nodesize(mini->list) != 1)
 	{
-		array_free(arr);
+		ft_printf(2, "msh: exit: too many arguments\n");
 		return ;
 	}
+	if (ft_nodesize(mini->list) != 1)
+		return ;
 	ft_printf(2, "exit\n");
 	if (argc > 1)
 	{
@@ -185,7 +186,7 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 			if (my_getenv(tmp, mini->env, mini->envvar))
 			{
 				tmptwo = ft_strjoin("unset ", tmp);
-				do_last(mini, tmptwo, mini->env);
+				do_last(mini, tmptwo);
 				free(tmptwo);
 			}
 			free(tmp);
