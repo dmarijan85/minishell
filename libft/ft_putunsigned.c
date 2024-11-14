@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:19:41 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/03/21 13:44:35 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:21:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static unsigned int	exp_counter(unsigned int n)
 	return (exp);
 }
 
-int	pt_putunsigned(unsigned int n)
+int	pt_putunsigned(int out, unsigned int n)
 {
 	char				c;
 	unsigned int		copy;
@@ -56,7 +56,7 @@ int	pt_putunsigned(unsigned int n)
 	while (exp > 0)
 	{
 		c = (copy / exp) + '0';
-		if (write(1, &c, sizeof(char)) == -1)
+		if (write(out, &c, sizeof(char)) == -1)
 			return (-1);
 		copy = copy % exp;
 		exp = exp / 10;

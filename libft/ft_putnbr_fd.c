@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:28:02 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/03/21 13:43:44 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:20:58 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	isneg(int *copy)
 	return (write (1, "-", sizeof(char)));
 }
 
-int	pt_putnbr_fd(int n)
+int	pt_putnbr_fd(int out, int n)
 {
 	char	c;
 	int		copy;
@@ -88,7 +88,7 @@ int	pt_putnbr_fd(int n)
 	while (exp > 0 && n != INT_MIN && i >= 0)
 	{
 		c = (copy / exp) + '0';
-		if (write(1, &c, sizeof(char)) == -1)
+		if (write(out, &c, sizeof(char)) == -1)
 			return (-1);
 		copy = copy % exp;
 		exp = exp / 10;

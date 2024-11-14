@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:20:17 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/13 14:36:37 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:57:06 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,6 @@ char	*get_free(char **str)
 	return (NULL);
 }
 */
-
-char	**test_array_free(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (str)
-	
-		while (str[i])
-		{
-			get_free(&str[i]);
-			i++;
-		}
-		if (str)
-			free(str);
-	}
-	return (NULL);
-}
 
 void	array_free(char **str)
 {
@@ -132,7 +114,9 @@ void	el_fregading(t_msh *mini)
 {
 	stack_free_nodes(&mini->list);
 	free(mini->args);
-	if (!access(".heredoc", F_OK)) 
+	if (!access(".heredoc", F_OK))
+	{
 		do_last(mini, "rm -rf .heredoc", mini->env);
-	wait(NULL);
+		wait(NULL);
+	}
 }

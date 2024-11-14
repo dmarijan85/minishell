@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/13 18:29:50 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:08:56 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,9 @@ void	lebomboclaat(t_msh *mini)
 	close(tmp0);
 	dup2(tmp1, 1);
 	close(tmp1);
-	while ((mini->pipelen)-- >= 0)
+	while ((mini->pipelen) >= 0)
+	{
 		wait(NULL);
+		(mini->pipelen)--;
+	}
 }

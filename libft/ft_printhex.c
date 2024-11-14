@@ -6,15 +6,15 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:50:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/03/21 13:47:42 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:19:53 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	printc(int c)
+static int	printc(int out, int c)
 {
-	return (write(1, &c, sizeof(char)));
+	return (write(out, &c, sizeof(char)));
 }
 
 static void	checkflag(char flag, int *letter)
@@ -25,7 +25,7 @@ static void	checkflag(char flag, int *letter)
 		*letter = 'A';
 }
 
-int	pt_puthex(char flag, unsigned int n)
+int	pt_puthex(int out, char flag, unsigned int n)
 {
 	int	rv;
 	int	letter;
@@ -34,19 +34,19 @@ int	pt_puthex(char flag, unsigned int n)
 	rv = 0;
 	checkflag(flag, &letter);
 	if ((n / 16) > 0)
-		rv += pt_puthex(flag, n / 16);
+		rv += pt_puthex(out, flag, n / 16);
 	if (rv < 0)
 		return (-1);
 	if ((n % 16) >= 10 && (n % 16) <= 15)
 	{
-		temp = printc(letter + ((n % 16) - 10));
+		temp = printc(out, letter + ((n % 16) - 10));
 		if (temp == -1)
 			return (-1);
 		rv += temp;
 	}
 	else
 	{
-		temp = printc('0' + (n % 16));
+		temp = printc(out, '0' + (n % 16));
 		if (temp == -1)
 			return (-1);
 		rv += temp;

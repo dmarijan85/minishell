@@ -6,40 +6,40 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:25:41 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/04/15 12:51:59 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:16:25 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "limits.h"
 
-static int	printc(int c)
+static int	printc(int out, int c)
 {
-	return (write(1, &c, sizeof(char)));
+	return (write(out, &c, sizeof(char)));
 }
 
-static int	formatter(char const *input, int i, va_list args)
+static int	formatter(int out, char const *input, int i, va_list args)
 {
 	unsigned int	u;
 
 	u = 0;
 	if (input[i] == 'c')
-		return (printc(va_arg(args, int)));
+		return (printc(out, va_arg(args, int)));
 	else if (input[i] == 's')
-		return (pt_putstr(va_arg(args, char *)));
+		return (pt_putstr(out, va_arg(args, char *)));
 	else if (input[i] == 'd' || input[i] == 'i')
-		return (pt_putnbr_fd(va_arg(args, int)));
+		return (pt_putnbr_fd(out, va_arg(args, int)));
 	else if (input[i] == '%')
-		return (printc('%'));
+		return (printc(out, '%'));
 	else if (input[i] == 'u')
 	{
 		u = (unsigned int)va_arg(args, int);
-		return (pt_putunsigned(u));
+		return (pt_putunsigned(out, u));
 	}
 	else if (input[i] == 'X' || input[i] == 'x')
-		return (pt_puthex(input[i], va_arg(args, unsigned int)));
+		return (pt_puthex(out, input[i], va_arg(args, unsigned int)));
 	else if (input[i] == 'p')
-		return (pt_putptr(va_arg(args, void *)));
+		return (pt_putptr(out, va_arg(args, void *)));
 	return (-1);
 }
 
@@ -54,7 +54,7 @@ int	printflogic(char const *input, int out, int ret, va_list args)
 		if (input[i] == '%' && pt_strchr("cspdiuxX%", input[i + 1]))
 		{
 			i++;
-			temp = formatter(input, i, args);
+			temp = formatter(out, input, i, args);
 			if (temp == -1)
 				return (-1);
 			ret = ret + temp;
@@ -70,26 +70,10 @@ int	printflogic(char const *input, int out, int ret, va_list args)
 	return (ret);
 }
 
-int	ft_printstderr(char const *input, ...)
+int	ft_printf(int out, char const *input, ...)
 {
 	va_list	args;
 
 	va_start(args, input);
-	return (printflogic(input, 2, 0, args));
+	return (printflogic(input, out, 0, args));
 }
-
-int	ft_printf(char const *input, ...)
-{
-	va_list	args;
-
-	va_start(args, input);
-	return (printflogic(input, 1, 0, args));
-}
-/*
-int	main()
-{
-	printf("hola me llamo \0danilo");
-	puts("\n");
-	ft_printf("hola me llamo \0danilo");
-}
-*/

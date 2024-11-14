@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:58:41 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/13 16:17:11 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:24:47 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	add_path_to_env(t_msh *mini)
 		else
 			tmp = ft_strdup("export PWD");
 		do_last(mini, tmp, mini->env);
-		wait(NULL);
 		free(tmp);
 	}
 	if (my_getenv("OLDPWD", mini->env, mini->envvar))
@@ -35,27 +34,41 @@ void	add_path_to_env(t_msh *mini)
 		else
 			tmp = ft_strdup("export OLDPWD");
 		do_last(mini, tmp, mini->env);
-		wait(NULL);
 		free(tmp);
 	}
+}
+
+int		can_opendir(char *path) 
+{
+	int	re;
+	DIR	*dir;
+
+	re = 1;
+	dir = opendir(path);
+	if (!dir)
+		re = 0;
+	else
+		closedir(dir);
+	return (re);
 }
 
 void	ft_cd(t_msh *mini, char **arr, int argc)
 {
 	if (argc > 2)
-		errexit(mini, "cd: too many arguments\n");
-	if (argc == 1)
-		errexit(mini, "cd: not relative or absolute path\n");
-	free(mini->oldpwd);
-	mini->oldpwd = getcwd(NULL, 0);
-	if (chdir(arr[1]))
-		errexit(mini, "cd: No such file or directory\n");
-	free(mini->pwd);
-/*	if (ft_nodesize(mini->list) != 1)
+		ft_printf(2, "msh: cd: too many arguments\n");
+	else if (argc == 1)
+		ft_printf(2, "msh: cd: not relative or absolute path\n");
+	else if (!can_opendir(arr[1]))
+		ft_printf(2, "msh: cd: %s: No such file or directory\n", arr[1]);
+	else
 	{
-		array_free(arr);
-		return ;
-	}*/
-	mini->pwd = getcwd(NULL, 0);
-	add_path_to_env(mini);
+		if (ft_nodesize(mini->list) != 1)
+			return ;
+		free(mini->oldpwd);
+		mini->oldpwd = getcwd(NULL, 0);
+		chdir(arr[1]);
+		free(mini->pwd);
+		mini->pwd = getcwd(NULL, 0);
+		add_path_to_env(mini);
+	}
 }

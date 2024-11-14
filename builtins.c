@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/13 18:16:37 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:24:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_builtdads(t_msh *mini, char **arr)
 			ft_export_create(mini, arr, 1);
 		else
 			ft_export_print(mini, mini->env);
-		array_free(arr);//este
+		array_free(arr);
 		return (1);
 	}
 	else if (!ft_strncmp(arr[0], "exit\0", 5))
@@ -92,6 +92,7 @@ void	ft_builtins(t_msh *mini, char **arr)
 	}
 	else if (!ft_strncmp(arr[0], "cd\0", 3))
 	{	
+		ft_cd(mini, arr, argc);
 		array_free(arr);
 		childexit(mini, "");
 	}
@@ -110,7 +111,7 @@ void	ft_exit(t_msh *mini, char **arr)
 		array_free(arr);
 		return ;
 	}
-	ft_printstderr("exit\n");
+	ft_printf(2, "exit\n");
 	if (argc > 1)
 	{
 		buf = ft_atoi(arr[1]);
@@ -133,14 +134,14 @@ void	ft_env(t_msh *mini, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		ft_printf("%s\n", envp[i]);
+		ft_printf(1, "%s\n", envp[i]);
 		i++;
 	}
 	tmp = mini->envvar;
 	while (tmp)
 	{
 		if (tmp->hasvalue)
-			ft_printf("%s=%s\n", tmp->name, tmp->value);
+			ft_printf(1, "%s=%s\n", tmp->name, tmp->value);
 		tmp = tmp->next;
 	}
 	childexit(mini, "");
@@ -186,7 +187,6 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 				tmptwo = ft_strjoin("unset ", tmp);
 				do_last(mini, tmptwo, mini->env);
 				free(tmptwo);
-				wait(NULL);
 			}
 			free(tmp);
 			append_envvar(&mini->envvar, ft_substr(args[i], start, finnish), \
@@ -206,29 +206,29 @@ void	ft_export_print(t_msh *mini, char **envp)
 	while (envp[i])
 	{
 		j = 0;
-		ft_printf("declare -x ");
+		ft_printf(1, "declare -x ");
 		while (envp[i][j] && envp[i][j] != '=')
-			ft_printf("%c", envp[i][j++]);
-		ft_printf("=\"");
+			ft_printf(1, "%c", envp[i][j++]);
+		ft_printf(1, "=\"");
 		while (envp[i][j++])
-			ft_printf("%c", envp[i][j]);
-		ft_printf("\"\n");
+			ft_printf(1, "%c", envp[i][j]);
+		ft_printf(1, "\"\n");
 		i++;
 	}
 	tmp = mini->envvar;
 	while (tmp)
 	{
-		ft_printf("declare -x %s", tmp->name);
+		ft_printf(1, "declare -x %s", tmp->name);
 		if (tmp->hasvalue)
-			ft_printf("=\"%s\"", tmp->value);
-		ft_printf("\n");
+			ft_printf(1, "=\"%s\"", tmp->value);
+		ft_printf(1, "\n");
 		tmp = tmp->next;	
 	}
 }
 
 void	ft_pwd(t_msh *mini)
 {
-	ft_printf("%s\n", mini->pwd);
+	ft_printf(1, "%s\n", mini->pwd);
 }
 
 void	ft_echo(char **arr)
@@ -244,14 +244,14 @@ void	ft_echo(char **arr)
 	{
 		while (j < (int)ft_strlen(arr[i]) && arr[i][j])
 		{
-			ft_printf("%c", arr[i][j]);
+			ft_printf(1, "%c", arr[i][j]);
 			j++;
 		}
 		if (arr[i + 1])
-			ft_printf(" ");
+			ft_printf(1, " ");
 		j = 0;
 		i++;
 	}
 	if (!arr[1] || ft_strncmp(arr[1], "-n", 2))
-		ft_printf("\n");
+		ft_printf(1, "\n");
 }

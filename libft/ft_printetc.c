@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:09:01 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/03/21 13:47:10 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:18:41 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ size_t	pt_strlen(const char *str)
 	return (i);
 }
 
-int	pt_putstr(char *s)
+int	pt_putstr(int out, char *s)
 {
 	size_t	i;
 	int		temp;
 
 	i = 0;
 	if (!s)
-		return (pt_putstr("(null)"));
+		return (pt_putstr(out, "(null)"));
 	while (i < pt_strlen(s))
 	{
-		temp = write(1, &s[i], sizeof(char));
+		temp = write(out, &s[i], sizeof(char));
 		if (temp == -1)
 			return (-1);
 		i++;

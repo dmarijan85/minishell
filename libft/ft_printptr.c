@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 17:08:11 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/03/21 13:45:09 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:20:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ static void	fill(unsigned long long value, char *changed)
 	changed[1] = 'x';
 }
 
-int	pt_putptr(void *ptr)
+int	pt_putptr(int out, void *ptr)
 {
 	unsigned long long	value;
 	char				*changed;
 	int					ret;
 
 	if (!ptr)
-		return (ft_printf("%s", "0x0"));
+		return (ft_printf(out, "%s", "0x0"));
 	value = (unsigned long long)ptr;
 	changed = malloc(sizeof(char) * ptrlen(value) + 3);
 	if (!changed)
 		return (-1);
 	fill(value, changed);
-	ret = ft_printf("%s", changed);
-	free (changed);
+	ret = ft_printf(out, "%s", changed);
+	free(changed);
 	return (ret);
 }

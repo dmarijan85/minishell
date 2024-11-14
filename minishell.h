@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/13 15:01:36 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:45:15 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <dirent.h>
 
 //Enums
 
