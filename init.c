@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:42 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/19 13:15:20 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:18:36 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarl
 	mini->args = NULL;
 	mini->pipelen = 0;
 	mini->hasbuiltins = false;
+	mini->lastpid = -1;
 }
 
 static char	**whileloop_cpy_env(char **env, char **ret, char **og)
@@ -66,6 +67,7 @@ void  msh_start(t_msh *mini, char **env)
 
 	mini->list = NULL;
 	mini->args = NULL;
+	mini->returnval = 0;
 	mini->env = cpy_env(env);
 	if (!mini->env)
 		errexit(mini, "environment copy failure?!\n");

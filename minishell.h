@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/19 13:25:20 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:15:05 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef struct	s_msh
 	char		*pwd;
 	char		*oldpwd;
 	bool		hasbuiltins;
+	int			lastpid;
+	int			returnval;
 }				t_msh;
 
 //Prototypes

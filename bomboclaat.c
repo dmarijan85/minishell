@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/19 13:27:10 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:30:13 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,9 @@ void	lebomboclaat(t_msh *mini)
 	int		tmp1;
 	int		tmp0;
 	t_node	*temp;
+	int		returnval;
 
+	returnval = 0;
 	temp = mini->list;
 	tmp0 = dup(0);
 	tmp1 = dup(1);
@@ -135,9 +137,11 @@ void	lebomboclaat(t_msh *mini)
 	close(tmp0);
 	dup2(tmp1, 1);
 	close(tmp1);
-	while ((mini->pipelen) >= 0)
+	waitpid(mini->lastpid, &returnval, 0);
+	while ((mini->pipelen) > 0)
 	{
 		wait(NULL);
 		(mini->pipelen)--;
 	}
+	mini->returnval = returnval;
 }

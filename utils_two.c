@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/14 14:54:19 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:30:19 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,5 @@ void	do_last(t_msh *mini, char *cmd)
 		errexit(mini, "msh: fork failure!?\n");
 	if (!pid)
 		exec(mini, cmd);
+	mini->lastpid = pid;
 }
