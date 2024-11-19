@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/14 14:53:48 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:53:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void		ft_unset(t_msh *mini, char **arr);
 
 //cedepuntoce
 void		ft_cd(t_msh *mini, char **arr, int argc);
+int			can_opendir(char *path);
 
 //find_last
 void		ft_export_create(t_msh *mini, char **env, int i);

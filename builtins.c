@@ -6,17 +6,20 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/14 14:21:47 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:08:50 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//el wait en linea 21 sirve para prevenir que escribamos mnsj de error
+//al mismo tiempo que un hijo en pipe, y no hace nada si no hay hijos :D
 int	ft_builtdads(t_msh *mini, char **arr)
 {
 	int	argc;
 
 	argc = ft_argc(arr);
+	wait(NULL);
 	if (!ft_strncmp(arr[0], "export\0", 7))
 	{
 		if (argc > 1)
@@ -34,7 +37,8 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	}	
 	else if (!ft_strncmp(arr[0], "unset\0", 6))
 	{
-		ft_unset(mini, arr);
+		if (mini->pipelen == 0)
+			ft_unset(mini, arr);
 		array_free(arr);
 		return (1);
 	}
@@ -94,6 +98,12 @@ void	ft_builtins(t_msh *mini, char **arr)
 	else if (!ft_strncmp(arr[0], "cd\0", 3))
 	{	
 		ft_cd(mini, arr, argc);
+		array_free(arr);
+		childexit(mini, "");
+	}
+	else if (!ft_strncmp(arr[0], "unset\0", 6))
+	{
+		ft_unset(mini, arr);
 		array_free(arr);
 		childexit(mini, "");
 	}
