@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/12 14:35:11 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:39:06 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,31 @@ t_node	*find_last_node(t_node *current)
 	while (current->next)
 		current = current->next;
 	return (current);
+}
+
+bool	isbuiltin(t_msh *mini, char *name)
+{
+	char	**tmp;
+	bool	re;
+
+	re = false;
+	tmp = wordsplit(mini, name, true);
+	if (!ft_strncmp(tmp[0], "export\0", 7))
+		re = true;
+	else if (!ft_strncmp(tmp[0], "exit\0", 5))
+		re = true;
+	else if (!ft_strncmp(tmp[0], "unset\0", 6))
+		re = true;
+	else if (!ft_strncmp(tmp[0], "pwd\0", 4))
+		re = true;
+	else if (!ft_strncmp(tmp[0], "cd\0", 3))
+		re = true;
+	else if (!ft_strncmp(tmp[0], "env\0", 4))
+		re = true;
+	else if (!ft_strncmp(tmp[0], "echo\0", 5))
+		re = true;
+	array_free(tmp);
+	return (re);
 }
 
 int	isvalid(char *name)
@@ -184,10 +209,77 @@ int expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 //this behavior is exactly the same for each token, the only differences being the indexes it reads from to account for >> and <<.
 //all of this is automatically assigned to the pointer of the list in our general MSH struct. 
 
-int	delim(char	c)
+int	istoken(char *c, int i)
 {
-	if (c == ' ' || c == '>' || c == '<' || c == '|' || !c)
+	if (c[i] == '|')
 		return (1);
+	else if (c[i] == '<')
+	{
+		if (isdouble(c + i, 0))
+			return (2);
+		return (1);
+	}
+	else if (c[i] == '>')
+	{
+		if (isdouble(c + i, 1))
+			return (2);
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\r' \
+		|| c == '\f')
+		return (1);
+	return (0);
+}
+
+int	delim(char c)
+{
+	if (c == ' ' || c == '|' || c == '<' || c == '>' || !c)
+		return (1);
+	return (0);
+}
+
+int istheretokens(char *str)
+{
+	int	i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if (istoken(str, i))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	plumbus(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (istoken(str, i))
+		return (str[i]);
+	while (str[i])
+	{
+		if (istoken(str, i))
+		{
+			i += istoken(str, i);
+			while (ft_isspace(str[i]))
+				i++;
+			if (!str[i])
+				return ('\n');
+			else if (istoken(str, i))
+				return (str[i]);
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -223,13 +315,26 @@ int	quote_lexer(t_msh *mini, int end)
 
 void shrimp_lexer(t_msh *mini)
 {
-	int		stt; //start
+	int		stt;
 	int		end;
 	char	*str;
+	char	tmp;
 
 	str = mini->args;
 	stt = 0;
 	end = -1;
+	if (istheretokens(str))
+	{
+		tmp = plumbus(str);		
+		if (tmp)
+		{
+			if (tmp == '\n')
+				ft_printf(2, "msh: syntax error near unexpected 'newline'.\n");
+			else
+				ft_printf(2, "msh: syntax error near unexpected '%c'.\n", tmp);
+			return ;
+		}
+	}
 	while (str && ++end < (int)ft_strlen(str))
 	{
 		if (str[end] == '\"' || str[end] == '\'')

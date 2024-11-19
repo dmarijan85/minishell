@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:42 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/14 14:21:23 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:15:20 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarl
 	mini->herectr = 0;
 	mini->args = NULL;
 	mini->pipelen = 0;
+	mini->hasbuiltins = false;
 }
 
 static char	**whileloop_cpy_env(char **env, char **ret, char **og)

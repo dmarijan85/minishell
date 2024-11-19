@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/19 12:08:50 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:39:38 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	ft_builtdads(t_msh *mini, char **arr)
 {
 	int	argc;
 
+	if (mini->hasbuiltins)
+		wait(NULL);
 	argc = ft_argc(arr);
-	wait(NULL);
 	if (!ft_strncmp(arr[0], "export\0", 7))
 	{
 		if (argc > 1)
@@ -174,6 +175,12 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 			if (!(args[i][finnish]))
 			{	
 				tmp = ft_substr(args[i], start, finnish);
+				if (!isvalid(tmp))
+				{
+					ft_printf(2, "msh: export: %s: illegal var name\n", tmp);
+					free(tmp);
+					return ;
+				}
 				if (!my_getenv(tmp, mini->env, mini->envvar))
 				{
 					if (!ft_strncmp(tmp,"PWD\0", 4))
@@ -193,6 +200,12 @@ void	ft_export_create(t_msh *mini, char **args, int i)
 		if (args[i])
 		{
 			tmp = ft_substr(args[i], start, finnish);
+			if (!isvalid(tmp))
+			{
+				ft_printf(2, "export: %s: illegal variable name\n", tmp);
+				free(tmp);
+				return ;
+			}
 			if (my_getenv(tmp, mini->env, mini->envvar))
 			{
 				tmptwo = ft_strjoin("unset ", tmp);

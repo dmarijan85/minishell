@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/19 11:53:24 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:25:20 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct	s_msh
 	t_envvar	*envvar;
 	char		*pwd;
 	char		*oldpwd;
+	bool		hasbuiltins;
 }				t_msh;
 
 //Prototypes
@@ -117,6 +118,8 @@ void		shrimp_lexer(t_msh *mini);
 void		append_redirs(t_redirs **stack, int fd, \
 t_openmodes type, t_msh *mini);
 t_envvar	*find_first_envvar(t_envvar *current);
+int			isvalid(char *name);
+bool		isbuiltin(t_msh *mini, char *name);
 
 //utils
 int			fl_redir(t_redirs *current, t_openmodes mode);
@@ -158,7 +161,7 @@ void		ft_unset(t_msh *mini, char **arr);
 void		ft_cd(t_msh *mini, char **arr, int argc);
 int			can_opendir(char *path);
 
-//find_last
+//mas builtins?
 void		ft_export_create(t_msh *mini, char **env, int i);
 void		ft_export_print(t_msh *mini, char **env);
 

@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/14 14:54:28 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:27:10 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	env = env;//TODO
 	if (pipe(p_fd) == -1)
 		errexit(mini, "pipe error: illegal fd assignment\n");
+	if (isbuiltin(mini, cmd))
+		mini->hasbuiltins = true;
 	pid = fork();
 	if (pid == -1)
 		errexit(mini, "fork error: fork returned -1!\n");

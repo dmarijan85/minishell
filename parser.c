@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:12:18 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/23 17:57:48 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:31:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,9 @@ void	parser(t_msh *msh)
 			delete_node(&temp);
 			delnext = false;
 		}
-		else if (temp->token != 0 && temp->token != PIPE \
-			&& temp->token != LLESS)
+		else if (temp->token == GREAT && temp->token == GGREAT \
+			&& temp->token == LESS)
 		{
-			if (!temp->next)
-				errexit(msh, "syntax error near unexpected token\n");
 			mode = setmode(temp);
 			remove_redir(msh, temp);
 			if (temp && temp->prev && temp->prev->token == 0)
@@ -79,17 +77,11 @@ void	parser(t_msh *msh)
 		}
 		else if (temp->token == PIPE)
 		{
-			if (!temp->prev)
-				errexit(msh, "syntax error near unexpected token `|'\n");
-			if (!temp->next)
-				errexit(msh, "syntax error: unexpected end of file\n");
 			msh->pipelen += 1;
 			delete_node(&temp);
 		}
 		else if (temp->token == LLESS)
 		{//TODO: maybe join it with the first if check
-			if (!temp->next)
-				errexit(msh, "syntax error near unexpected token\n");
 			remove_redir(msh, temp);
 			here_doc(msh, temp);
 			if (temp && temp->prev && temp->prev->token == 0)
@@ -105,4 +97,3 @@ void	parser(t_msh *msh)
 		temp = backup;
 	}
 }
-
