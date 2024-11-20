@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:58:41 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/14 14:14:32 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:21:11 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		can_opendir(char *path)
 	return (re);
 }
 
-void	ft_cd(t_msh *mini, char **arr, int argc)
+int	ft_cd(t_msh *mini, char **arr, int argc)
 {
 	if (argc > 2)
 		ft_printf(2, "msh: cd: too many arguments\n");
@@ -63,12 +63,14 @@ void	ft_cd(t_msh *mini, char **arr, int argc)
 	else
 	{
 		if (ft_nodesize(mini->list) != 1)
-			return ;
+			return (1);
 		free(mini->oldpwd);
 		mini->oldpwd = getcwd(NULL, 0);
 		chdir(arr[1]);
 		free(mini->pwd);
 		mini->pwd = getcwd(NULL, 0);
 		add_path_to_env(mini);
+		return (0);
 	}
+	return (1);
 }

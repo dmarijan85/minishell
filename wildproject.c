@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/19 16:42:00 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:30:57 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ int	expand_name_end(char *str, int stt)
 	int	end;
 
 	end = stt;
-	if (str[end] && (ft_isalpha(str[end]) || str[end] == '_'))
+	if (str[end] == '?')
+		return (end + 1);
+	else if (str[end] && (ft_isalpha(str[end]) || str[end] == '_'))
 	{
 		while (str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 			end++;
 		return (end);
 	}
-	else
-		return (0);
+	return (end + 1);
 }
 
 char	*strexpander(t_msh *mini, char *str, char *value, int stt)
@@ -65,7 +66,7 @@ char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 
 	if (*name == '?' && !(*name) + 1)
 	{
-		retval = ft_itoa(mini->returnval);	
+		retval = ft_itoa(mini->returnval);
 		ret = strexpander(mini, str, retval, stt);
 		free(retval);
 		return (ret);

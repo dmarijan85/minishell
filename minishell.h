@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/19 16:15:05 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:53:47 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct	s_msh
 	bool		hasbuiltins;
 	int			lastpid;
 	int			returnval;
+	bool		lastisbuiltin;
 }				t_msh;
 
 //Prototypes
@@ -122,6 +123,7 @@ t_openmodes type, t_msh *mini);
 t_envvar	*find_first_envvar(t_envvar *current);
 int			isvalid(char *name);
 bool		isbuiltin(t_msh *mini, char *name);
+int			ft_isspace(char c);
 
 //utils
 int			fl_redir(t_redirs *current, t_openmodes mode);
@@ -133,6 +135,7 @@ void		do_last(t_msh *mini, char *cmd);
 int			open_file(t_msh *mini, char *file, t_openmodes mode);
 char		*my_getenv(char *name, char **env, t_envvar *envvar);
 char		*get_path(t_msh *mini, char *cmd, char **env);
+bool		my_findvar(char *name, char **env, t_envvar *envar);
 
 //utils three
 int			ft_argc(char **argv);
@@ -147,25 +150,25 @@ void		here_doc(t_msh *mini, t_node *node);
 //donepezilo
 void		reset_msh(t_msh *mini);
 void		errexit(t_msh *mini, char *str);
-void		childexit(t_msh *mini, char *str);
+void		childexit(int exitnumber, t_msh *mini, char *str);
 void		stack_free_envvars(t_msh *mini);
 
 //builtins
 void		ft_builtins(t_msh *mini, char **arr);
 int			ft_builtdads(t_msh *mini, char **arr);
-void		ft_exit(t_msh *mini, char **arr);
+int			ft_exit(t_msh *mini, char **arr);
 void		ft_env(t_msh *mini, char **envp);
 void		ft_pwd(t_msh *mini);
 void		ft_echo(char **arr);
 void		ft_unset(t_msh *mini, char **arr);
 
 //cedepuntoce
-void		ft_cd(t_msh *mini, char **arr, int argc);
+int			ft_cd(t_msh *mini, char **arr, int argc);
 int			can_opendir(char *path);
 
 //mas builtins?
-void		ft_export_create(t_msh *mini, char **env, int i);
-void		ft_export_print(t_msh *mini, char **env);
+int			ft_export_create(t_msh *mini, char **env, int i);
+int			ft_export_print(t_msh *mini, char **env);
 
 //append
 void		append_envvar(t_envvar **stack, char *name, \

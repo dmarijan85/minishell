@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:47:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/01/25 13:25:12 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:35:11 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_atoi(const char *str)
 	i = 0;
 	re = 0;
 	sign = 1;
+	if (!str)
+		return (0);
 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\v' || str[i] == '\n' \
 			|| str[i] == '\r' || str[i] == '\f')
 		i++;

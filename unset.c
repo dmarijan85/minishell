@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:40:21 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/12 14:39:46 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:45:40 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ void	ft_unset(t_msh *mini, char **arr)
 	i = 1;
 	while (arr[i])
 	{
-		if (my_getenv(arr[i], mini->env, mini->envvar))
+		if (my_findvar(arr[i], mini->env, mini->envvar))
 		{
-			if (my_getenv(arr[i], mini->env, NULL))
+			if (my_findvar(arr[i], mini->env, NULL))
 			{
 				tmp = del_env(mini, mini->env, arr[i]);
 				array_free(mini->env);
 				mini->env = tmp;
-				return ;
 			}
 			var = mini->envvar;
 			while (var)
@@ -77,9 +76,9 @@ void	ft_unset(t_msh *mini, char **arr)
 				{
 					var = delete_envvar(&var);
 					mini->envvar = find_first_envvar(var);
-					return ;
 				}
-				var = var->next;
+				else
+					var = var->next;
 			}
 		}
 		i++;

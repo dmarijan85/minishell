@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:42 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/19 16:18:36 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:24:57 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarl
 	mini->pipelen = 0;
 	mini->hasbuiltins = false;
 	mini->lastpid = -1;
+	mini->lastisbuiltin = false;
 }
 
 static char	**whileloop_cpy_env(char **env, char **ret, char **og)

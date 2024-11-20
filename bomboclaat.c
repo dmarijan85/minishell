@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/19 16:30:13 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:02:48 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ void	exec(t_msh *mini, char *cmd)
 	char	*path;
 
 	if (cmd && !*cmd)
-		childexit(mini, "command not found: ''\n");
+		childexit(127, mini, "command not found: ''\n");
 	wildfinder(mini, &cmd, false);
 	s_cmd = wordsplit(mini, cmd, true);
 	if (!s_cmd || !*s_cmd)
-		childexit(mini, "");
+		childexit(1, mini, "wordsplit blew the fuck up wtf\n");
 	ft_builtins(mini, s_cmd);	
 	path = get_path(mini, s_cmd[0], mini->env);
 	if (execve(path, s_cmd, mini->env) == -1)
 	{
 		ft_printf(2, "msh: command not found: %s\n", s_cmd[0]);
 		array_free(s_cmd);
-		childexit(mini, "");
+		childexit(127, mini, "");
 	}
 }
 
@@ -126,9 +126,9 @@ void	lebomboclaat(t_msh *mini)
 	int		tmp1;
 	int		tmp0;
 	t_node	*temp;
-	int		returnval;
+	int		tookthekids;
 
-	returnval = 0;
+	tookthekids = 0;
 	temp = mini->list;
 	tmp0 = dup(0);
 	tmp1 = dup(1);
@@ -137,11 +137,14 @@ void	lebomboclaat(t_msh *mini)
 	close(tmp0);
 	dup2(tmp1, 1);
 	close(tmp1);
-	waitpid(mini->lastpid, &returnval, 0);
+	waitpid(mini->lastpid, &tookthekids, 0);
 	while ((mini->pipelen) > 0)
 	{
 		wait(NULL);
 		(mini->pipelen)--;
 	}
-	mini->returnval = returnval;
+	if (!mini->lastisbuiltin && WIFEXITED(tookthekids))
+		tookthekids = WEXITSTATUS(tookthekids);
+	if (!mini->lastisbuiltin)
+		mini->returnval = tookthekids;
 }

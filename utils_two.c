@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:53:10 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/19 16:30:19 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:33:03 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,38 @@ int	open_file(t_msh *mini, char *file, t_openmodes mode)
 	return (ret);
 }
 
+bool	my_findvar(char *name, char **env, t_envvar *envvar)
+{
+	int			i;
+	int			j;
+	char		*sub;
+	t_envvar	*temp;
+
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j] && env[i][j] != '=')
+			j++;
+		sub = ft_substr(env[i], 0, j);
+		if (!ft_strncmp(sub, name, ft_strlen(sub) + 1))
+		{
+			free(sub);
+			return (true);
+		}
+		free(sub);
+		i++;
+	}
+	temp = envvar;
+	while (temp)
+	{
+		if (!ft_strncmp(name, temp->name, ft_strlen(name) + 1))
+			return (true);
+		temp = temp->next;
+	}
+	return (false);
+}
+
 char	*my_getenv(char *name, char **env, t_envvar *envvar)
 {
 	int			i;
@@ -48,7 +80,7 @@ char	*my_getenv(char *name, char **env, t_envvar *envvar)
 		while (env[i][j] && env[i][j] != '=')
 			j++;
 		sub = ft_substr(env[i], 0, j);
-		if (!ft_strncmp(sub, name, ft_strlen(sub)))
+		if (!ft_strncmp(sub, name, ft_strlen(sub) + 1))
 		{
 			free(sub);
 			return (env[i] + j + 1);
@@ -113,7 +145,10 @@ void	do_last(t_msh *mini, char *cmd)
 		return ;
 	}
 	if (ft_builtdads(mini, arr))
+	{
+		mini->lastisbuiltin = true;
 		return ;
+	}
 	array_free(arr);
 	pid = fork();
 	if (pid == -1)
