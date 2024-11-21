@@ -6,11 +6,11 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:40:21 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/20 18:45:40 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:33:55 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 static char	**whileloop_del_env(char **env, char **ret, char *str)
 {

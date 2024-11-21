@@ -6,11 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:58:41 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/20 17:21:11 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:34:14 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 //rutas absolutas Y relativas... creo que chdir ya controla bastante
 

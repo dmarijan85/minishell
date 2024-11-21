@@ -6,11 +6,11 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 15:50:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/20 19:32:32 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:33:41 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 //el wait en linea 21 sirve para prevenir que escribamos mnsj de error
 //al mismo tiempo que un hijo en pipe, y no hace nada si no hay hijos :D

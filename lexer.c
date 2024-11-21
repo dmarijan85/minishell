@@ -6,11 +6,11 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/19 14:39:06 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:32:33 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 t_envvar	*find_first_envvar(t_envvar *current)
 {
@@ -332,6 +332,7 @@ void shrimp_lexer(t_msh *mini)
 				ft_printf(2, "msh: syntax error near unexpected 'newline'.\n");
 			else
 				ft_printf(2, "msh: syntax error near unexpected '%c'.\n", tmp);
+			mini->returnval = 2;
 			return ;
 		}
 	}

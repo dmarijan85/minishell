@@ -6,11 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/10/29 16:02:41 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:34:28 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 t_redirs *fl_findlast(t_redirs *tmp, t_openmodes mode)
 {

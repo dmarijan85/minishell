@@ -6,11 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:42 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/20 17:24:57 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:31:37 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarle el nombre tipo msh clean, ns
 {
@@ -72,10 +72,7 @@ void  msh_start(t_msh *mini, char **env)
 	mini->env = cpy_env(env);
 	if (!mini->env)
 		errexit(mini, "environment copy failure?!\n");
-	mini->pwd = getenv("PWD");
 	mini->envvar = NULL;
-	if (!mini->pwd)
-		errexit(mini, "Va no em toquis els qllons germanet\n");
 	mini->pwd = getcwd(NULL, 0);
 	if (!getenv("PWD"))
 	{
@@ -86,4 +83,6 @@ void  msh_start(t_msh *mini, char **env)
 	mini->oldpwd = getenv("OLDPWD");
 	if (!getenv("OLDPWD"))
 		do_last(mini, "export OLDPWD=");
+	mini->shlvl = 2;
+	do_last(mini, "export SHLVL=2");
 }

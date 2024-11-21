@@ -6,11 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/20 16:28:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:31:50 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 t_node	*find_first_node(t_node *current)
 {
@@ -63,7 +63,9 @@ void minishell_loop(t_msh *mini)
 int	main(int ac, char **av, char **envp)
 {
 	t_msh	mini;
+	
 	av = av;
+	valssig = 0;
 	if (ac != 1)
 		ft_printf(2, "Aquest programa no tolera arguments!! >:3\n");
 	else
