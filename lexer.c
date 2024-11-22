@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/21 15:32:33 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:58:49 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ int istheretokens(char *str)
 	int	i;
 	
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (istoken(str, i))
 			return (1);

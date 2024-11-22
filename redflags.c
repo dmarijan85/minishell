@@ -6,10 +6,20 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 13:34:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/21 15:32:45 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:57:14 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "./inc/minishell.h"
+
+
+int	ft_get_stt(bool flag, int val)
+{
+	static int	var;
+
+	if (flag)
+		var = val;
+	return (var);
+}
 
 static void	signal_handler(int signal)
 {
@@ -19,7 +29,7 @@ static void	signal_handler(int signal)
 		ft_printf(1, "\n");
 		rl_on_new_line();
 		rl_redisplay();
-		valssig = 1;
+		ft_get_stt(1, 1);
 	}
 	else if (signal == SIGQUIT)
 	{
@@ -31,24 +41,24 @@ static void	signal_handler(int signal)
 static void	child_handler(int signal)
 {
 	if (signal == SIGINT)
-		valssig = 130;
+		ft_get_stt(true, 130);
 	else if (signal == SIGQUIT)
 	{
 		ft_printf(1, "Quit: 3\n");
-		valssig = 131;
+		ft_get_stt(true, 131);
 	}
 }
 
-void	wait_signal(int i)
+void	wait_signal(bool flag)
 {
 	struct sigaction	sa;
 
-	if (i)
+	if (flag)
 		sa.sa_handler = &signal_handler;
 	else
 		sa.sa_handler = &child_handler;
 	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGTERM, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL); //ctrl+"C"
+	sigaction(SIGQUIT, &sa, NULL);//ctrl+"?"
+	sigaction(SIGTERM, &sa, NULL);//ctrl+"?"
 }

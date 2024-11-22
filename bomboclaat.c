@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/21 15:32:57 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:29:14 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	int		p_fd[2];
 
 	env = env;//TODO
+	wait_signal(0);
 	if (pipe(p_fd) == -1)
 		errexit(mini, "pipe error: illegal fd assignment\n");
 	if (isbuiltin(mini, cmd))
@@ -145,6 +146,9 @@ void	lebomboclaat(t_msh *mini)
 	}
 	if (!mini->lastisbuiltin && WIFEXITED(tookthekids))
 		tookthekids = WEXITSTATUS(tookthekids);
+	if (tookthekids == 2 || tookthekids == 3)
+		tookthekids += 128;
 	if (!mini->lastisbuiltin)
 		mini->returnval = tookthekids;
+	wait_signal(1);
 }

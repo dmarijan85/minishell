@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/21 15:35:06 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:40:20 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # include <fcntl.h>
 # include <dirent.h>
 
-//our little chungus global :,)
-int valssig;
 
 //Enums
 
@@ -187,5 +185,9 @@ void		wildfinder(t_msh *mini, char **str, bool dofree);
 //init
 void		msh_init(t_msh *mini);
 void		msh_start(t_msh *mini, char **env);
+
+//redflags
+int			ft_get_stt(bool flag, int val);
+void		wait_signal(bool flag);
 
 #endif

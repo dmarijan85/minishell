@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/21 15:31:50 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:21:28 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void minishell_loop(t_msh *mini)
 {
 	msh_init(mini);
 	mini->args = readline("msh$ ");
+	if (!mini->args)
+	{
+		ft_printf(1, "exit\n");
+		childexit(ft_get_stt(false, 0), mini, "");
+	}
 	shrimp_lexer(mini);
 	parser(mini);
 	if (mini->list)
@@ -65,7 +70,7 @@ int	main(int ac, char **av, char **envp)
 	t_msh	mini;
 	
 	av = av;
-	valssig = 0;
+	ft_get_stt(true, 0);
 	if (ac != 1)
 		ft_printf(2, "Aquest programa no tolera arguments!! >:3\n");
 	else
@@ -74,6 +79,7 @@ int	main(int ac, char **av, char **envp)
 		do_last(&mini, "clear");
 		wait(NULL);
 		ft_printf(1, "\n\tT X I Q U I P E T X I N A !\n\n");
+		wait_signal(true);
 		minishell_loop(&mini);
 	}
 }
