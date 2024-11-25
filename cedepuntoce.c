@@ -13,7 +13,6 @@
 #include "./inc/minishell.h"
 
 //rutas absolutas Y relativas... creo que chdir ya controla bastante
-
 void	add_path_to_env(t_msh *mini)
 {
 	char	*tmp;
@@ -38,7 +37,7 @@ void	add_path_to_env(t_msh *mini)
 	}
 }
 
-int		can_opendir(char *path) 
+int	can_opendir(char *path)
 {
 	int	re;
 	DIR	*dir;

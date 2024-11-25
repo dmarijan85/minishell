@@ -23,7 +23,7 @@ void	exec(t_msh *mini, char *cmd)
 	s_cmd = wordsplit(mini, cmd, true);
 	if (!s_cmd || !*s_cmd)
 		childexit(1, mini, "wordsplit blew the fuck up wtf\n");
-	ft_builtins(mini, s_cmd);	
+	ft_builtins(mini, s_cmd);
 	path = get_path(mini, s_cmd[0], mini->env);
 	if (execve(path, s_cmd, mini->env) == -1)
 	{
@@ -70,7 +70,7 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	pid_t	pid;
 	int		p_fd[2];
 
-	env = env;//TODO
+	env = env;
 	wait_signal(0);
 	if (pipe(p_fd) == -1)
 		errexit(mini, "pipe error: illegal fd assignment\n");
@@ -94,13 +94,13 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	}
 }
 
-void	letxiquibomber(t_node *temp, t_msh *mini)
+void	letxiquibomber(t_msh *mini, int i)
 {
-	int	i;
 	int	fd_in;
 	int	fd_out;
+	t_node	*temp;
 
-	i = mini->pipelen;
+	temp = mini->list;
 	while (i >= 0)
 	{
 		fd_in = fl_redir(temp->redir, READ);
@@ -126,14 +126,12 @@ void	lebomboclaat(t_msh *mini)
 {
 	int		tmp1;
 	int		tmp0;
-	t_node	*temp;
 	int		tookthekids;
 
 	tookthekids = 0;
-	temp = mini->list;
 	tmp0 = dup(0);
 	tmp1 = dup(1);
-	letxiquibomber(temp, mini);
+	letxiquibomber(mini, mini->pipelen);
 	dup2(tmp0, 0);
 	close(tmp0);
 	dup2(tmp1, 1);

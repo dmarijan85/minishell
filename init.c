@@ -12,7 +12,7 @@
 
 #include "./inc/minishell.h"
 
-void msh_init(t_msh *mini) //este es el del loop, igual tendria sentido cambiarle el nombre tipo msh clean, ns
+void	msh_init(t_msh *mini)
 {
 	mini->list = NULL;
 	mini->reset = false;
@@ -40,8 +40,8 @@ static char	**whileloop_cpy_env(char **env, char **ret, char **og)
 		{
 			array_free(ret);
 			return (NULL);
-    	}
-    	i++;
+		}
+		i++;
 	}
 	ret[i] = NULL;
 	return (ret);
@@ -62,9 +62,9 @@ char	**cpy_env(char **env)
 	return (ret);
 }
 
-void  msh_start(t_msh *mini, char **env) 
+void	msh_start(t_msh *mini, char **env)
 {
-	char *tmp;
+	char	*tmp;
 
 	mini->list = NULL;
 	mini->args = NULL;

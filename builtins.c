@@ -12,32 +12,13 @@
 
 #include "./inc/minishell.h"
 
-//el wait en linea 21 sirve para prevenir que escribamos mnsj de error
-//al mismo tiempo que un hijo en pipe, y no hace nada si no hay hijos :D
-int	ft_builtdads(t_msh *mini, char **arr)
+//builtins del padre parte 2
+static int	ft_builtdads_two(t_msh *mini, char **arr)
 {
 	int	argc;
 
-	if (mini->hasbuiltins)
-		wait(NULL);
 	argc = ft_argc(arr);
-	if (!ft_strncmp(arr[0], "export\0", 7))
-	{
-		if (argc > 1)
-			argc = ft_export_create(mini, arr, 1);
-		else
-			argc = ft_export_print(mini, mini->env);
-		array_free(arr);
-		mini->returnval = argc;
-		return (1);
-	}
-	else if (!ft_strncmp(arr[0], "exit\0", 5))
-	{		
-		mini->returnval = ft_exit(mini, arr);
-		array_free(arr);
-		return (1);	
-	}	
-	else if (!ft_strncmp(arr[0], "unset\0", 6))
+	if (!ft_strncmp(arr[0], "unset\0", 6))
 	{
 		if (mini->pipelen == 0)
 			ft_unset(mini, arr);
@@ -60,6 +41,63 @@ int	ft_builtdads(t_msh *mini, char **arr)
 	}
 	return (0);
 }
+
+//builtins del padre
+int	ft_builtdads(t_msh *mini, char **arr)
+{
+	int	argc;
+
+	if (mini->hasbuiltins)
+		wait(NULL);
+	argc = ft_argc(arr);
+	if (!ft_strncmp(arr[0], "export\0", 7))
+	{
+		if (argc > 1)
+			argc = ft_export_create(mini, arr, 1);
+		else
+			argc = ft_export_print(mini, mini->env);
+		array_free(arr);
+		mini->returnval = argc;
+		return (1);
+	}
+	else if (!ft_strncmp(arr[0], "exit\0", 5))
+	{
+		mini->returnval = ft_exit(mini, arr);
+		array_free(arr);
+		return (1);
+	}
+	return (ft_builtdads_two(mini, arr));
+}
+
+//hijo builtins parte dos
+static void	ft_builtins_two(t_msh *mini, char **arr)
+{
+	if (!ft_strncmp(arr[0], "pwd\0", 4))
+	{
+		ft_pwd(mini);
+		array_free(arr);
+		childexit(0, mini, "");
+	}
+	else if (!ft_strncmp(arr[0], "echo\0", 5))
+	{
+		ft_echo(arr);
+		array_free(arr);
+		childexit(0, mini, "");
+	}
+	else if (!ft_strncmp(arr[0], "cd\0", 3))
+	{
+		ft_cd(mini, arr, ft_argc(arr));
+		array_free(arr);
+		childexit(1, mini, "");
+	}
+	else if (!ft_strncmp(arr[0], "unset\0", 6))
+	{
+		ft_unset(mini, arr);
+		array_free(arr);
+		childexit(0, mini, "");
+	}
+}
+
 //estos son los builtins que mira el hijo
 void	ft_builtins(t_msh *mini, char **arr)
 {
@@ -78,39 +116,16 @@ void	ft_builtins(t_msh *mini, char **arr)
 		if (argc > 1)
 			argc = ft_export_create(mini, arr, 1);
 		else
-			argc = ft_export_print(mini, mini->env);
+			argc = ft_export_print(mini, mini->env, 0);
 		array_free(arr);
 		childexit(argc, mini, "");
 	}
 	else if (!ft_strncmp(arr[0], "exit\0", 5))
 	{
-		array_free(arr);	
-		childexit(0, mini, "");
-	}	
-	else if (!ft_strncmp(arr[0], "pwd\0", 4))
-	{
-		ft_pwd(mini);
 		array_free(arr);
 		childexit(0, mini, "");
 	}
-	else if (!ft_strncmp(arr[0], "echo\0", 5))
-	{
-		ft_echo(arr);
-		array_free(arr);
-		childexit(0, mini, "");
-	}
-	else if (!ft_strncmp(arr[0], "cd\0", 3))
-	{	
-		ft_cd(mini, arr, argc);
-		array_free(arr);
-		childexit(1, mini, "");
-	}
-	else if (!ft_strncmp(arr[0], "unset\0", 6))
-	{
-		ft_unset(mini, arr);
-		array_free(arr);
-		childexit(0, mini, "");
-	}
+	ft_builtins_two(mini, arr);
 }
 
 int	ft_exit(t_msh *mini, char **arr)
@@ -164,8 +179,8 @@ void	ft_env(t_msh *mini, char **envp)
 
 int	ft_export_create(t_msh *mini, char **args, int i)
 {
-	char 	*tmp;
-	char	*tmptwo;
+	char		*tmp;
+	char		*tmptwo;
 	int		start;
 	int		finnish;
 	int		ret;
@@ -186,7 +201,7 @@ int	ft_export_create(t_msh *mini, char **args, int i)
 		}
 		else if (!args[i][finnish] && !my_findvar(tmp, mini->env, mini->envvar))
 		{
-			if (!ft_strncmp(tmp,"PWD\0", 4))
+			if (!ft_strncmp(tmp, "PWD\0", 4))
 				append_envvar(&mini->envvar, tmp, mini->pwd, mini);
 			else if (!ft_strncmp(tmp, "OLDPWD\0", 7))
 				append_envvar(&mini->envvar, tmp, mini->oldpwd, mini);
@@ -211,13 +226,11 @@ int	ft_export_create(t_msh *mini, char **args, int i)
 	return (ret);
 }
 
-int	ft_export_print(t_msh *mini, char **envp)
+int	ft_export_print(t_msh *mini, char **envp, int i)
 {
-	int			i;
 	t_envvar	*tmp;
 	int			j;
 
-	i = 0;
 	while (envp[i])
 	{
 		j = 0;
@@ -237,7 +250,7 @@ int	ft_export_print(t_msh *mini, char **envp)
 		if (tmp->hasvalue)
 			ft_printf(1, "=\"%s\"", tmp->value);
 		ft_printf(1, "\n");
-		tmp = tmp->next;	
+		tmp = tmp->next;
 	}
 	return (0);
 }
