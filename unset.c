@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:40:21 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/21 15:33:55 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:44:57 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static char	**whileloop_del_env(char **env, char **ret, char *str)
 			{
 				array_free(ret);
 				return (NULL);
-    		}
-    		i++;
+			}
+			i++;
 		}
 		j++;
 	}
@@ -52,6 +52,20 @@ char	**del_env(t_msh *mini, char **env, char *str)
 	return (ret);
 }
 
+void	ft_desseteja(t_msh *mini, t_envvar *var, char **arr, int i)
+{
+	while (var)
+	{
+		if (!ft_strncmp(arr[i], var->name, ft_strlen(var->name + 1)))
+		{
+			var = delete_envvar(&var);
+			mini->envvar = find_first_envvar(var);
+		}
+		else
+			var = var->next;
+	}
+}
+
 void	ft_unset(t_msh *mini, char **arr)
 {
 	char		**tmp;
@@ -70,16 +84,7 @@ void	ft_unset(t_msh *mini, char **arr)
 				mini->env = tmp;
 			}
 			var = mini->envvar;
-			while (var)
-			{
-				if (!ft_strncmp(arr[i], var->name, ft_strlen(var->name + 1)))
-				{
-					var = delete_envvar(&var);
-					mini->envvar = find_first_envvar(var);
-				}
-				else
-					var = var->next;
-			}
+			ft_desseteja(mini, var, arr, i);
 		}
 		i++;
 	}
