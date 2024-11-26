@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/11/26 14:43:15 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/11/26 17:19:02 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,10 +38,7 @@ SRC =	lexer.c			\
 		morequestions.c	\
 		removequotes.c	\
 		quoteshitbro.c	\
-
-
-
-
+		utils_four.c	\
 
 OBJ = $(SRC:.c=.o)
 

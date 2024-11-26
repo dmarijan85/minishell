@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:08:25 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 12:29:02 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:07:34 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	unset_if_alreadyfound(t_msh *mini, char *tmp, char *sub)
 {
 	char	*tmptwo;
 
-	if (my_findvar(tmp, mini->env, mini->envvar))
+	if (my_findvar(tmp, mini->env, mini->envvar, 0))
 	{
 		tmptwo = ft_strjoin("unset ", tmp);
 		do_last(mini, tmptwo);
@@ -58,7 +58,8 @@ int	ft_export_create(t_msh *mini, char **args, int i, int ret)
 		tmp = ft_substr(args[i], start, finnish);
 		if (!isvalid(tmp))
 			ret = first_if(&tmp);
-		else if (!args[i][finnish] && !my_findvar(tmp, mini->env, mini->envvar))
+		else if (!args[i][finnish] && !my_findvar(tmp, mini->env, \
+				mini->envvar, 0))
 			second_if(mini, tmp);
 		else if (args[i][finnish] == '=')
 			unset_if_alreadyfound(mini, tmp, \

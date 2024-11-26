@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:40:21 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 15:44:57 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:08:13 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	ft_unset(t_msh *mini, char **arr)
 	i = 1;
 	while (arr[i])
 	{
-		if (my_findvar(arr[i], mini->env, mini->envvar))
+		if (my_findvar(arr[i], mini->env, mini->envvar, 0))
 		{
-			if (my_findvar(arr[i], mini->env, NULL))
+			if (my_findvar(arr[i], mini->env, NULL, 0))
 			{
 				tmp = del_env(mini, mini->env, arr[i]);
 				array_free(mini->env);
