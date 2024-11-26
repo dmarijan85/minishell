@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:12:37 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 16:42:30 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:55:53 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini)
 	node->name = name;
 	node->hasvalue = false;
 	if (value)
+	{
 		node->hasvalue = true;
-	removequotes(&value);
+		removequotes(&value);
+	}
 	node->value = value;
 	if (!*stack)
 		*stack = node;

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:08:25 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 17:07:34 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:56:53 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	second_if(t_msh *mini, char *tmp)
 
 static int	first_if(char **tmp)
 {
-	ft_printf(2, "msh: export: %s: illegal var name\n", *tmp);
+	ft_printf(2, "msh: export: %s: not a valid identifier\n", *tmp);
 	free(*tmp);
 	*tmp = NULL;
 	return (1);
