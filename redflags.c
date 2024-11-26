@@ -6,11 +6,11 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 13:34:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/22 13:57:14 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:43:08 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "./inc/minishell.h"
 
+#include "./inc/minishell.h"
 
 int	ft_get_stt(bool flag, int val)
 {
@@ -58,7 +58,7 @@ void	wait_signal(bool flag)
 	else
 		sa.sa_handler = &child_handler;
 	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL); //ctrl+"C"
-	sigaction(SIGQUIT, &sa, NULL);//ctrl+"?"
-	sigaction(SIGTERM, &sa, NULL);//ctrl+"?"
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGTERM, &sa, NULL);
 }

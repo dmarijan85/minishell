@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/11/26 12:19:47 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/11/26 14:43:15 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,15 @@ SRC =	lexer.c			\
 		helpmedoctor.c	\
 		echopwdenvexit.c\
 		exports.c		\
+		stack_cleaners.c\
+		find_lasts.c	\
+		appends_balls.c	\
+		questions.c		\
+		morequestions.c	\
+		removequotes.c	\
+		quoteshitbro.c	\
+
+
 
 
 

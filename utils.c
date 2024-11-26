@@ -6,39 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:00:53 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/21 15:34:28 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:58:59 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/minishell.h"
-
-t_redirs *fl_findlast(t_redirs *tmp, t_openmodes mode)
-{
-	t_redirs	*res;
-	
-	res = NULL;
-	if (mode == READ)
-	{
-		while (tmp)
-		{
-			if (tmp && tmp->fd_type == READ)
-				res = tmp;
-			tmp = tmp->next;
-		}
-		return (res);
-	}
-	else
-	{
-		while (tmp)
-		{
-			if (tmp && (tmp->fd_type == TRUNC || tmp->fd_type == APPEND))
-				res = tmp;
-			tmp = tmp->next;
-		}
-		return (res);
-	}
-	return (NULL);
-}
 
 int	fl_redir(t_redirs *current, t_openmodes mode)
 {
@@ -65,15 +37,8 @@ void	delete_node(t_node **node)
 	node = NULL;
 }
 
-int	count_words(const char *str)
+int	count_words(const char *str, int i, int trigger, int quote)
 {
-	int	i;
-	int	trigger;
-	int	quote;
-
-	i = 0;
-	trigger = 0;
-	quote = 0;
 	while (*str)
 	{
 		if ((*str == '\'' || *str == '\"') && !quote)
@@ -99,26 +64,30 @@ int	count_words(const char *str)
 	return (i);
 }
 
-//Receives the Token node and moves the string that comes after around: the first word is
-void	remove_redir(t_msh *mini, t_node *node)
+static void	node_prev_is_no(t_node *node, char **buf)
+{
+	char	*tmp;
+
+	tmp = node->next->str;
+	node->next->str = ft_substr(node->next->str, \
+		ft_strlen(buf[0]) + 1, ft_strlen(node->next->str));
+	free(tmp);
+}
+
+void	remove_redir(t_msh *mini, t_node *node, int i)
 {
 	char	**buf;
 	char	*tmp;
-	int		i;
-	
+
 	buf = wordsplit(mini, node->next->str, false);
 	if (!buf || !buf[0])
-		errexit(mini, "Remove Redir Error?!");
+		errexit(mini, "Remove Redir Error?!, wordsplit blew the fuck up?\n");
 	node->str = ft_strdup(buf[0]);
-	i = 1;
-	while (i <= count_words(node->next->str))
+	while (i <= count_words(node->next->str, 0, 0, 0))
 	{
 		if (!node->prev)
 		{
-			tmp = node->next->str;
-			node->next->str = ft_substr(node->next->str, ft_strlen(buf[0]) + 1,\
-			ft_strlen(node->next->str));
-			free(tmp);
+			node_prev_is_no(node, buf);
 			break ;
 		}
 		tmp = node->prev->str;
@@ -131,5 +100,3 @@ void	remove_redir(t_msh *mini, t_node *node)
 	}
 	array_free(buf);
 }
-
-

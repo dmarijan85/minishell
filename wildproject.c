@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/21 15:34:36 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:45:51 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,45 @@ int	expand_name_end(char *str, int stt)
 	return (end + 1);
 }
 
-char	*strexpander(t_msh *mini, char *str, char *value, int stt)
+char	*strexpander_two(char *firstpart, char *lastpart, int end, char *value)
 {
-	char	*result;
-	char	*firstpart;
-	char	*lastpart;
 	char	*middlepart;
-	int		i;
-	int		end;
+	char	*result;
 
-	mini=mini;//TODO
-	i = -1;
-	firstpart = malloc(stt + 1 * sizeof(char));
-	//proc malloc
-	while (str[++i] && str[i] != '$')
-		firstpart[i] = str[i];
-	firstpart[i] = '\0';
-	end = expand_name_end(str, stt + 1);
-	lastpart = malloc((ft_strlen(str) - stt + 1) * sizeof(char));
-	//proc malloc
-	i = -1;
-	while (str[end])
-		lastpart[++i] = str[end++];
-	lastpart[++i] = '\0';
 	middlepart = ft_strjoin(firstpart, value);
 	result = ft_strjoin(middlepart, lastpart);
 	free(firstpart);
 	free(middlepart);
 	free(lastpart);
 	return (result);
+}
+
+char	*strexpander(t_msh *mini, char *str, char *value, int stt)
+{
+	char	*firstpart;
+	char	*lastpart;
+	int		i;
+	int		end;
+
+	i = -1;
+	firstpart = malloc(stt + 1 * sizeof(char));
+	if (!firstpart)
+		errexit(mini, "malloc failure?!\n");
+	while (str[++i] && str[i] != '$')
+		firstpart[i] = str[i];
+	firstpart[i] = '\0';
+	end = expand_name_end(str, stt + 1);
+	lastpart = malloc((ft_strlen(str) - stt + 1) * sizeof(char));
+	if (!lastpart)
+	{
+		free(firstpart);
+		errexit(mini, "malloc failure?!\n");
+	}
+	i = -1;
+	while (str[end])
+		lastpart[++i] = str[end++];
+	lastpart[++i] = '\0';
+	return (strexpander_two(firstpart, lastpart, end, value));
 }
 
 char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
@@ -74,7 +84,7 @@ char	*wildhandler(t_msh *mini, char *str, int stt, char *name)
 	else if (my_getenv(name, mini->env, mini->envvar))
 	{
 		ret = strexpander(mini, str, my_getenv(name, mini->env, \
-			mini->envvar), stt);		
+			mini->envvar), stt);
 		return (ret);
 	}
 	return (strexpander(mini, str, NULL, stt));

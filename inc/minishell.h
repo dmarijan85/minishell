@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 12:19:23 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:44:58 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ typedef struct	s_msh
 	int			lastpid;
 	int			returnval;
 	bool		lastisbuiltin;
-	int			shlvl;
 }				t_msh;
 
 //Prototypes
@@ -109,7 +108,7 @@ void		array_free(char **str);
 void		el_fregading(t_msh *mini);
 
 //wordsplit
-int			count_words(const char *str);
+int			count_words(const char *str, int i, int trigger, int quote);
 char		**wordsplit(t_msh *mini, char const *s, bool delquotes);
 
 //nodestuff
@@ -127,9 +126,24 @@ int			isvalid(char *name);
 bool		isbuiltin(t_msh *mini, char *name);
 int			ft_isspace(char c);
 
+//appendsballs
+void		append_node(t_node **stack, char *str, t_tokens token, t_msh *mini);
+
+//findlasts
+t_envvar	*find_last_envvar(t_envvar *current);
+t_redirs	*find_last_redirs(t_redirs *current);
+t_node		*find_last_node(t_node *current);
+t_node		*find_first_node(t_node *current);
+t_redirs	*fl_findlast(t_redirs *tmp, t_openmodes mode);
+
+//QUESTIONS???
+bool		isdouble(char *str, int lessorgreat);
+int			istoken(char *c, int i);
+int			istheretokens(char *str);
+
 //utils
 int			fl_redir(t_redirs *current, t_openmodes mode);
-void		remove_redir(t_msh *msh, t_node *node);
+void		remove_redir(t_msh *msh, t_node *node, int i);
 void		removequotes(char **str);
 
 //utils two
@@ -180,6 +194,9 @@ char *value, t_msh *mini);
 
 //quotes
 char		imquoted(char *str, int loc);
+int			isquote(char a);
+int			istherequotes(char *str);
+int			howmanyquotes(char *str);
 
 //wildshit
 void		wildfinder(t_msh *mini, char **str, bool dofree);

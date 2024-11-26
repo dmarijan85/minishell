@@ -6,20 +6,11 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/22 14:21:28 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:42:26 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/minishell.h"
-
-t_node	*find_first_node(t_node *current)
-{
-	if (!current)
-		return (NULL);
-	while (current->prev)
-		current = current->prev;
-	return (current);
-}
 
 void	minishell_loop(t_msh *mini)
 {

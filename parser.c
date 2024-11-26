@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:12:18 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/21 15:34:21 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:48:38 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	parser(t_msh *msh)
 			delete_node(&temp);
 			delnext = false;
 		}
-		else if (temp->token == GREAT && temp->token == GGREAT \
-			&& temp->token == LESS)
+		else if (temp->token == GREAT || temp->token == GGREAT \
+			|| temp->token == LESS)
 		{
 			mode = setmode(temp);
-			remove_redir(msh, temp);
+			remove_redir(msh, temp, 1);
 			if (temp && temp->prev && temp->prev->token == 0)
 				append_redirs((&temp->prev->redir), open_file(msh, temp->str, mode), mode, msh);
 			else if (temp && temp->next && temp->next->token == 0)
@@ -82,7 +82,7 @@ void	parser(t_msh *msh)
 		}
 		else if (temp->token == LLESS)
 		{//TODO: maybe join it with the first if check
-			remove_redir(msh, temp);
+			remove_redir(msh, temp, 1);
 			here_doc(msh, temp);
 			if (temp && temp->prev && temp->prev->token == 0)
 				append_redirs((&temp->prev->redir), open_file(msh, ".heredoc", READ), READ, msh);
