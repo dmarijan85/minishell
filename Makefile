@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/11/21 15:32:18 by dmarijan         ###   ########.fr        #
+#    Updated: 2024/11/26 12:19:47 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,12 @@ SRC =	lexer.c			\
 		unset.c			\
 		init.c			\
 		cedepuntoce.c	\
-		redflags.c
+		redflags.c		\
+		helpmedoctor.c	\
+		echopwdenvexit.c\
+		exports.c		\
+
+
 
 OBJ = $(SRC:.c=.o)
 

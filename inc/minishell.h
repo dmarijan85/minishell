@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/22 13:40:20 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:19:23 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ t_envvar	*delete_envvar(t_envvar **var);
 //bomboclaat
 void		lebomboclaat(t_msh *mini);
 void		exec(t_msh *mini, char *cmd);
+
+//heredoc
 void		here_doc(t_msh *mini, t_node *node);
 
 //donepezilo
@@ -169,8 +171,8 @@ int			ft_cd(t_msh *mini, char **arr, int argc);
 int			can_opendir(char *path);
 
 //mas builtins?
-int			ft_export_create(t_msh *mini, char **env, int i);
-int			ft_export_print(t_msh *mini, char **env);
+int			ft_export_create(t_msh *mini, char **env, int i, int ret);
+int			ft_export_print(t_msh *mini, char **env, int i);
 
 //append
 void		append_envvar(t_envvar **stack, char *name, \

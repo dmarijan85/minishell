@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/22 14:29:14 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:59:42 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,38 +31,6 @@ void	exec(t_msh *mini, char *cmd)
 		array_free(s_cmd);
 		childexit(127, mini, "");
 	}
-}
-
-void	here_doc_put_in(char *delim, int fd)
-{
-	char	*ret;
-
-	while (1)
-	{
-		ret = readline("heredoc> ");
-		if (ft_strncmp(ret, delim, ft_strlen(delim) + 1) == 0)
-		{
-			free(ret);
-			close(fd);
-			exit(0);
-		}
-		ft_putstr_fd(ret, fd);
-		ft_putstr_fd("\n", fd);
-		free(ret);
-	}
-}
-
-void	here_doc(t_msh *mini, t_node *node)
-{
-	pid_t	pid;
-
-	mini->herectr++;
-	pid = fork();
-	if (pid == -1)
-		errexit(mini, "fork error: fork returned -1!\n");
-	if (!pid)
-		here_doc_put_in(node->str, open_file(mini, ".heredoc", TRUNC));
-	wait(NULL);
 }
 
 void	do_pipe(t_msh *mini, char *cmd, char **env)
@@ -96,8 +64,8 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 
 void	letxiquibomber(t_msh *mini, int i)
 {
-	int	fd_in;
-	int	fd_out;
+	int		fd_in;
+	int		fd_out;
 	t_node	*temp;
 
 	temp = mini->list;
