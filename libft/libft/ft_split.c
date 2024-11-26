@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:38:14 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/10/26 18:04:33 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:05:21 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	count_words(const char *str, char c)
 static char	*malloc_word(const char *str, char c)
 {
 	char	*word;
-	int	count;
+	int		count;
 
 	count = 0;
 	while (str[count] && str[count] != c)

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 14:44:58 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:03:37 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <dirent.h>
-
 
 //Enums
 
@@ -54,11 +53,11 @@ typedef struct s_envvar
 	char			*name;
 	char			*value;
 	struct s_envvar	*next;
-	struct s_envvar *prev;
+	struct s_envvar	*prev;
 	bool			hasvalue;
 }				t_envvar;
 
-typedef struct	s_redirs
+typedef struct s_redirs
 {
 	t_openmodes		fd_type;
 	int				fd;
@@ -77,7 +76,7 @@ typedef struct s_node
 	struct s_msh	*mini;
 }				t_node;
 
-typedef struct	s_msh
+typedef struct s_msh
 {
 	char		**env;
 	t_node		*list;
