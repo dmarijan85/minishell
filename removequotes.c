@@ -6,13 +6,13 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:42:36 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 14:42:57 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:53:45 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/minishell.h"
 
-static void	removequotes_two(char *freer, char *tmp, char **str, int j)
+static char	*removequotes_two(char *freer, char *tmp, char **str, int j)
 {
 	char	quote;
 	int		i;
@@ -33,8 +33,7 @@ static void	removequotes_two(char *freer, char *tmp, char **str, int j)
 		i++;
 	}
 	freer[j] = '\0';
-	free(*str);
-	*str = freer;
+	return (freer);
 }
 
 void	removequotes(char **str)
@@ -52,5 +51,6 @@ void	removequotes(char **str)
 		*str = NULL;
 		return ;
 	}
-	removequotes_two(freer, tmp, str, 0);
+	*str = removequotes_two(freer, tmp, str, 0);
+	free(tmp);
 }
