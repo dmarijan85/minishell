@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 17:18:12 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:06 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:56:26 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,28 @@ char	*get_path(char *cmd)
 	return (cmd);
 }
 
-void	do_last(t_msh *mini, char *cmd)
+static void	do_it_pee(t_msh *mini, char *cmd)
 {
 	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		errexit(mini, "msh: fork failure!?\n");
+	if (!pid)
+	{
+		wait_signal(0);
+		exec(mini, cmd);
+	}
+	mini->lastpid = pid;
+}
+
+void	do_last(t_msh *mini, char *cmd)
+{
 	char	**arr;
 	char	*tmp;
 
 	tmp = ft_strdup(cmd);
+	wait_signal(0);
 	wildfinder(mini, &tmp, true);
 	arr = wordsplit(mini, tmp, false);
 	free(tmp);
@@ -62,10 +77,5 @@ void	do_last(t_msh *mini, char *cmd)
 		return ;
 	}
 	array_free(arr);
-	pid = fork();
-	if (pid == -1)
-		errexit(mini, "msh: fork failure!?\n");
-	if (!pid)
-		exec(mini, cmd);
-	mini->lastpid = pid;
+	do_it_pee(mini, cmd);
 }

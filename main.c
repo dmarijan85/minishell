@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:25:37 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/26 13:42:26 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:27:54 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	minishell_loop(t_msh *mini)
 {
 	msh_init(mini);
+	wait_signal(1);
 	mini->args = readline("msh$ ");
 	if (!mini->args)
 	{
@@ -45,7 +46,6 @@ int	main(int ac, char **av, char **envp)
 		do_last(&mini, "clear");
 		wait(NULL);
 		ft_printf(1, "\n\tT X I Q U I P E T X I N A !\n\n");
-		wait_signal(true);
 		minishell_loop(&mini);
 	}
 }

@@ -6,11 +6,19 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:12:37 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 17:55:53 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:51:24 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/minishell.h"
+
+static void	those_who_toes(t_envvar *node, char *name)
+{
+	node->prev = NULL;
+	node->next = NULL;
+	node->name = name;
+	node->hasvalue = false;
+}
 
 void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini)
 {
@@ -22,10 +30,7 @@ void	append_envvar(t_envvar **stack, char *name, char *value, t_msh *mini)
 	node = malloc(sizeof(t_envvar));
 	if (!node)
 		errexit(mini, "t_envvar malloc failure?!\n");
-	node->prev = NULL;
-	node->next = NULL;
-	node->name = name;
-	node->hasvalue = false;
+	those_who_toes(node, name);
 	if (value)
 	{
 		node->hasvalue = true;

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:08:25 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 17:56:53 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:21:37 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,18 @@ static void	second_if(t_msh *mini, char *tmp)
 		append_envvar(&mini->envvar, tmp, NULL, mini);
 }
 
-static int	first_if(char **tmp)
+static int	first_if(char **tmp, int finnish, char *arg)
 {
-	ft_printf(2, "msh: export: %s: not a valid identifier\n", *tmp);
+	char	*tmptwo;
+
+	if (!*tmp)
+	{
+		tmptwo = ft_substr(arg, finnish, ft_strlen(arg));
+		ft_printf(2, "msh: export: \"%s\": not a valid identifier\n", tmptwo);
+		free(tmptwo);
+	}
+	else
+		ft_printf(2, "msh: export: \"%s\": not a valid identifier\n", *tmp);
 	free(*tmp);
 	*tmp = NULL;
 	return (1);
@@ -57,7 +66,7 @@ int	ft_export_create(t_msh *mini, char **args, int i, int ret)
 			finnish++;
 		tmp = ft_substr(args[i], start, finnish);
 		if (!isvalid(tmp))
-			ret = first_if(&tmp);
+			ret = first_if(&tmp, finnish, args[i]);
 		else if (!args[i][finnish] && !my_findvar(tmp, mini->env, \
 				mini->envvar, 0))
 			second_if(mini, tmp);

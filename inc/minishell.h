@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 17:16:35 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:14:09 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,6 @@ void		msh_start(t_msh *mini, char **env);
 
 //redflags
 int			ft_get_stt(bool flag, int val);
-void		wait_signal(bool flag);
+void		wait_signal(int flag);
 
 #endif

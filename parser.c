@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:12:18 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 16:41:37 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:30:32 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_openmodes	setmode(t_node *node)
 static void	here_doctor_help_us(t_msh *msh, t_node *temp, bool *delnext)
 {
 	remove_redir(msh, temp, 1);
+	wait_signal(-1);
 	here_doc(msh, temp);
 	if (temp && temp->prev && temp->prev->token == 0)
 		append_redirs((&temp->prev->redir), open_file(msh, ".heredoc", READ), \
@@ -38,6 +39,7 @@ static void	here_doctor_help_us(t_msh *msh, t_node *temp, bool *delnext)
 	else
 		*delnext = true;
 	delete_node(&temp);
+	wait_signal(1);
 }
 
 static void	handle_scenario(t_msh *msh, t_node *temp, bool *delnext)
