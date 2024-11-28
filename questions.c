@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:13:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/27 15:11:20 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:20:11 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,20 @@ int	isvalid(char *name)
 	int	i;
 
 	i = 0;
-	if (!name || !*name || ft_isdigit(name[i]))
+	if (!name || !*name || ft_isdigit(name[i]) || name[i] == '+' \
+		|| name[i] == '=')
 		return (0);
 	while (name[i])
 	{
 		if (!ft_isalnum(name[i]))
-			if (!(name[i] == '_'))
+		{
+			if (name[i] == '=')
+				break ;
+			else if (name[i] == '+' && name[i + 1] == '=')
+				break ;
+			else if (!(name[i] == '_'))
 				return (0);
+		}
 		i++;
 	}
 	return (1);

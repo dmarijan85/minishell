@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:58:41 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/21 15:34:14 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:23:59 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	ft_cd(t_msh *mini, char **arr, int argc)
 	{
 		if (ft_nodesize(mini->list) != 1)
 			return (1);
-		free(mini->oldpwd);
+		if (mini->oldpwd)
+			free(mini->oldpwd);
 		mini->oldpwd = getcwd(NULL, 0);
 		chdir(arr[1]);
 		free(mini->pwd);
