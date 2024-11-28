@@ -17,6 +17,7 @@ static char	*removequotes_two(char *freer, char *tmp, char **str, int j)
 	char	quote;
 	int		i;
 
+	str = str;
 	i = 0;
 	while (tmp[i])
 	{

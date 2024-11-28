@@ -33,6 +33,7 @@ char	*strexpander_two(char *firstpart, char *lastpart, int end, char *value)
 	char	*middlepart;
 	char	*result;
 
+	end = end;
 	middlepart = ft_strjoin(firstpart, value);
 	result = ft_strjoin(middlepart, lastpart);
 	free(firstpart);

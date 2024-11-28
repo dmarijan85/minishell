@@ -54,6 +54,7 @@ int	quote_lexer(t_msh *mini, int end, char *str)
 	int		nquote;
 	char	quote;
 
+	mini = mini;
 	quote = 0;
 	nquote = 0;
 	while (str[end] && end < (int)ft_strlen(str) && str[end] != quote)

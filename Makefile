@@ -42,7 +42,7 @@ SRC =	lexer.c			\
 
 OBJ = $(SRC:.c=.o)
 
-COMPILE = gcc -Werror -Wextra -g -fsanitize=address
+COMPILE = gcc -Wall -Werror -Wextra -g -fsanitize=address
 
 REMOVE = rm -f
 
