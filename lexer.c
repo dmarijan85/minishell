@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 13:33:04 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:10:38 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,26 @@ int	expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 	return (*end);
 }
 
-char	plumbus(char *str)
+char	plumbus(char *str, int i)
 {
-	int	i;
-
-	i = 0;
 	while (ft_isspace(str[i]))
 		i++;
-	if (istoken(str, i))
+	if (istoken(str, i) && istoken(str,i) != 4 && istoken(str,i) != 5)
 		return (str[i]);
 	while (str[i])
 	{
 		if (istoken(str, i))
 		{
-			i += istoken(str, i);
+			if (istoken(str, i) == 1 || istoken(str, i) == 2 \
+				|| istoken(str, i) == 4) 
+				i++;
+			else if (istoken(str, i))
+				i += 2;
 			while (ft_isspace(str[i]))
 				i++;
 			if (!str[i])
 				return ('\n');
-			else if (istoken(str, i))
+			else if (istoken(str, i) && istoken(str, i) != 4 && istoken(str, i) != 5)
 				return (str[i]);
 		}
 		i++;
@@ -112,7 +113,7 @@ void	shrimp_lexer(t_msh *mini)
 	end = -1;
 	if (istheretokens(str))
 	{
-		tmp = plumbus(str);
+		tmp = plumbus(str, 0);
 		if (tmp)
 		{
 			if (tmp == '\n')

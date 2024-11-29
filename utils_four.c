@@ -6,13 +6,13 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 17:18:12 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/27 17:56:26 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:42:35 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/minishell.h"
 
-char	*get_path(char *cmd)
+char	*get_path(t_msh *mini, char *cmd)
 {
 	int		i;
 	char	*exec;
@@ -21,7 +21,7 @@ char	*get_path(char *cmd)
 	char	**s_cmd;
 
 	i = -1;
-	allpath = ft_split(getenv("PATH"), ':');
+	allpath = ft_split(my_getenv("PATH", mini->env, mini->envvar), ':');
 	s_cmd = ft_split(cmd, ' ');
 	while (allpath && allpath[++i] && s_cmd)
 	{

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:13:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/28 14:20:11 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:15:43 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	istoken(char *c, int i)
 	else if (c[i] == '<')
 	{
 		if (isdouble(c + i, 0))
-			return (2);
-		return (1);
+			return (3);
+		return (2);
 	}
 	else if (c[i] == '>')
 	{
 		if (isdouble(c + i, 1))
-			return (2);
-		return (1);
+			return (5);
+		return (4);
 	}
 	return (0);
 }
@@ -66,6 +66,8 @@ bool	isbuiltin(t_msh *mini, char *name)
 
 	re = false;
 	tmp = wordsplit(mini, name, true);
+	if (!tmp[0])
+		return (false);
 	if (!ft_strncmp(tmp[0], "export\0", 7))
 		re = true;
 	else if (!ft_strncmp(tmp[0], "exit\0", 5))

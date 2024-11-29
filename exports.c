@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:08:25 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/28 14:22:52 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:21:18 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static void	third_if(t_msh *mini, char *name, char *arg, int i)
 	sub = ft_substr(arg, i + 1, ft_strlen(arg));
 	if (i != 0 && arg[i - 1] == '+')
 	{
-			newname = ft_substr(name, 0, ft_strlen(name) - 1);
-			free(name);
-			name = newname;
-			tmp = ft_strjoin(my_getenv(name, mini->env, mini->envvar), sub);
-			free(sub);
-			sub = tmp;	
+		newname = ft_substr(name, 0, ft_strlen(name) - 1);
+		free(name);
+		name = newname;
+		tmp = ft_strjoin(my_getenv(name, mini->env, mini->envvar), sub);
+		free(sub);
+		sub = tmp;
 	}
 	if (my_findvar(name, mini->env, mini->envvar, 0))
 	{

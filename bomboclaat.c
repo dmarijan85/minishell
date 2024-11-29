@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/27 18:45:48 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:14:37 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec(t_msh *mini, char *cmd)
 	if (!s_cmd || !*s_cmd)
 		childexit(1, mini, "wordsplit blew the fuck up wtf\n");
 	ft_builtins(mini, s_cmd);
-	path = get_path(s_cmd[0]);
+	path = get_path(mini, s_cmd[0]);
 	if (execve(path, s_cmd, mini->env) == -1)
 	{
 		ft_printf(2, "msh: command not found: %s\n", s_cmd[0]);
