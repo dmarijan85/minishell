@@ -67,10 +67,11 @@ bool	isbuiltin(t_msh *mini, char *name)
 	re = false;
 	tmp = wordsplit(mini, name, true);
 	if (!tmp[0])
+	{
+		array_free(tmp);
 		return (false);
-	if (!ft_strncmp(tmp[0], "export\0", 7))
-		re = true;
-	else if (!ft_strncmp(tmp[0], "exit\0", 5))
+	}
+	if (!ft_strncmp(tmp[0], "export\0", 7) || !ft_strncmp(tmp[0], "exit\0", 5))
 		re = true;
 	else if (!ft_strncmp(tmp[0], "unset\0", 6))
 		re = true;

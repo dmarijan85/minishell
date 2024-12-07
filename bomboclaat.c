@@ -17,17 +17,15 @@ void	exec(t_msh *mini, char *cmd)
 	char	**s_cmd;
 	char	*path;
 
-	if (cmd && !*cmd)
-		childexit(127, mini, "command not found: ''\n");
 	wildfinder(mini, &cmd, false);
 	s_cmd = wordsplit(mini, cmd, true);
-	if (!s_cmd || !*s_cmd)
-		childexit(1, mini, "wordsplit blew the fuck up wtf\n");
+	if ((!s_cmd || !*s_cmd ))
+		childexit(1, mini, "");
 	ft_builtins(mini, s_cmd);
 	path = get_path(mini, s_cmd[0]);
 	if (execve(path, s_cmd, mini->env) == -1)
 	{
-		ft_printf(2, "msh: command not found: %s\n", s_cmd[0]);
+		ft_printf(2, "msh: command not found: '%s'\n", s_cmd[0]);
 		array_free(s_cmd);
 		childexit(127, mini, "");
 	}
@@ -62,14 +60,12 @@ void	do_pipe(t_msh *mini, char *cmd, char **env)
 	}
 }
 
-void	letxiquibomber(t_msh *mini, int i)
+void	letxiquibomber(t_msh *mini, int i, int fd_in, int fd_out)
 {
-	int		fd_in;
-	int		fd_out;
 	t_node	*temp;
 
 	temp = mini->list;
-	while (i >= 0)
+	while (i >= 0 && temp)
 	{
 		fd_in = fl_redir(temp->redir, READ);
 		dup2(fd_in, 0);
@@ -99,7 +95,7 @@ void	lebomboclaat(t_msh *mini)
 	tookthekids = 0;
 	tmp0 = dup(0);
 	tmp1 = dup(1);
-	letxiquibomber(mini, mini->pipelen);
+	letxiquibomber(mini, mini->pipelen, 0, 1);
 	dup2(tmp0, 0);
 	close(tmp0);
 	dup2(tmp1, 1);

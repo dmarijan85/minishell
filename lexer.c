@@ -16,6 +16,9 @@ int	expand_list(char *str, t_tokens token, t_msh *mini, int *end)
 {
 	if (str && *str)
 		append_node(&mini->list, str, 0, mini);
+	else
+		if (str)
+			free(str);
 	if (token != 0)
 		append_node(&mini->list, NULL, token, mini);
 	if (token == LLESS || token == GGREAT)
