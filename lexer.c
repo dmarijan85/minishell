@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:22:03 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/29 13:10:38 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:37:34 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ char	plumbus(char *str, int i)
 {
 	while (ft_isspace(str[i]))
 		i++;
-	if (istoken(str, i) && istoken(str,i) != 4 && istoken(str,i) != 5)
+	if (istoken(str, i) && istoken(str, i) != 4 && istoken(str, i) != 5)
 		return (str[i]);
 	while (str[i])
 	{
 		if (istoken(str, i))
 		{
 			if (istoken(str, i) == 1 || istoken(str, i) == 2 \
-				|| istoken(str, i) == 4) 
+				|| istoken(str, i) == 4)
 				i++;
 			else if (istoken(str, i))
 				i += 2;
@@ -45,7 +45,8 @@ char	plumbus(char *str, int i)
 				i++;
 			if (!str[i])
 				return ('\n');
-			else if (istoken(str, i) && istoken(str, i) != 4 && istoken(str, i) != 5)
+			else if (istoken(str, i) && istoken(str, i) != 4 \
+				&& istoken(str, i) != 5)
 				return (str[i]);
 		}
 		i++;

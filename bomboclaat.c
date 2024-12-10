@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:52:14 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/29 13:14:37 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:36:40 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec(t_msh *mini, char *cmd)
 
 	wildfinder(mini, &cmd, false);
 	s_cmd = wordsplit(mini, cmd, true);
-	if ((!s_cmd || !*s_cmd ))
+	if (!s_cmd || !*s_cmd)
 		childexit(1, mini, "");
 	ft_builtins(mini, s_cmd);
 	path = get_path(mini, s_cmd[0]);
@@ -108,8 +108,6 @@ void	lebomboclaat(t_msh *mini)
 	}
 	if (!mini->lastisbuiltin && WIFEXITED(tookthekids))
 		tookthekids = WEXITSTATUS(tookthekids);
-	if (tookthekids == 2 || tookthekids == 3)
-		tookthekids += 128;
 	if (!mini->lastisbuiltin)
 		mini->returnval = tookthekids;
 	wait_signal(1);

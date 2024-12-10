@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:08 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/26 12:45:51 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:24:44 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	expand_name_end(char *str, int stt)
 			end++;
 		return (end);
 	}
-	return (end + 1);
+	return (end);
 }
 
 char	*strexpander_two(char *firstpart, char *lastpart, int end, char *value)
@@ -102,7 +102,8 @@ void	wildfinder(t_msh *mini, char **str, bool dofree)
 	rec = *str;
 	while (i < (int)ft_strlen(rec) && rec[i])
 	{
-		if (rec[i] == '$' && imquoted(rec, i) != '\'')
+		if (rec[i] == '$' && imquoted(rec, i) != '\'' && \
+			!ft_isspace(rec[i + 1]) && rec[i + 1])
 		{
 			name = ft_substr(rec, i + 1, expand_name_end(rec, i + 1) - i - 1);
 			res = wildhandler(mini, *str, i, name);
