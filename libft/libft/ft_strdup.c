@@ -6,7 +6,7 @@
 /*   By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:17:29 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/03/28 12:58:53 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:29:18 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ char	*ft_strdup(const char *s)
 
 	copy = malloc(ft_strlen(s) * sizeof(char) + 1);
 	if (!copy)
-	{
-		errno = ENOMEM;
 		return (NULL);
-	}
+	if (!s || !*s)
+		return (copy);
 	ft_strlcpy(copy, s, ft_strlen(s) + 1);
 	return (copy);
 }

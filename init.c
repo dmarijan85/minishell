@@ -6,7 +6,7 @@
 /*   By: mclaver- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:15:42 by mclaver-          #+#    #+#             */
-/*   Updated: 2024/11/27 17:17:37 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:48:42 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	msh_start(t_msh *mini, char **env)
 		do_last(mini, tmp);
 		free(tmp);
 	}
-	mini->oldpwd = getenv("OLDPWD");
+	mini->oldpwd = ft_strdup(getenv("OLDPWD"));
 	if (!getenv("OLDPWD"))
 		do_last(mini, "export OLDPWD=");
 }

@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:08:25 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/29 12:21:18 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:46:35 by mclaver-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,25 @@ static void	second_if(t_msh *mini, char *tmp)
 		append_envvar(&mini->envvar, tmp, NULL, mini);
 }
 
-static int	first_if(char **tmp, char *arg)
+static int	first_if(char **tmp)
 {
-	ft_printf(2, "msh: export: \'%s\': not a valid identifier\n", arg);
+	ft_printf(2, "msh: export: %s: not a valid identifier\n", *tmp);
 	free(*tmp);
 	*tmp = NULL;
 	return (1);
 }
 
-static void	third_if(t_msh *mini, char *name, char *arg, int i)
+static void	unset_if_alreadyfound(t_msh *mini, char *tmp, char *sub)
 {
-	char	*tmp;
-	char	*newname;
-	char	*sub;
 	char	*tmptwo;
 
-	sub = ft_substr(arg, i + 1, ft_strlen(arg));
-	if (i != 0 && arg[i - 1] == '+')
+	if (my_findvar(tmp, mini->env, mini->envvar, 0))
 	{
-		newname = ft_substr(name, 0, ft_strlen(name) - 1);
-		free(name);
-		name = newname;
-		tmp = ft_strjoin(my_getenv(name, mini->env, mini->envvar), sub);
-		free(sub);
-		sub = tmp;
-	}
-	if (my_findvar(name, mini->env, mini->envvar, 0))
-	{
-		tmptwo = ft_strjoin("unset ", name);
+		tmptwo = ft_strjoin("unset ", tmp);
 		do_last(mini, tmptwo);
 		free(tmptwo);
 	}
-	append_envvar(&mini->envvar, name, sub, mini);
+	append_envvar(&mini->envvar, tmp, sub, mini);
 }
 
 int	ft_export_create(t_msh *mini, char **args, int i, int ret)
@@ -69,13 +56,14 @@ int	ft_export_create(t_msh *mini, char **args, int i, int ret)
 		while (args[i][finnish] && args[i][finnish] != '=')
 			finnish++;
 		tmp = ft_substr(args[i], start, finnish);
-		if (!isvalid(args[i]))
-			ret = first_if(&tmp, args[i]);
+		if (!isvalid(tmp))
+			ret = first_if(&tmp);
 		else if (!args[i][finnish] && !my_findvar(tmp, mini->env, \
 				mini->envvar, 0))
 			second_if(mini, tmp);
 		else if (args[i][finnish] == '=')
-			third_if(mini, tmp, args[i], finnish);
+			unset_if_alreadyfound(mini, tmp, \
+				ft_substr(args[i], finnish + 1, ft_strlen(args[i])));
 		else
 			free(tmp);
 		i++;
@@ -87,17 +75,20 @@ int	ft_export_print(t_msh *mini, char **envp, int i)
 {
 	t_envvar	*tmp;
 	int			j;
+	char		*name;
+	char		*value;
 
 	while (envp[i])
 	{
 		j = 0;
 		ft_printf(1, "declare -x ");
 		while (envp[i][j] && envp[i][j] != '=')
-			ft_printf(1, "%c", envp[i][j++]);
-		ft_printf(1, "=\"");
-		while (envp[i][j++])
-			ft_printf(1, "%c", envp[i][j]);
-		ft_printf(1, "\"\n");
+			j++;
+		name = ft_substr(envp[i], 0, j);
+		value = ft_substr(envp[i], j + 1, ft_strlen(envp[i]));
+		ft_printf(1, "%s=\"%s\"\n", name, value);
+		free(name);
+		free(value);
 		i++;
 	}
 	tmp = mini->envvar;
