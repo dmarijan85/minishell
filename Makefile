@@ -6,7 +6,7 @@
 #    By: dmarijan <dmarijan@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 11:33:35 by dmarijan          #+#    #+#              #
-#    Updated: 2024/12/14 17:52:04 by mclaver-         ###   ########.fr        #
+#    Updated: 2024/12/18 09:51:55 by dmarijan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,11 @@ SRC =	lexer.c			\
 		removequotes.c	\
 		quoteshitbro.c	\
 		utils_four.c	\
+		deported.c
 
 OBJ = $(SRC:.c=.o)
 
-COMPILE = gcc -Wall -Werror -Wextra -g -fsanitize=address
+COMPILE = gcc -Wall -Werror -Wextra #-g -fsanitize=address
 
 REMOVE = rm -f
 

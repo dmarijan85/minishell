@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:08:25 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/12/14 17:46:35 by mclaver-         ###   ########.fr       */
+/*   Updated: 2024/12/18 09:46:46 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,36 +69,4 @@ int	ft_export_create(t_msh *mini, char **args, int i, int ret)
 		i++;
 	}
 	return (ret);
-}
-
-int	ft_export_print(t_msh *mini, char **envp, int i)
-{
-	t_envvar	*tmp;
-	int			j;
-	char		*name;
-	char		*value;
-
-	while (envp[i])
-	{
-		j = 0;
-		ft_printf(1, "declare -x ");
-		while (envp[i][j] && envp[i][j] != '=')
-			j++;
-		name = ft_substr(envp[i], 0, j);
-		value = ft_substr(envp[i], j + 1, ft_strlen(envp[i]));
-		ft_printf(1, "%s=\"%s\"\n", name, value);
-		free(name);
-		free(value);
-		i++;
-	}
-	tmp = mini->envvar;
-	while (tmp)
-	{
-		ft_printf(1, "declare -x %s", tmp->name);
-		if (tmp->hasvalue)
-			ft_printf(1, "=\"%s\"", tmp->value);
-		ft_printf(1, "\n");
-		tmp = tmp->next;
-	}
-	return (0);
 }

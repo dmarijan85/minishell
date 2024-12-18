@@ -6,7 +6,7 @@
 /*   By: dmarijan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:43 by dmarijan          #+#    #+#             */
-/*   Updated: 2024/11/29 12:42:12 by dmarijan         ###   ########.fr       */
+/*   Updated: 2024/12/18 09:48:07 by dmarijan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ void		ft_env(t_msh *mini, char **envp);
 void		ft_pwd(t_msh *mini);
 void		ft_echo(char **arr);
 void		ft_unset(t_msh *mini, char **arr);
+int			ft_export_print(t_msh *mini, char **envp, int i);
 
 //cedepuntoce
 int			ft_cd(t_msh *mini, char **arr, int argc);
